@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "container:../../Documents/iOS 2/SuperVision/SuperVision.xcodeproj">
+      location = "self:SuperVision 2.xcodeproj">
    </FileRef>
 </Workspace>
