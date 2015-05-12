@@ -14,6 +14,9 @@
 		2F45A7181B018B9C007B4BC1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F45A7171B018B9C007B4BC1 /* Images.xcassets */; };
 		2F45A71B1B018B9C007B4BC1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F45A7191B018B9C007B4BC1 /* LaunchScreen.xib */; };
 		2F45A7271B018B9C007B4BC1 /* SuperVision_2Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F45A7261B018B9C007B4BC1 /* SuperVision_2Tests.m */; };
+		A03C74EA1B0291560029D480 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A03C74E71B02909D0029D480 /* AVFoundation.framework */; };
+		A03C75121B029BDC0029D480 /* sliderthumb2.png in Resources */ = {isa = PBXBuildFile; fileRef = A03C75111B029BDC0029D480 /* sliderthumb2.png */; };
+		A03C75151B029D3D0029D480 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A03C75131B029D270029D480 /* CoreGraphics.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +43,10 @@
 		2F45A7201B018B9C007B4BC1 /* SuperVision 2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SuperVision 2Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F45A7251B018B9C007B4BC1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2F45A7261B018B9C007B4BC1 /* SuperVision_2Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SuperVision_2Tests.m; sourceTree = "<group>"; };
+		A03C74E71B02909D0029D480 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		A03C75111B029BDC0029D480 /* sliderthumb2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sliderthumb2.png; path = "SuperVision 2/sliderthumb2.png"; sourceTree = SOURCE_ROOT; };
+		A03C75131B029D270029D480 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		A03C75171B02A4210029D480 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +54,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A03C75151B029D3D0029D480 /* CoreGraphics.framework in Frameworks */,
+				A03C74EA1B0291560029D480 /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +74,7 @@
 			children = (
 				2F45A7091B018B9C007B4BC1 /* SuperVision 2 */,
 				2F45A7231B018B9C007B4BC1 /* SuperVision 2Tests */,
+				A03C74E91B02910D0029D480 /* framework */,
 				2F45A7081B018B9C007B4BC1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -88,6 +98,7 @@
 				2F45A7141B018B9C007B4BC1 /* Main.storyboard */,
 				2F45A7171B018B9C007B4BC1 /* Images.xcassets */,
 				2F45A7191B018B9C007B4BC1 /* LaunchScreen.xib */,
+				A03C74EB1B029A880029D480 /* Resource */,
 				2F45A70A1B018B9C007B4BC1 /* Supporting Files */,
 			);
 			path = "SuperVision 2";
@@ -117,6 +128,23 @@
 				2F45A7251B018B9C007B4BC1 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A03C74E91B02910D0029D480 /* framework */ = {
+			isa = PBXGroup;
+			children = (
+				A03C75131B029D270029D480 /* CoreGraphics.framework */,
+				A03C74E71B02909D0029D480 /* AVFoundation.framework */,
+			);
+			path = framework;
+			sourceTree = "<group>";
+		};
+		A03C74EB1B029A880029D480 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				A03C75111B029BDC0029D480 /* sliderthumb2.png */,
+			);
+			path = Resource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -199,6 +227,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A03C75121B029BDC0029D480 /* sliderthumb2.png in Resources */,
 				2F45A7161B018B9C007B4BC1 /* Main.storyboard in Resources */,
 				2F45A71B1B018B9C007B4BC1 /* LaunchScreen.xib in Resources */,
 				2F45A7181B018B9C007B4BC1 /* Images.xcassets in Resources */,
@@ -248,6 +277,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				2F45A7151B018B9C007B4BC1 /* Base */,
+				A03C75171B02A4210029D480 /* en */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -350,9 +380,11 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "SuperVision 2/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -363,9 +395,11 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "SuperVision 2/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos;
 			};
 			name = Release;
 		};
@@ -382,6 +416,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "SuperVision 2Tests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SuperVision 2.app/SuperVision 2";
@@ -397,6 +432,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "SuperVision 2Tests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SuperVision 2.app/SuperVision 2";
@@ -422,6 +458,7 @@
 				2F45A72C1B018B9C007B4BC1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2F45A72D1B018B9C007B4BC1 /* Build configuration list for PBXNativeTarget "SuperVision 2Tests" */ = {
 			isa = XCConfigurationList;
@@ -430,6 +467,7 @@
 				2F45A72F1B018B9C007B4BC1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
