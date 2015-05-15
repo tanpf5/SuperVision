@@ -35,6 +35,9 @@
 
 @interface ViewController ()
 
+@property (assign, nonatomic) float maxFrameRate;
+@property (assign, nonatomic) float minFrameRate;
+
 @end
 
 
@@ -56,8 +59,8 @@
 //    self.avgTimeForOneFrame = 0;
 //    self.avgTimeForPostProcess = 0;
 //    self.avgTimeForTrack = 0;
-//    self.minFrameRate = 20;
-//    self.maxFrameRate = 30;
+    self.minFrameRate = 20;
+    self.maxFrameRate = 30;
 //    self.imageNo = 0;
 //    self.imageProcess = [[ImageProcess alloc] init];
     /*  set the flashLight by default off */
