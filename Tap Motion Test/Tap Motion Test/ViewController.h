@@ -12,7 +12,13 @@
 @interface ViewController : UIViewController
 
 @property (strong, nonatomic) CMMotionManager* motionManager;
-@property (strong, nonatomic) NSMutableArray* accelerometer_z;
-@property (strong, nonatomic) NSLock* accelerometer_zLock;
+@property (strong, nonatomic) NSMutableArray* accelerometer;
+@property (strong, nonatomic) NSLock* accelerometerLock;
+@property (strong, nonatomic) NSMutableArray* gyro;
+@property (strong, nonatomic) NSLock* gyroLock;
+//@property (assign, nonatomic) BOOL isShown;
+@property (strong, nonatomic) IBOutlet UILabel *menu;
+@property (strong, nonatomic) IBOutlet UILabel *menuRight;
+
 @end
 
