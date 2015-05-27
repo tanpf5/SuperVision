@@ -185,7 +185,6 @@
 		A0634B381B14B7FE0010D14C /* Zoom in and out */ = {
 			isa = PBXGroup;
 			children = (
-				A0634B5F1B14B92E0010D14C /* Image */,
 				A0634B3D1B14B7FE0010D14C /* AppDelegate.h */,
 				A0634B3E1B14B7FE0010D14C /* AppDelegate.m */,
 				A0634B401B14B7FE0010D14C /* ViewController.h */,
@@ -193,6 +192,7 @@
 				A0634B431B14B7FE0010D14C /* Main.storyboard */,
 				A0634B461B14B7FE0010D14C /* Images.xcassets */,
 				A0634B481B14B7FE0010D14C /* LaunchScreen.xib */,
+				A0634B5F1B14B92E0010D14C /* Image */,
 				A0634B391B14B7FE0010D14C /* Supporting Files */,
 			);
 			path = "Zoom in and out";
@@ -1030,6 +1030,7 @@
 				A0634B5B1B14B7FE0010D14C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A0634B5C1B14B7FE0010D14C /* Build configuration list for PBXNativeTarget "Zoom in and outTests" */ = {
 			isa = XCConfigurationList;
@@ -1038,6 +1039,7 @@
 				A0634B5E1B14B7FE0010D14C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

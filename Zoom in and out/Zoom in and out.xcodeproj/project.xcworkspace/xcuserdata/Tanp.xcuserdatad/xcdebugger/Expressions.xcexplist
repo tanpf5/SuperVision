@@ -10,5 +10,13 @@
             </PersistentString>
          </PersistentStrings>
       </ContextState>
+      <ContextState
+         contextName = "-[ViewController initialMotion]:ViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.motionManager.gyroUpdateInterval">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
    </ContextStates>
 </VariablesViewState>

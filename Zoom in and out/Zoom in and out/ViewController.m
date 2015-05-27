@@ -166,7 +166,7 @@
 
 - (void) zoomSliderChangedByMotion:(float)y {
     // zoom in -y, zoom out +y
-    float scale = self.currentZoomRate - y * 0.05 * 15;
+    float scale = self.currentZoomRate - y * 0.05 * 10;
     if (scale > 8) {
         scale = 8;
     } else if (scale < 0.5) {
@@ -190,7 +190,7 @@
         NSOperationQueue *queue = [[NSOperationQueue alloc] init];
         [self.motionManager
          startGyroUpdatesToQueue:queue withHandler:^(CMGyroData *gyroData, NSError *error) {
-              //NSLog(@"gyr, %.00f, %.05f, %.05f, %.05f", CFAbsoluteTimeGetCurrent() * 100000000, gyroData.rotationRate.x, gyroData.rotationRate.y, gyroData.rotationRate.z);
+              NSLog(@"gyr, %.00f, %.05f, %.05f, %.05f", CFAbsoluteTimeGetCurrent() * 100000000, gyroData.rotationRate.x, gyroData.rotationRate.y, gyroData.rotationRate.z);
              if (!self.isHidden) {
                  [self zoomSliderChangedByMotion:gyroData.rotationRate.y];
              }
@@ -233,7 +233,6 @@
     self.currentZoomRate = 1;
     
     [self hideAllControls];
-    [self initialMotion];
 }
 
 - (void)hideAllControls {
@@ -269,7 +268,7 @@
     [super viewDidLoad];
     [self initialControls];
     [self initialViewPosition];
-    
+    [self initialMotion];
     // Do any additional setup after loading the view, typically from a nib.
 }
 
