@@ -3,10 +3,38 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "-[ViewController updateOffset]:ViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.offset">
+            </PersistentString>
+            <PersistentString
+               value = "self.n">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[ViewController zoomSliderChangedByMotion:]:ViewController.m">
          <PersistentStrings>
             <PersistentString
                value = "self.currentZoomRate">
+            </PersistentString>
+            <PersistentString
+               value = "self.offset">
+            </PersistentString>
+            <PersistentString
+               value = "self.n">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ViewController zoomSliderChangedByMotion]:ViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.offset">
+            </PersistentString>
+            <PersistentString
+               value = "self.n">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -15,6 +43,17 @@
          <PersistentStrings>
             <PersistentString
                value = "self.motionManager.gyroUpdateInterval">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "__31-[ViewController initialMotion]_block_invoke:ViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.offset">
+            </PersistentString>
+            <PersistentString
+               value = "self.n">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

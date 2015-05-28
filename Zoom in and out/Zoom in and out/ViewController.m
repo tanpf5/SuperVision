@@ -23,6 +23,9 @@
 
 @interface ViewController ()
 
+@property (assign, nonatomic) float offset;
+@property (assign, nonatomic) NSInteger n;
+
 @end
 
 @implementation ViewController
@@ -164,7 +167,7 @@
 }
 
 
-- (void) zoomSliderChangedByMotion:(float)y {
+/*- (void) zoomSliderChangedByMotion:(float)y {
     // zoom in -y, zoom out +y
     float scale = self.currentZoomRate - y * 0.05 * 10;
     if (scale > 8) {
@@ -177,6 +180,64 @@
         [self.zoomSlider setValue:self.currentZoomRate animated:YES];
         [self.zoomSliderRight setValue:self.currentZoomRate animated:YES];
     });
+}*/
+
+- (void) zoomSliderChangedByMotion {
+    // zoom in -y, zoom out +y
+    if ([self.gyro count] < 2) {
+        return ;
+    }
+    CMGyroData *gyroData1 = self.gyro[[self.gyro count] - 2];
+    float y1 = gyroData1.rotationRate.y;
+    CMGyroData *gyroData2 = self.gyro[[self.gyro count] - 1];
+    float y2 = gyroData2.rotationRate.y;
+    if (fabs(y2 - y1) < 0.015 || fabs(y2 - y1) > 0.3) {
+        return ;
+    }
+    float scale = self.currentZoomRate - (y2 - self.offset) * 0.05 * 80;
+    if (scale > 8) {
+        scale = 8;
+    } else if (scale < 0.5) {
+        scale = 0.5;
+    }
+    self.currentZoomRate = scale;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.zoomSlider setValue:self.currentZoomRate animated:YES];
+        [self.zoomSliderRight setValue:self.currentZoomRate animated:YES];
+    });
+}
+
+/*- (void) zoomSliderChangedByMotion:(float)y {
+    // zoom in -y, zoom out +y
+    if (fabs(y - self.offset) < 0.01) {
+        return ;
+    }
+    float scale = self.currentZoomRate - (y - self.offset) * 0.05 * 10;
+    if (scale > 8) {
+        scale = 8;
+    } else if (scale < 0.5) {
+        scale = 0.5;
+    }
+    self.currentZoomRate = scale;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.zoomSlider setValue:self.currentZoomRate animated:YES];
+        [self.zoomSliderRight setValue:self.currentZoomRate animated:YES];
+    });
+}*/
+
+- (void) updateOffset {
+    if ([self.gyro count] < 2) {
+        return ;
+    }
+    CMGyroData *gyroData1 = self.gyro[[self.gyro count] - 2];
+    float y1 = gyroData1.rotationRate.y;
+    CMGyroData *gyroData2 = self.gyro[[self.gyro count] - 1];
+    float y2 = gyroData2.rotationRate.y;
+    // update offset
+    if (fabs(y2 - y1) < 0.002) {
+        self.offset = (self.offset * self.n + y1 + y2) / (self.n + 2);
+        self.n = self.n + 2;
+    }
 }
 
 - (void) initialMotion {
@@ -191,10 +252,9 @@
         [self.motionManager
          startGyroUpdatesToQueue:queue withHandler:^(CMGyroData *gyroData, NSError *error) {
               NSLog(@"gyr, %.00f, %.05f, %.05f, %.05f", CFAbsoluteTimeGetCurrent() * 100000000, gyroData.rotationRate.x, gyroData.rotationRate.y, gyroData.rotationRate.z);
-             if (!self.isHidden) {
-                 [self zoomSliderChangedByMotion:gyroData.rotationRate.y];
-             }
              [self.gyroLock lock];
+             // update offset
+             [self updateOffset];
              if ([self.gyro count] < GAP_WND + TAP_WND) {
                  [self.gyro addObject:gyroData];
                  if ([self.gyro count] == GAP_WND + TAP_WND) {
@@ -208,7 +268,17 @@
                  [self.gyro replaceObjectAtIndex:GAP_WND + TAP_WND - 1 withObject:gyroData];
                  [self checkTaps];
              }
+             if (!self.isHidden) {
+                 //[self zoomSliderChangedByMotion:gyroData.rotationRate.y];
+                 [self zoomSliderChangedByMotion];
+             }
              [self.gyroLock unlock];
+             
+             /*if (!self.isHidden) {
+                 //[self zoomSliderChangedByMotion:gyroData.rotationRate.y];
+                 //[self zoomSliderChangedByMotion];
+                 [self zoomSliderChangedByMotion:gyroData.rotationRate.y];
+             }*/
          }];
     }
     
@@ -231,6 +301,9 @@
     self.zoomSlider.transform = transformRotate;
     self.zoomSliderRight.transform = transformRotate;
     self.currentZoomRate = 1;
+    
+    self.offset = 0.0;
+    self.n = 0;
     
     [self hideAllControls];
 }
