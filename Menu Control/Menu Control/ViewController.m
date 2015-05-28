@@ -50,6 +50,10 @@
 
 @property (assign, nonatomic) float currentZoomRate;
 
+@property (assign, nonatomic) float x_offset;
+@property (assign, nonatomic) NSInteger x_number;
+@property (assign, nonatomic) float y_offset;
+@property (assign, nonatomic) NSInteger y_number;
 
 @end
 
@@ -142,6 +146,9 @@
          startGyroUpdatesToQueue:queue withHandler:^(CMGyroData *gyroData, NSError *error) {
              //NSLog(@"gyr, %.00f, %.05f, %.05f, %.05f", CFAbsoluteTimeGetCurrent() * 100000000, gyroData.rotationRate.x, gyroData.rotationRate.y, gyroData.rotationRate.z);
              [self.gyroLock lock];
+             // update offset
+             [self updateOffset];
+             // save data in buffer
              if ([self.gyro count] < GAP_WND + TAP_WND) {
                  [self.gyro addObject:gyroData];
                  if ([self.gyro count] == GAP_WND + TAP_WND) {
@@ -155,16 +162,16 @@
                  [self.gyro replaceObjectAtIndex:GAP_WND + TAP_WND - 1 withObject:gyroData];
                  [self checkTaps];
              }
-             [self.gyroLock unlock];
              if (!self.isHidden) {
                  if (self.zoomIsSelected) {
-                     [self zoomSliderChangedByMotion:gyroData.rotationRate.y];
+                     [self zoomSliderChangedByMotion];
                  } else {
-                     [self targetCursorChangedByMostion:gyroData.rotationRate.x];
+                     [self targetCursorChangedByMotion];
                      [self checkTargetCursor];
                  }
                  //[self zoomSliderChangedByMotion:gyroData.rotationRate.y];
              }
+             [self.gyroLock unlock];
          }];
     }
 }
@@ -180,6 +187,27 @@
 
 #pragma mark -
 #pragma mark Control Function
+
+- (void) updateOffset {
+    if ([self.gyro count] < 2) {
+        return ;
+    }
+    CMGyroData *gyroData1 = self.gyro[[self.gyro count] - 2];
+    float x1 = gyroData1.rotationRate.x;
+    float y1 = gyroData1.rotationRate.y;
+    CMGyroData *gyroData2 = self.gyro[[self.gyro count] - 1];
+    float x2 = gyroData2.rotationRate.x;
+    float y2 = gyroData2.rotationRate.y;
+    // update offset
+    if (fabs(x2 - x1) < 0.002) {
+        self.x_offset = (self.x_offset * self.x_number + x1 + x2) / (self.x_number + 2);
+        self.x_number = self.x_number + 2;
+    }
+    if (fabs(y2 - y1) < 0.002) {
+        self.y_offset = (self.y_offset * self.y_number + y1 + y2) / (self.y_number + 2);
+        self.y_number = self.y_number + 2;
+    }
+}
 
 - (IBAction)zoomSliderChanged:(id)sender {
     float scale;
@@ -334,15 +362,26 @@
     }
 }
 
-- (void) targetCursorChangedByMostion:(float)x {
- // left +x, right -x
-    float scale = self.targetCursor - (x - TARGETOFFSET) * 0.05 * TARGETRATIO;
+- (void)targetCursorChangedByMotion {
+    if ([self.gyro count] < 2) {
+        return ;
+    }
+    CMGyroData *gyroData1 = self.gyro[[self.gyro count] - 2];
+    float x1 = gyroData1.rotationRate.x;
+    CMGyroData *gyroData2 = self.gyro[[self.gyro count] - 1];
+    float x2 = gyroData2.rotationRate.x;
+    if (fabs(x2 - x1) < 0.015 || fabs(x2 - x1) > 0.3) {
+        return ;
+    }
+    // left +x, right -x
+    float scale = self.targetCursor - (x2 - self.x_offset) * 0.05 * TARGETRATIO;
     //NSLog(@"x = %.05f", x + OFFSET);
     if (scale >= 8) {
         scale = 8;
     } else if (scale < 0) {
         scale = 0;
     }
+    
     if (scale >= 0 && scale < 2) {
         self.isZoomTargetted = true;
         self.isFlashTargetted = false;
@@ -367,10 +406,19 @@
     self.targetCursor = scale;
  }
 
-- (void) zoomSliderChangedByMotion:(float)y {
+- (void)zoomSliderChangedByMotion {
     // zoom in -y, zoom out +y
-    float scale = self.currentZoomRate - (y + OFFSET) * 0.05 * RATIO;
-    NSLog(@"y = %.05f", y + OFFSET);
+    if ([self.gyro count] < 2) {
+        return ;
+    }
+    CMGyroData *gyroData1 = self.gyro[[self.gyro count] - 2];
+    float y1 = gyroData1.rotationRate.y;
+    CMGyroData *gyroData2 = self.gyro[[self.gyro count] - 1];
+    float y2 = gyroData2.rotationRate.y;
+    if (fabs(y2 - y1) < 0.015 || fabs(y2 - y1) > 0.3) {
+        return ;
+    }
+    float scale = self.currentZoomRate - (y2 - self.y_offset) * 0.05 * 80;
     if (scale > 8) {
         scale = 8;
     } else if (scale < 0.5) {
@@ -462,7 +510,7 @@
             // fnd=find(probedata0<0);
             // probedata0(fnd)=0;
             NSMutableArray* probedata0 = [[NSMutableArray alloc] init];
-            for (int i = n + 1; i < [x_coodinate count]; i++) {
+            for (NSInteger i = n + 1; i < [x_coodinate count]; i++) {
                 NSNumber* number = [NSNumber numberWithFloat:[x_coodinate[i] floatValue] - stable_mean > 0? [x_coodinate[i] floatValue] - stable_mean: 0];
                 [probedata0 addObject:number];
             }
