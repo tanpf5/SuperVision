@@ -199,11 +199,11 @@
     float x2 = gyroData2.rotationRate.x;
     float y2 = gyroData2.rotationRate.y;
     // update offset
-    if (fabs(x2 - x1) < 0.002) {
+    if (fabs(x2 - x1) < 0.001) {
         self.x_offset = (self.x_offset * self.x_number + x1 + x2) / (self.x_number + 2);
         self.x_number = self.x_number + 2;
     }
-    if (fabs(y2 - y1) < 0.002) {
+    if (fabs(y2 - y1) < 0.001) {
         self.y_offset = (self.y_offset * self.y_number + y1 + y2) / (self.y_number + 2);
         self.y_number = self.y_number + 2;
     }
