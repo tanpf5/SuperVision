@@ -8,11 +8,12 @@
 
 #import "ViewController.h"
 
-#define TAP_WND 20
-#define GAP_WND TAP_WND * 0.8
 #define FREQUENCY 20
+#define TIME_THRESHOLD 1
+#define TAP_WND TIME_THRESHOLD * FREQUENCY
+#define GAP_WND TAP_WND
 #define STABLE_THRESHOLD 0.03
-#define FLUC_THRESHOLD 0.05
+#define FLUC_THRESHOLD 0.07
 #define HIT_THRESHOLD 3
 
 @interface ViewController ()
@@ -51,7 +52,7 @@
     if (number > 1) {
         [self.gyro removeAllObjects];
         // NSString* s = [NSString stringWithFormat:@"Tap number = %ld", (long)number];
-        NSLog(@"number = %ld", (long)number);
+        //NSLog(@"number = %ld", (long)number);
         //[self alertWithMessage:s];
         dispatch_async(dispatch_get_main_queue(), ^{
             if ([self.menu isHidden]) {
@@ -155,14 +156,11 @@
     self.accelerometer = [[NSMutableArray alloc] init];
     self.gyro = [[NSMutableArray alloc] init];
     self.motionManager = [[CMMotionManager alloc] init];
-    self.motionManager.accelerometerUpdateInterval = 1.0 / TAP_WND;
-    self.motionManager.gyroUpdateInterval = 1.0 / TAP_WND;
+    self.motionManager.accelerometerUpdateInterval = 1.0 / FREQUENCY;
+    self.motionManager.gyroUpdateInterval = 1.0 / FREQUENCY;
     self.accelerometerLock = [[NSLock alloc] init];
     self.gyroLock = [[NSLock alloc] init];
-    //self.isShown = false;
-    [self.menu setCenter:CGPointMake(CGRectGetHeight([[UIScreen mainScreen] bounds]) / 4, CGRectGetWidth([[UIScreen mainScreen] bounds]) / 2)];
     [self.menu setHidden:YES];
-    [self.menuRight setCenter:CGPointMake(CGRectGetHeight([[UIScreen mainScreen] bounds]) / 4 * 3, CGRectGetWidth([[UIScreen mainScreen] bounds]) / 2)];
     [self.menuRight setHidden:YES];
     //float a = CGRectGetHeight([[UIScreen mainScreen] bounds]) / 2;
     //float b = CGRectGetWidth([[UIScreen mainScreen] bounds]) / 2;
