@@ -9,12 +9,15 @@
 #import "ViewController.h"
 
 #define FREQUENCY 20
-#define TIME_THRESHOLD 1
+#define TIME_THRESHOLD 0.6
 #define TAP_WND TIME_THRESHOLD * FREQUENCY
 #define GAP_WND TAP_WND
-#define STABLE_THRESHOLD 0.03
-#define FLUC_THRESHOLD 0.07
-#define HIT_THRESHOLD 3
+#define STABLE_THRESHOLD_ACC 0.015
+#define FLUC_THRESHOLD_ACC 0.02
+#define HIT_THRESHOLD_ACC 4
+#define STABLE_THRESHOLD_GYRO 0.03
+#define FLUC_THRESHOLD_GYRO 0.07
+#define HIT_THRESHOLD_GYRO 3
 
 @interface ViewController ()
 
@@ -44,15 +47,15 @@
     [self.menu setHidden:YES];
 }*/
 
-- (void)checkTaps {
+- (void)checkTaps:(NSArray *)data stable_thre:(float)stableThreshold fluc_thre:(float)flucThreshold hit_thre:(float)hitThreshold  {
     /*NSDate *date = [NSDate date];
     double timePassed_ms = [date timeIntervalSinceNow] * -1000.0;
     NSLog(@"Start time = %.05f", timePassed_ms);*/
-    NSInteger number = [self countTaps];
+    NSInteger number = [self countTaps:data stable_thre:stableThreshold fluc_thre:flucThreshold hit_thre:hitThreshold];
     if (number > 1) {
-        [self.gyro removeAllObjects];
+        [self.accelerometer removeAllObjects];
         // NSString* s = [NSString stringWithFormat:@"Tap number = %ld", (long)number];
-        //NSLog(@"number = %ld", (long)number);
+        NSLog(@"number = %ld", (long)number);
         //[self alertWithMessage:s];
         dispatch_async(dispatch_get_main_queue(), ^{
             if ([self.menu isHidden]) {
@@ -68,24 +71,49 @@
     NSLog(@"End time = %.05f", timePassed_ms);*/
 }
 
-- (NSInteger)countTaps {
-    NSMutableArray* x_coodinate = [[NSMutableArray alloc] init];
-    for (int i = 0; i < [self.gyro count]; i++) {
-        CMGyroData *gyroData = self.gyro[i];
-        NSNumber* x = [NSNumber numberWithFloat:gyroData.rotationRate.x];
-        [x_coodinate addObject:x];
+- (NSNumber *)meanOf:(NSArray *)array
+{
+    double runningTotal = 0.0;
+    
+    for(NSNumber *number in array)
+    {
+        runningTotal += [number doubleValue];
     }
-    NSNumber* filter_wnd_t = [NSNumber numberWithInt:100]; //int
-    NSNumber* filter_wnd = [NSNumber numberWithFloat:ceil(([filter_wnd_t intValue]* FREQUENCY) / 1000)]; //float
+    
+    return [NSNumber numberWithDouble:(runningTotal / [array count])];
+}
+
+- (NSNumber *)std:(NSArray *)array
+{
+    if(![array count]) return nil;
+    
+    double mean = [[self meanOf:array] doubleValue];
+    double sumOfSquaredDifferences = 0.0;
+    
+    for(NSNumber *number in array)
+    {
+        double valueOfNumber = [number doubleValue];
+        double difference = valueOfNumber - mean;
+        sumOfSquaredDifferences += difference * difference;
+    }
+    
+    return [NSNumber numberWithDouble:sqrt(sumOfSquaredDifferences / ([array count] - 1))];
+}
+
+- (NSInteger)countTaps:(NSArray *)data stable_thre:(float)stableThreshold fluc_thre:(float)flucThreshold hit_thre:(float)hitThreshold {
+    NSInteger filter_wnd_t = 100;
+    NSInteger filter_wnd = ceil((filter_wnd_t * FREQUENCY) / 1000);
     // filter
-    NSNumber* tapwidth_threshold = [NSNumber numberWithFloat:[filter_wnd floatValue] * 2]; // float
+    NSInteger tapwidth_threshold = filter_wnd * 2.5;
     NSInteger n = GAP_WND - 1; // int
-    NSExpression *expression = [NSExpression expressionForFunction:@"stddev:" arguments:@[[NSExpression expressionForConstantValue:[x_coodinate subarrayWithRange:NSMakeRange(0, GAP_WND)]]]];
-    NSNumber* fluc = [expression expressionValueWithObject:nil context:nil]; // float
-    if ([fluc floatValue] < STABLE_THRESHOLD) {
-        float stable_mean = [[[x_coodinate subarrayWithRange:NSMakeRange(0, GAP_WND)] valueForKeyPath:@"@avg.floatValue"] floatValue]; // float
-        expression = [NSExpression expressionForFunction:@"stddev:" arguments:@[[NSExpression expressionForConstantValue:[x_coodinate subarrayWithRange:NSMakeRange(n + 1, TAP_WND)]]]];
-        NSNumber* std = [expression expressionValueWithObject:nil context:nil];
+//    NSExpression *expression = [NSExpression expressionForFunction:@"stddev:" arguments:@[[NSExpression expressionForConstantValue:[data subarrayWithRange:NSMakeRange(0, GAP_WND)]]]];
+//    NSNumber* fluc = [expression expressionValueWithObject:nil context:nil]; // float
+    NSNumber* fluc = [self std:[data subarrayWithRange:NSMakeRange(0, GAP_WND)]];
+    if ([fluc floatValue] < stableThreshold) {
+        double stable_mean = [[[data subarrayWithRange:NSMakeRange(0, GAP_WND)] valueForKeyPath:@"@avg.floatValue"] floatValue]; // float
+        //expression = [NSExpression expressionForFunction:@"stddev:" arguments:@[[NSExpression expressionForConstantValue:[data subarrayWithRange:NSMakeRange(n + 1, TAP_WND)]]]];
+        //NSNumber* std = [expression expressionValueWithObject:nil context:nil];
+        NSNumber* std = [self std:[data subarrayWithRange:NSMakeRange(n + 1, TAP_WND)]];
         // test part
         /*if (fabs([y_coodinate[n + 1] floatValue] - stable_mean) > HIT_THRESHOLD * [fluc floatValue]) {
             NSLog(@"fabs = %f, hit = %f", fabs([y_coodinate[n + 1] floatValue] - stable_mean), HIT_THRESHOLD * [fluc floatValue]);
@@ -98,13 +126,13 @@
                 NSLog(@"std = %f, fluc = %f", [std floatValue], FLUC_THRESHOLD);
             }
         }*/
-        if (fabs([x_coodinate[n + 1] floatValue] - stable_mean) > HIT_THRESHOLD * [fluc floatValue] && [std floatValue] > FLUC_THRESHOLD) {
+        if (fabs([data[n + 1] floatValue] - stable_mean) > hitThreshold * [fluc floatValue] && [std floatValue] > flucThreshold) {
             // probedata0 = (sensor(n:n+tap_wnd)-stable_mean);
             // fnd=find(probedata0<0);
             // probedata0(fnd)=0;
             NSMutableArray* probedata0 = [[NSMutableArray alloc] init];
-            for (int i = n + 1; i < [x_coodinate count]; i++) {
-                NSNumber* number = [NSNumber numberWithFloat:[x_coodinate[i] floatValue] - stable_mean > 0? [x_coodinate[i] floatValue] - stable_mean: 0];
+            for (int i = n + 1; i < [data count]; i++) {
+                NSNumber* number = [NSNumber numberWithFloat:[data[i] floatValue] - stable_mean > 0? [data[i] floatValue] - stable_mean: 0];
                 [probedata0 addObject:number];
             }
             // probedata = conv(probedata0,filter);
@@ -114,7 +142,7 @@
                 if (i == 0 || i == [probedata0 count] - 1) {
                     number = [NSNumber numberWithFloat:[probedata0[i] floatValue]];
                 } else {
-                    number = [NSNumber numberWithFloat:[probedata0[i - 1] floatValue] * 0.1 + [probedata0[i] floatValue] * 0.8 + [probedata0[i + 1] floatValue] * 0.1];
+                    number = [NSNumber numberWithFloat:[probedata0[i - 1] floatValue] * 0.2 + [probedata0[i] floatValue] * 0.6 + [probedata0[i + 1] floatValue] * 0.2];
                 }
                 [probedata addObject:number];
             }
@@ -131,14 +159,14 @@
             bool started = false;
             NSInteger start = 0, end = 0, count = 0;
             for (int i = 0; i < [probedata count]; i++) {
-                if (!started && [probedata[i] floatValue] > HIT_THRESHOLD * [fluc floatValue]) {
+                if (!started && [probedata[i] floatValue] > hitThreshold * [fluc floatValue]) {
                     started = true;
                     start = i;
                 }
-                if (started && [probedata[i] floatValue] <= HIT_THRESHOLD * [fluc floatValue]) {
+                if (started && [probedata[i] floatValue] <= hitThreshold * [fluc floatValue]) {
                     started = false;
                     end = i;
-                    if (end - start > [tapwidth_threshold intValue])
+                    if (end - start > tapwidth_threshold)
                         return 0;
                     else {
                         count++;
@@ -170,37 +198,35 @@
         [self.motionManager
             startAccelerometerUpdatesToQueue: queue
             withHandler:^(CMAccelerometerData *accelerometerData, NSError *error) {
-                //[self.accelerometerLock lock];
-                // NSLog(@"acc, %.00f, %.05f, %.05f, %.05f", CFAbsoluteTimeGetCurrent() * 1000000000, accelerometerData.acceleration.x * 9.8, accelerometerData.acceleration.y * 9.8, accelerometerData.acceleration.z * 9.8);
-                /*if ([self.accelerometer count] < GAP_WND + TAP_WND) {
-                    [self.accelerometer addObject:accelerometerData];
+                 //NSLog(@"acc, %.00f, %.10f, %.10f, %.10f", CFAbsoluteTimeGetCurrent() * 1000000000, accelerometerData.acceleration.x, accelerometerData.acceleration.y, accelerometerData.acceleration.z);
+                [self.accelerometerLock lock];
+                if ([self.accelerometer count] < GAP_WND + TAP_WND) {
+                    [self.accelerometer addObject:[[NSNumber alloc] initWithDouble:accelerometerData.acceleration.y]];
                     if ([self.accelerometer count] == GAP_WND + TAP_WND) {
                         if (fabs(accelerometerData.acceleration.x) > 0.5 && fabs(accelerometerData.acceleration.y) < 0.5 && fabs(accelerometerData.acceleration.z) < 0.5) {
-                            [self checkTaps];
+                            [self checkTaps:self.accelerometer stable_thre:STABLE_THRESHOLD_ACC fluc_thre:FLUC_THRESHOLD_ACC hit_thre:HIT_THRESHOLD_ACC];
                         }
                     }
                 }
                 else {
                     for (int i = 1; i < GAP_WND + TAP_WND; i++) {
-                        //NSLog(@"i = %d", i);
-                        //NSLog(@"i = %d, X = %.04f, Y = %.04f, Z = %.04f", i, accelerometerData.acceleration.x, accelerometerData.acceleration.y, accelerometerData.acceleration.z);
                         [self.accelerometer replaceObjectAtIndex:i - 1 withObject:[self.accelerometer objectAtIndex:i]];
                     }
-                    [self.accelerometer replaceObjectAtIndex:GAP_WND + TAP_WND - 1 withObject:accelerometerData];
+                    [self.accelerometer replaceObjectAtIndex:GAP_WND + TAP_WND - 1 withObject:[[NSNumber alloc] initWithDouble:accelerometerData.acceleration.y]];
                     if (fabs(accelerometerData.acceleration.x) > 0.5 && fabs(accelerometerData.acceleration.y) < 0.5 && fabs(accelerometerData.acceleration.z) < 0.5) {
-                        [self checkTaps];
+                        [self checkTaps:self.accelerometer stable_thre:STABLE_THRESHOLD_ACC fluc_thre:FLUC_THRESHOLD_ACC hit_thre:HIT_THRESHOLD_ACC];
                     }
-                }*/
-                //[self.accelerometerLock unlock];
+                }
+                [self.accelerometerLock unlock];
             }];
         [self.motionManager
             startGyroUpdatesToQueue:queue withHandler:^(CMGyroData *gyroData, NSError *error) {
-                [self.gyroLock lock];
-                NSLog(@"gyr, %.00f, %.05f, %.05f, %.05f", CFAbsoluteTimeGetCurrent() * 100000000, gyroData.rotationRate.x, gyroData.rotationRate.y, gyroData.rotationRate.z);
+                //NSLog(@"gyr, %.00f, %.05f, %.05f, %.05f", CFAbsoluteTimeGetCurrent() * 100000000, gyroData.rotationRate.x, gyroData.rotationRate.y, gyroData.rotationRate.z);
+                /*[self.gyroLock lock];
                 if ([self.gyro count] < GAP_WND + TAP_WND) {
                     [self.gyro addObject:gyroData];
                     if ([self.gyro count] == GAP_WND + TAP_WND) {
-                     [self checkTaps];
+                        [self checkTaps:STABLE_THRESHOLD_GYRO fluc_thre:FLUC_THRESHOLD_GYRO hit_thre:HIT_THRESHOLD_GYRO];
                     }
                  }
                  else {
@@ -208,9 +234,9 @@
                          [self.gyro replaceObjectAtIndex:i - 1 withObject:[self.gyro objectAtIndex:i]];
                      }
                      [self.gyro replaceObjectAtIndex:GAP_WND + TAP_WND - 1 withObject:gyroData];
-                     [self checkTaps];
+                     [self checkTaps:STABLE_THRESHOLD_GYRO fluc_thre:FLUC_THRESHOLD_GYRO hit_thre:HIT_THRESHOLD_GYRO];
                  }
-                [self.gyroLock unlock];
+                [self.gyroLock unlock];*/
             }];
     }
 }

@@ -12,8 +12,10 @@
 @interface ViewController : UIViewController
 
 @property (strong, nonatomic) CMMotionManager* motionManager;
+// y-coodinate
 @property (strong, nonatomic) NSMutableArray* accelerometer;
 @property (strong, nonatomic) NSLock* accelerometerLock;
+// x-coodinate
 @property (strong, nonatomic) NSMutableArray* gyro;
 @property (strong, nonatomic) NSLock* gyroLock;
 //@property (assign, nonatomic) BOOL isShown;
