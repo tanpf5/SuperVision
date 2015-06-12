@@ -429,6 +429,7 @@
 				2F831E2A1B12AE7000D940BB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2F831E2B1B12AE7000D940BB /* Build configuration list for PBXNativeTarget "GyroTests" */ = {
 			isa = XCConfigurationList;
@@ -437,6 +438,7 @@
 				2F831E2D1B12AE7000D940BB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

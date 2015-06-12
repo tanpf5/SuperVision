@@ -9,12 +9,14 @@
 #import "ViewController.h"
 
 #define FREQUENCY 20
-#define TIME_THRESHOLD 0.6
+#define TIME_THRESHOLD 1
 #define TAP_WND TIME_THRESHOLD * FREQUENCY
-#define GAP_WND TAP_WND
+#define FLUC_WND 0.6 * TAP_WND
+#define GAP_WND FLUC_WND
 #define STABLE_THRESHOLD_ACC 0.015
-#define FLUC_THRESHOLD_ACC 0.02
-#define HIT_THRESHOLD_ACC 4
+#define FLUC_THRESHOLD_ACC 0.025
+#define HIT_THRESHOLD_ACC 3.5
+#define TRIPLE_THRESHOLD_ACC 0.02
 #define STABLE_THRESHOLD_GYRO 0.03
 #define FLUC_THRESHOLD_GYRO 0.07
 #define HIT_THRESHOLD_GYRO 3
@@ -31,21 +33,23 @@
 @synthesize gyro = _gyro;
 @synthesize gyroLock = _gyroLock;
 //@synthesize isShown = _isShown;
-@synthesize menu = _menu;
-@synthesize menuRight = _menuRight;
+@synthesize message = _message;
+@synthesize messageRight = _messageRight;
 
-
-
-
-/*- (void)showMenu {
-    self.isShown = true;
-    [self.menu setHidden:NO];
+- (void) showMessage:(NSString*)s {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.message.text = s;
+        self.messageRight.text = s;
+        [self.message setHidden:NO];
+        [self.messageRight setHidden:NO];
+    });
+    double delayInSeconds = 1.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self.message setHidden:YES];
+        [self.messageRight setHidden:YES];
+    });
 }
-
-- (void)hideMenu {
-    self.isShown = false;
-    [self.menu setHidden:YES];
-}*/
 
 - (void)checkTaps:(NSArray *)data stable_thre:(float)stableThreshold fluc_thre:(float)flucThreshold hit_thre:(float)hitThreshold  {
     /*NSDate *date = [NSDate date];
@@ -55,17 +59,9 @@
     if (number > 1) {
         [self.accelerometer removeAllObjects];
         // NSString* s = [NSString stringWithFormat:@"Tap number = %ld", (long)number];
-        NSLog(@"number = %ld", (long)number);
+        //NSLog(@"number = %ld", (long)number);
         //[self alertWithMessage:s];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if ([self.menu isHidden]) {
-                [self.menu setHidden:NO];
-                [self.menuRight setHidden:NO];
-            } else {
-                [self.menu setHidden:YES];
-                [self.menuRight setHidden:YES];
-            }
-        });
+        [self showMessage:[NSString stringWithFormat:@"n = %ld", (long)number]];
     }
     /*timePassed_ms = [date timeIntervalSinceNow] * -1000.0;
     NSLog(@"End time = %.05f", timePassed_ms);*/
@@ -113,7 +109,7 @@
         double stable_mean = [[[data subarrayWithRange:NSMakeRange(0, GAP_WND)] valueForKeyPath:@"@avg.floatValue"] floatValue]; // float
         //expression = [NSExpression expressionForFunction:@"stddev:" arguments:@[[NSExpression expressionForConstantValue:[data subarrayWithRange:NSMakeRange(n + 1, TAP_WND)]]]];
         //NSNumber* std = [expression expressionValueWithObject:nil context:nil];
-        NSNumber* std = [self std:[data subarrayWithRange:NSMakeRange(n + 1, TAP_WND)]];
+        NSNumber* std = [self std:[data subarrayWithRange:NSMakeRange(n + 1, FLUC_WND)]];
         // test part
         /*if (fabs([y_coodinate[n + 1] floatValue] - stable_mean) > HIT_THRESHOLD * [fluc floatValue]) {
             NSLog(@"fabs = %f, hit = %f", fabs([y_coodinate[n + 1] floatValue] - stable_mean), HIT_THRESHOLD * [fluc floatValue]);
@@ -142,7 +138,7 @@
                 if (i == 0 || i == [probedata0 count] - 1) {
                     number = [NSNumber numberWithFloat:[probedata0[i] floatValue]];
                 } else {
-                    number = [NSNumber numberWithFloat:[probedata0[i - 1] floatValue] * 0.2 + [probedata0[i] floatValue] * 0.6 + [probedata0[i + 1] floatValue] * 0.2];
+                    number = [NSNumber numberWithFloat:[probedata0[i - 1] floatValue] * 0.25 + [probedata0[i] floatValue] * 0.5 + [probedata0[i + 1] floatValue] * 0.25];
                 }
                 [probedata addObject:number];
             }
@@ -173,6 +169,10 @@
                     }
                 }
             }
+            float a = [[self std:[data subarrayWithRange:NSMakeRange(n + 1 + FLUC_WND - 2, TAP_WND - FLUC_WND)]] floatValue];
+            if (count >= 3 && [[self std:[data subarrayWithRange:NSMakeRange(n + 1 + FLUC_WND - 2, TAP_WND - FLUC_WND)]] floatValue] < TRIPLE_THRESHOLD_ACC) {
+                count--;
+            }
             return count;
         }
     }
@@ -188,8 +188,8 @@
     self.motionManager.gyroUpdateInterval = 1.0 / FREQUENCY;
     self.accelerometerLock = [[NSLock alloc] init];
     self.gyroLock = [[NSLock alloc] init];
-    [self.menu setHidden:YES];
-    [self.menuRight setHidden:YES];
+    [self.message setHidden:YES];
+    [self.messageRight setHidden:YES];
     //float a = CGRectGetHeight([[UIScreen mainScreen] bounds]) / 2;
     //float b = CGRectGetWidth([[UIScreen mainScreen] bounds]) / 2;
     if ([self.motionManager isAccelerometerAvailable] && [self.motionManager isGyroAvailable]){
@@ -198,7 +198,7 @@
         [self.motionManager
             startAccelerometerUpdatesToQueue: queue
             withHandler:^(CMAccelerometerData *accelerometerData, NSError *error) {
-                 //NSLog(@"acc, %.00f, %.10f, %.10f, %.10f", CFAbsoluteTimeGetCurrent() * 1000000000, accelerometerData.acceleration.x, accelerometerData.acceleration.y, accelerometerData.acceleration.z);
+                 NSLog(@"acc, %.00f, %.10f, %.10f, %.10f", CFAbsoluteTimeGetCurrent() * 1000000000, accelerometerData.acceleration.x, accelerometerData.acceleration.y, accelerometerData.acceleration.z);
                 [self.accelerometerLock lock];
                 if ([self.accelerometer count] < GAP_WND + TAP_WND) {
                     [self.accelerometer addObject:[[NSNumber alloc] initWithDouble:accelerometerData.acceleration.y]];
@@ -221,7 +221,7 @@
             }];
         [self.motionManager
             startGyroUpdatesToQueue:queue withHandler:^(CMGyroData *gyroData, NSError *error) {
-                //NSLog(@"gyr, %.00f, %.05f, %.05f, %.05f", CFAbsoluteTimeGetCurrent() * 100000000, gyroData.rotationRate.x, gyroData.rotationRate.y, gyroData.rotationRate.z);
+                NSLog(@"gyr, %.00f, %.10f, %.10f, %.10f", CFAbsoluteTimeGetCurrent() * 100000000, gyroData.rotationRate.x, gyroData.rotationRate.y, gyroData.rotationRate.z);
                 /*[self.gyroLock lock];
                 if ([self.gyro count] < GAP_WND + TAP_WND) {
                     [self.gyro addObject:gyroData];

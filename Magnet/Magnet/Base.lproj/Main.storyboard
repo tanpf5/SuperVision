@@ -48,8 +48,8 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="message" destination="JKC-7T-ppd" id="wXD-IY-cq0"/>
-                        <outlet property="messageRight" destination="ReO-Lt-F49" id="Cf3-Zi-fuB"/>
+                        <outlet property="message" destination="JKC-7T-ppd" id="iR5-24-pVu"/>
+                        <outlet property="messageRight" destination="ReO-Lt-F49" id="P7h-iB-uFa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

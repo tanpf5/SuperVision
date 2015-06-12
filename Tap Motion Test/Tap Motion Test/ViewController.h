@@ -19,8 +19,8 @@
 @property (strong, nonatomic) NSMutableArray* gyro;
 @property (strong, nonatomic) NSLock* gyroLock;
 //@property (assign, nonatomic) BOOL isShown;
-@property (strong, nonatomic) IBOutlet UILabel *menu;
-@property (strong, nonatomic) IBOutlet UILabel *menuRight;
+@property (strong, nonatomic) IBOutlet UILabel *message;
+@property (strong, nonatomic) IBOutlet UILabel *messageRight;
 
 @end
 
