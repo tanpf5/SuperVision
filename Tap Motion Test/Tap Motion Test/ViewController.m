@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 
-#define FREQUENCY 20
+#define FREQUENCY 100
 #define TIME_THRESHOLD 1
 #define TAP_WND TIME_THRESHOLD * FREQUENCY
 #define FLUC_WND 0.6 * TAP_WND
@@ -221,7 +221,7 @@
             }];
         [self.motionManager
             startGyroUpdatesToQueue:queue withHandler:^(CMGyroData *gyroData, NSError *error) {
-                NSLog(@"gyr, %.00f, %.10f, %.10f, %.10f", CFAbsoluteTimeGetCurrent() * 100000000, gyroData.rotationRate.x, gyroData.rotationRate.y, gyroData.rotationRate.z);
+                //NSLog(@"gyr, %.00f, %.10f, %.10f, %.10f", CFAbsoluteTimeGetCurrent() * 100000000, gyroData.rotationRate.x, gyroData.rotationRate.y, gyroData.rotationRate.z);
                 /*[self.gyroLock lock];
                 if ([self.gyro count] < GAP_WND + TAP_WND) {
                     [self.gyro addObject:gyroData];
