@@ -14,6 +14,7 @@
 		A003EC211B1E4DD900AE8246 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A003EC201B1E4DD900AE8246 /* Images.xcassets */; };
 		A003EC241B1E4DD900AE8246 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A003EC221B1E4DD900AE8246 /* LaunchScreen.xib */; };
 		A003EC301B1E4DDA00AE8246 /* SuperVision__GogglesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A003EC2F1B1E4DDA00AE8246 /* SuperVision__GogglesTests.m */; };
+		A0F0FAA91B3DA652000FC3E9 /* SVScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0F0FAA81B3DA652000FC3E9 /* SVScrollView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,8 @@
 		A003EC291B1E4DDA00AE8246 /* SuperVision+ GogglesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SuperVision+ GogglesTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A003EC2E1B1E4DDA00AE8246 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A003EC2F1B1E4DDA00AE8246 /* SuperVision__GogglesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SuperVision__GogglesTests.m; sourceTree = "<group>"; };
+		A0F0FAA71B3DA652000FC3E9 /* SVScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SVScrollView.h; path = Model/SVScrollView.h; sourceTree = "<group>"; };
+		A0F0FAA81B3DA652000FC3E9 /* SVScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SVScrollView.m; path = Model/SVScrollView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,13 +84,10 @@
 		A003EC121B1E4DD900AE8246 /* SuperVision+ Goggles */ = {
 			isa = PBXGroup;
 			children = (
-				A003EC171B1E4DD900AE8246 /* AppDelegate.h */,
-				A003EC181B1E4DD900AE8246 /* AppDelegate.m */,
-				A003EC1A1B1E4DD900AE8246 /* ViewController.h */,
-				A003EC1B1B1E4DD900AE8246 /* ViewController.m */,
-				A003EC1D1B1E4DD900AE8246 /* Main.storyboard */,
+				A0F0FA9E1B3DA0B5000FC3E9 /* Main */,
+				A0F0FA9F1B3DA134000FC3E9 /* Section */,
+				A0F0FAA01B3DA18A000FC3E9 /* Model */,
 				A003EC201B1E4DD900AE8246 /* Images.xcassets */,
-				A003EC221B1E4DD900AE8246 /* LaunchScreen.xib */,
 				A003EC131B1E4DD900AE8246 /* Supporting Files */,
 			);
 			path = "SuperVision+ Goggles";
@@ -117,6 +117,51 @@
 				A003EC2E1B1E4DDA00AE8246 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A0F0FA9E1B3DA0B5000FC3E9 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				A003EC1D1B1E4DD900AE8246 /* Main.storyboard */,
+				A003EC171B1E4DD900AE8246 /* AppDelegate.h */,
+				A003EC181B1E4DD900AE8246 /* AppDelegate.m */,
+				A003EC221B1E4DD900AE8246 /* LaunchScreen.xib */,
+				A003EC1A1B1E4DD900AE8246 /* ViewController.h */,
+				A003EC1B1B1E4DD900AE8246 /* ViewController.m */,
+			);
+			name = Main;
+			sourceTree = "<group>";
+		};
+		A0F0FA9F1B3DA134000FC3E9 /* Section */ = {
+			isa = PBXGroup;
+			children = (
+				A0F0FAA11B3DA1EC000FC3E9 /* Motion */,
+				A0F0FAA21B3DA1F8000FC3E9 /* Help */,
+			);
+			name = Section;
+			sourceTree = "<group>";
+		};
+		A0F0FAA01B3DA18A000FC3E9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A0F0FAA71B3DA652000FC3E9 /* SVScrollView.h */,
+				A0F0FAA81B3DA652000FC3E9 /* SVScrollView.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		A0F0FAA11B3DA1EC000FC3E9 /* Motion */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Motion;
+			sourceTree = "<group>";
+		};
+		A0F0FAA21B3DA1F8000FC3E9 /* Help */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Help;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -220,6 +265,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0F0FAA91B3DA652000FC3E9 /* SVScrollView.m in Sources */,
 				A003EC1C1B1E4DD900AE8246 /* ViewController.m in Sources */,
 				A003EC191B1E4DD900AE8246 /* AppDelegate.m in Sources */,
 				A003EC161B1E4DD900AE8246 /* main.m in Sources */,
@@ -353,6 +399,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -365,6 +412,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -421,6 +469,7 @@
 				A003EC351B1E4DDA00AE8246 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A003EC361B1E4DDA00AE8246 /* Build configuration list for PBXNativeTarget "SuperVision+ GogglesTests" */ = {
 			isa = XCConfigurationList;
@@ -429,6 +478,7 @@
 				A003EC381B1E4DDA00AE8246 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
