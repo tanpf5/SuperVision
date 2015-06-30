@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -16,17 +19,343 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0gI-NS-mT8">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0gI-NS-mT8" customClass="SVScrollView">
                                 <rect key="frame" x="300" y="0.0" width="300" height="600"/>
+                                <color key="backgroundColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                             </scrollView>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="llx-Ev-CIz">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y3e-X7-7nn" customClass="SVScrollView">
                                 <rect key="frame" x="0.0" y="0.0" width="300" height="600"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </scrollView>
+                            <button opaque="NO" alpha="0.60000002384185791" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fcc-53-vC4">
+                                <rect key="frame" x="27" y="516" width="46" height="46"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Fcc-53-vC4" secondAttribute="height" multiplier="1:1" id="JWv-N0-czI"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" image="flashon.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" image="flashoff.png"/>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" alpha="0.60000002384185791" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GeK-8e-2ie">
+                                <rect key="frame" x="328" y="516" width="46" height="46"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="GeK-8e-2ie" secondAttribute="height" multiplier="1:1" id="nsN-qH-ZFv"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" image="flashon.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" image="flashoff.png"/>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" alpha="0.60000002384185791" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uWO-LI-UrR">
+                                <rect key="frame" x="77" y="516" width="46" height="46"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="uWO-LI-UrR" secondAttribute="height" multiplier="1:1" id="jXU-9H-wOU"/>
+                                </constraints>
+                                <state key="normal" title="Imagemode" image="image.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" image="image_selected.png"/>
+                            </button>
+                            <button opaque="NO" alpha="0.60000002384185791" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MIF-Q2-VAn">
+                                <rect key="frame" x="378" y="516" width="46" height="46"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="MIF-Q2-VAn" secondAttribute="height" multiplier="1:1" id="Vrz-NT-9Tg"/>
+                                </constraints>
+                                <state key="normal" title="Imagemode" image="image.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" image="image_selected.png"/>
+                            </button>
+                            <button opaque="NO" alpha="0.60000002384185791" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="60u-eV-mM0">
+                                <rect key="frame" x="428" y="516" width="46" height="46"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="60u-eV-mM0" secondAttribute="height" multiplier="1:1" id="GQG-8t-XlV"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <inset key="contentEdgeInsets" minX="4" minY="4" maxX="4" maxY="4"/>
+                                <state key="normal" image="info.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" alpha="0.60000002384185791" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZXk-Cw-zRx">
+                                <rect key="frame" x="127" y="516" width="46" height="46"/>
+                                <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="0.0"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="ZXk-Cw-zRx" secondAttribute="height" multiplier="1:1" id="RTo-kM-Clu"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <inset key="contentEdgeInsets" minX="4" minY="4" maxX="4" maxY="4"/>
+                                <state key="normal" image="info.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" alpha="0.60000002384185791" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HkX-dz-Smk">
+                                <rect key="frame" x="393" y="157" width="46" height="46"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="HkX-dz-Smk" secondAttribute="height" multiplier="1:1" id="Y3H-Fg-2Um"/>
+                                </constraints>
+                                <inset key="contentEdgeInsets" minX="2" minY="2" maxX="2" maxY="2"/>
+                                <state key="normal" title="flashlight" image="flashlight.png"/>
+                                <state key="selected" image="flashlight_selected.png"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="10"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="layer.borderWidth" value="2"/>
+                                </userDefinedRuntimeAttributes>
+                            </button>
+                            <button opaque="NO" alpha="0.60000002384185791" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y42-VE-0cT">
+                                <rect key="frame" x="526" y="157" width="46" height="46"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Y42-VE-0cT" secondAttribute="height" multiplier="1:1" id="Rxq-hz-PWc"/>
+                                </constraints>
+                                <inset key="contentEdgeInsets" minX="0.0" minY="5" maxX="0.0" maxY="5"/>
+                                <state key="normal" title="Exit" image="exit.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="10"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="layer.borderWidth" value="2"/>
+                                </userDefinedRuntimeAttributes>
+                            </button>
+                            <button opaque="NO" alpha="0.60000002384185791" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EnT-Kf-jsP">
+                                <rect key="frame" x="459" y="157" width="46" height="46"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="EnT-Kf-jsP" secondAttribute="height" multiplier="1:1" id="9bH-Pm-TZp"/>
+                                </constraints>
+                                <state key="normal" title="Imagemode" image="image.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" image="image_selected.png"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="10"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="layer.borderWidth" value="2"/>
+                                </userDefinedRuntimeAttributes>
+                            </button>
+                            <button opaque="NO" alpha="0.60000002384185791" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="btO-cs-XtP">
+                                <rect key="frame" x="328" y="157" width="46" height="46"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="btO-cs-XtP" secondAttribute="height" multiplier="1:1" id="yh7-Si-2sh"/>
+                                </constraints>
+                                <inset key="contentEdgeInsets" minX="-2" minY="-3" maxX="-2" maxY="-3"/>
+                                <state key="normal" title="Zoom" image="zoom.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="10"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="layer.borderWidth" value="2"/>
+                                </userDefinedRuntimeAttributes>
+                            </button>
+                            <button opaque="NO" alpha="0.60000002384185791" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G0c-Sy-RWa">
+                                <rect key="frame" x="94" y="157" width="46" height="46"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="G0c-Sy-RWa" secondAttribute="height" multiplier="1:1" id="HI4-0R-xW8"/>
+                                </constraints>
+                                <inset key="contentEdgeInsets" minX="2" minY="2" maxX="2" maxY="2"/>
+                                <state key="normal" title="flashlight" image="flashlight.png"/>
+                                <state key="selected" image="flashlight_selected.png"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="10"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="layer.borderWidth" value="2"/>
+                                </userDefinedRuntimeAttributes>
+                            </button>
+                            <button opaque="NO" alpha="0.60000002384185791" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5vd-C8-zQK">
+                                <rect key="frame" x="227" y="157" width="46" height="46"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="5vd-C8-zQK" secondAttribute="height" multiplier="1:1" id="PNv-3y-oAR"/>
+                                </constraints>
+                                <inset key="contentEdgeInsets" minX="0.0" minY="5" maxX="0.0" maxY="5"/>
+                                <state key="normal" title="Exit" image="exit.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="10"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="layer.borderWidth" value="2"/>
+                                </userDefinedRuntimeAttributes>
+                            </button>
+                            <button opaque="NO" alpha="0.60000002384185791" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IRh-cu-S1N">
+                                <rect key="frame" x="160" y="157" width="46" height="46"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="IRh-cu-S1N" secondAttribute="height" multiplier="1:1" id="qi4-Ug-87g"/>
+                                </constraints>
+                                <state key="normal" title="Imagemode" image="image.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" image="image_selected.png"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="10"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="layer.borderWidth" value="2"/>
+                                </userDefinedRuntimeAttributes>
+                            </button>
+                            <button opaque="NO" alpha="0.60000002384185791" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uns-Ig-NvO">
+                                <rect key="frame" x="27" y="157" width="46" height="46"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="uns-Ig-NvO" secondAttribute="height" multiplier="1:1" id="4vr-Sy-XsN"/>
+                                    <constraint firstAttribute="width" constant="44" id="5hD-LJ-jTc"/>
+                                </constraints>
+                                <inset key="contentEdgeInsets" minX="-2" minY="-3" maxX="-2" maxY="-3"/>
+                                <state key="normal" title="Zoom" image="zoom.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="10"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="layer.borderWidth" value="2"/>
+                                </userDefinedRuntimeAttributes>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="5hD-LJ-jTc"/>
+                                    </mask>
+                                </variation>
+                            </button>
+                            <imageView userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="scaleToFill" image="slider.png" translatesAutoresizingMaskIntoConstraints="NO" id="5ca-D4-Ea8">
+                                <rect key="frame" x="210" y="125" width="80" height="350"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="5ca-D4-Ea8" secondAttribute="height" multiplier="80:350" id="eKV-Xd-e7v"/>
+                                </constraints>
+                            </imageView>
+                            <slider opaque="NO" alpha="0.59999999999999998" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.5" maxValue="8" translatesAutoresizingMaskIntoConstraints="NO" id="ezA-fb-eUd" customClass="SVSlider">
+                                <rect key="frame" x="73" y="285" width="354" height="31"/>
+                            </slider>
+                            <imageView userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="scaleToFill" image="slider.png" translatesAutoresizingMaskIntoConstraints="NO" id="Qvy-6r-Ks9">
+                                <rect key="frame" x="510" y="125" width="80" height="350"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Qvy-6r-Ks9" secondAttribute="height" multiplier="80:350" id="B0F-AJ-qXQ"/>
+                                </constraints>
+                            </imageView>
+                            <slider opaque="NO" alpha="0.60000002384185791" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.5" maxValue="8" translatesAutoresizingMaskIntoConstraints="NO" id="XB6-9Q-PtT" customClass="SVSlider">
+                                <rect key="frame" x="373" y="285" width="354" height="31"/>
+                            </slider>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerY" secondItem="llx-Ev-CIz" secondAttribute="centerY" id="tS1-lb-8oZ"/>
+                            <constraint firstAttribute="centerX" secondItem="5vd-C8-zQK" secondAttribute="centerX" multiplier="6:5" id="049-Ey-PFQ"/>
+                            <constraint firstAttribute="centerX" secondItem="Fcc-53-vC4" secondAttribute="centerX" multiplier="6:1" id="0Cx-t7-Xqb"/>
+                            <constraint firstAttribute="centerY" secondItem="IRh-cu-S1N" secondAttribute="centerY" multiplier="5:3" id="0yh-U6-tx4"/>
+                            <constraint firstItem="Fcc-53-vC4" firstAttribute="height" secondItem="60u-eV-mM0" secondAttribute="height" id="1Xp-6q-JPJ"/>
+                            <constraint firstItem="btO-cs-XtP" firstAttribute="width" secondItem="IRh-cu-S1N" secondAttribute="height" multiplier="1:1" id="2M8-Ax-2y2"/>
+                            <constraint firstAttribute="centerY" secondItem="IRh-cu-S1N" secondAttribute="centerY" multiplier="3:2" id="2tf-Fk-yIh"/>
+                            <constraint firstItem="btO-cs-XtP" firstAttribute="width" secondItem="HkX-dz-Smk" secondAttribute="width" id="3hu-XB-y4x"/>
+                            <constraint firstItem="btO-cs-XtP" firstAttribute="height" secondItem="IRh-cu-S1N" secondAttribute="height" id="43O-3E-CV5"/>
+                            <constraint firstAttribute="centerY" secondItem="HkX-dz-Smk" secondAttribute="centerY" multiplier="5:3" id="4Zl-5M-Crq"/>
+                            <constraint firstItem="btO-cs-XtP" firstAttribute="height" secondItem="EnT-Kf-jsP" secondAttribute="height" id="5C0-qR-trT"/>
+                            <constraint firstItem="btO-cs-XtP" firstAttribute="width" secondItem="Y42-VE-0cT" secondAttribute="width" id="5RP-Rs-tlb"/>
+                            <constraint firstItem="btO-cs-XtP" firstAttribute="height" secondItem="Y42-VE-0cT" secondAttribute="height" id="8Kj-qZ-OgN"/>
+                            <constraint firstItem="btO-cs-XtP" firstAttribute="width" secondItem="5vd-C8-zQK" secondAttribute="height" multiplier="1:1" id="8oJ-bN-Rxr"/>
+                            <constraint firstAttribute="centerY" secondItem="Qvy-6r-Ks9" secondAttribute="centerY" id="8zs-P0-acZ"/>
+                            <constraint firstItem="btO-cs-XtP" firstAttribute="width" secondItem="5vd-C8-zQK" secondAttribute="width" id="9N5-ZY-6mr"/>
+                            <constraint firstItem="uns-Ig-NvO" firstAttribute="width" secondItem="Y3e-X7-7nn" secondAttribute="width" multiplier="44:284" id="9ZH-r7-ts4"/>
+                            <constraint firstItem="btO-cs-XtP" firstAttribute="height" secondItem="HkX-dz-Smk" secondAttribute="height" id="BL5-ZI-IBT"/>
+                            <constraint firstAttribute="centerX" secondItem="Y3e-X7-7nn" secondAttribute="centerX" multiplier="2:1" id="BQm-gg-UuN"/>
+                            <constraint firstItem="btO-cs-XtP" firstAttribute="width" secondItem="IRh-cu-S1N" secondAttribute="width" id="BTI-Gw-EeQ"/>
+                            <constraint firstAttribute="centerX" secondItem="GeK-8e-2ie" secondAttribute="centerX" multiplier="6:7" id="BZF-G3-vfh"/>
+                            <constraint firstAttribute="centerX" secondItem="Y42-VE-0cT" secondAttribute="centerX" multiplier="6:11" id="Bc0-7S-Cyo"/>
+                            <constraint firstAttribute="centerY" secondItem="uns-Ig-NvO" secondAttribute="centerY" multiplier="5:3" id="Cas-io-2AR"/>
+                            <constraint firstItem="Y3e-X7-7nn" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="DNy-tI-eIS"/>
+                            <constraint firstAttribute="centerX" secondItem="IRh-cu-S1N" secondAttribute="centerX" multiplier="18:11" id="Dbs-eX-qxS"/>
+                            <constraint firstItem="5ca-D4-Ea8" firstAttribute="height" secondItem="ezA-fb-eUd" secondAttribute="width" id="JMC-5a-KDA"/>
+                            <constraint firstItem="Fcc-53-vC4" firstAttribute="width" secondItem="MIF-Q2-VAn" secondAttribute="width" id="L2M-Zh-wau"/>
+                            <constraint firstAttribute="centerY" secondItem="Y42-VE-0cT" secondAttribute="centerY" multiplier="5:3" id="Ln5-hx-Hqt"/>
+                            <constraint firstItem="btO-cs-XtP" firstAttribute="height" secondItem="5vd-C8-zQK" secondAttribute="height" id="MdR-Ak-SdV"/>
+                            <constraint firstAttribute="centerY" secondItem="ezA-fb-eUd" secondAttribute="centerY" id="MfQ-vd-DuD"/>
+                            <constraint firstItem="Qvy-6r-Ks9" firstAttribute="height" secondItem="0gI-NS-mT8" secondAttribute="height" multiplier="350:600" id="Mm5-2e-G4v"/>
+                            <constraint firstItem="Fcc-53-vC4" firstAttribute="width" secondItem="Y3e-X7-7nn" secondAttribute="width" multiplier="44:284" id="N6s-9s-Xvx"/>
+                            <constraint firstItem="Fcc-53-vC4" firstAttribute="width" secondItem="60u-eV-mM0" secondAttribute="width" id="Naj-ld-WOG"/>
+                            <constraint firstAttribute="centerY" secondItem="GeK-8e-2ie" secondAttribute="centerY" multiplier="5:9" id="NeA-CA-GIQ"/>
+                            <constraint firstAttribute="centerY" secondItem="Y42-VE-0cT" secondAttribute="centerY" multiplier="3:2" id="Nzn-uJ-nnz"/>
+                            <constraint firstAttribute="centerY" secondItem="60u-eV-mM0" secondAttribute="centerY" multiplier="5:9" id="O8y-FR-aNt"/>
+                            <constraint firstAttribute="centerY" secondItem="EnT-Kf-jsP" secondAttribute="centerY" multiplier="5:3" id="Qun-Ti-u5P"/>
+                            <constraint firstItem="btO-cs-XtP" firstAttribute="width" secondItem="HkX-dz-Smk" secondAttribute="height" multiplier="1:1" id="RKf-Ad-vaA"/>
+                            <constraint firstAttribute="centerX" secondItem="btO-cs-XtP" secondAttribute="centerX" multiplier="6:7" id="RUp-dm-PzY"/>
+                            <constraint firstAttribute="centerY" secondItem="HkX-dz-Smk" secondAttribute="centerY" multiplier="4:3" id="Ruf-aK-fxX"/>
+                            <constraint firstAttribute="centerY" secondItem="EnT-Kf-jsP" secondAttribute="centerY" multiplier="4:3" id="SD2-px-h3Z"/>
+                            <constraint firstAttribute="centerY" secondItem="5vd-C8-zQK" secondAttribute="centerY" multiplier="5:3" id="SGe-V5-YGE"/>
+                            <constraint firstAttribute="centerX" secondItem="EnT-Kf-jsP" secondAttribute="centerX" multiplier="18:29" id="U9H-b1-Zt8"/>
+                            <constraint firstAttribute="centerX" secondItem="G0c-Sy-RWa" secondAttribute="centerX" multiplier="18:7" id="UAe-7f-1AO"/>
+                            <constraint firstItem="Y3e-X7-7nn" firstAttribute="top" secondItem="0gI-NS-mT8" secondAttribute="top" id="UZk-BD-o13"/>
+                            <constraint firstAttribute="centerY" secondItem="btO-cs-XtP" secondAttribute="centerY" multiplier="5:3" id="VVQ-Xi-Q5P"/>
+                            <constraint firstAttribute="centerY" secondItem="G0c-Sy-RWa" secondAttribute="centerY" multiplier="5:3" id="Vj3-9Y-Qeo"/>
+                            <constraint firstItem="Fcc-53-vC4" firstAttribute="height" secondItem="ZXk-Cw-zRx" secondAttribute="height" id="YSt-F4-FoV"/>
+                            <constraint firstAttribute="centerY" secondItem="Fcc-53-vC4" secondAttribute="centerY" multiplier="5:9" id="ZPL-Y6-5Ld"/>
+                            <constraint firstItem="0gI-NS-mT8" firstAttribute="bottom" secondItem="2fi-mo-0CV" secondAttribute="top" id="bLe-Iv-leW"/>
+                            <constraint firstItem="Y3e-X7-7nn" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="cGF-Nt-QVd"/>
+                            <constraint firstAttribute="centerX" secondItem="60u-eV-mM0" secondAttribute="centerX" multiplier="6:9" id="ciU-JM-gLa"/>
+                            <constraint firstItem="btO-cs-XtP" firstAttribute="width" secondItem="uns-Ig-NvO" secondAttribute="width" id="cnH-2c-sGd"/>
+                            <constraint firstItem="btO-cs-XtP" firstAttribute="height" secondItem="uns-Ig-NvO" secondAttribute="height" id="dQY-KJ-OSq"/>
+                            <constraint firstItem="Fcc-53-vC4" firstAttribute="width" secondItem="uWO-LI-UrR" secondAttribute="width" id="e6R-Uf-Xbt"/>
+                            <constraint firstAttribute="centerX" secondItem="uWO-LI-UrR" secondAttribute="centerX" multiplier="6:2" id="fxP-cF-9Cs"/>
+                            <constraint firstItem="0gI-NS-mT8" firstAttribute="width" secondItem="Y3e-X7-7nn" secondAttribute="width" id="hDZ-7I-tKR"/>
+                            <constraint firstAttribute="centerX" secondItem="MIF-Q2-VAn" secondAttribute="centerX" multiplier="6:8" id="hRx-4B-5WL"/>
+                            <constraint firstAttribute="centerX" secondItem="ZXk-Cw-zRx" secondAttribute="centerX" multiplier="6:3" id="hrY-8w-Hed"/>
+                            <constraint firstAttribute="centerX" secondItem="0gI-NS-mT8" secondAttribute="centerX" multiplier="2:3" id="i70-EV-ker"/>
+                            <constraint firstItem="uns-Ig-NvO" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" symbolic="YES" id="iN7-M3-CMK"/>
+                            <constraint firstItem="Fcc-53-vC4" firstAttribute="height" secondItem="MIF-Q2-VAn" secondAttribute="height" id="iVF-dP-CS6"/>
+                            <constraint firstAttribute="centerX" secondItem="ezA-fb-eUd" secondAttribute="centerX" multiplier="300:250" id="iYl-ap-eOV"/>
+                            <constraint firstItem="Fcc-53-vC4" firstAttribute="width" secondItem="GeK-8e-2ie" secondAttribute="width" id="iaJ-4W-iGP"/>
+                            <constraint firstAttribute="centerX" secondItem="HkX-dz-Smk" secondAttribute="centerX" multiplier="18:25" id="jCr-aI-Ie0"/>
+                            <constraint firstAttribute="centerY" secondItem="5ca-D4-Ea8" secondAttribute="centerY" id="jEG-jD-koC"/>
+                            <constraint firstItem="Fcc-53-vC4" firstAttribute="width" secondItem="ZXk-Cw-zRx" secondAttribute="width" id="kHl-pY-8W1"/>
+                            <constraint firstAttribute="centerY" secondItem="G0c-Sy-RWa" secondAttribute="centerY" multiplier="4:3" id="kWV-eA-fhW"/>
+                            <constraint firstItem="btO-cs-XtP" firstAttribute="width" secondItem="G0c-Sy-RWa" secondAttribute="height" multiplier="1:1" id="leF-pE-2f3"/>
+                            <constraint firstAttribute="centerY" secondItem="uns-Ig-NvO" secondAttribute="centerY" multiplier="4:3" id="mce-FN-epB"/>
+                            <constraint firstItem="btO-cs-XtP" firstAttribute="width" secondItem="EnT-Kf-jsP" secondAttribute="height" multiplier="1:1" id="mf3-iP-lgx"/>
+                            <constraint firstItem="Fcc-53-vC4" firstAttribute="height" secondItem="GeK-8e-2ie" secondAttribute="height" id="oqh-T3-ZdR"/>
+                            <constraint firstItem="btO-cs-XtP" firstAttribute="width" secondItem="G0c-Sy-RWa" secondAttribute="width" id="pYR-Sb-gK5"/>
+                            <constraint firstItem="btO-cs-XtP" firstAttribute="width" secondItem="Y42-VE-0cT" secondAttribute="height" multiplier="1:1" id="qP4-tj-GlK"/>
+                            <constraint firstAttribute="centerX" secondItem="Qvy-6r-Ks9" secondAttribute="centerX" multiplier="300:550" id="qZD-4O-6aw"/>
+                            <constraint firstAttribute="centerY" secondItem="uWO-LI-UrR" secondAttribute="centerY" multiplier="5:9" id="qd0-lg-Xbo"/>
+                            <constraint firstAttribute="centerY" secondItem="XB6-9Q-PtT" secondAttribute="centerY" id="qw1-Q2-sPd"/>
+                            <constraint firstAttribute="centerX" secondItem="uns-Ig-NvO" secondAttribute="centerX" multiplier="6:1" id="qyz-jq-ZBZ"/>
+                            <constraint firstAttribute="centerY" secondItem="ZXk-Cw-zRx" secondAttribute="centerY" multiplier="5:9" id="sKy-L7-yLA"/>
+                            <constraint firstItem="Fcc-53-vC4" firstAttribute="height" secondItem="uWO-LI-UrR" secondAttribute="height" id="tCC-Tl-18f"/>
+                            <constraint firstAttribute="centerX" secondItem="XB6-9Q-PtT" secondAttribute="centerX" multiplier="300:550" id="tjw-QK-JJc"/>
+                            <constraint firstAttribute="centerX" secondItem="5ca-D4-Ea8" secondAttribute="centerX" multiplier="300:250" id="ujV-ZE-ZR8"/>
+                            <constraint firstItem="btO-cs-XtP" firstAttribute="width" secondItem="EnT-Kf-jsP" secondAttribute="width" id="v9h-qg-kmZ"/>
+                            <constraint firstItem="Qvy-6r-Ks9" firstAttribute="height" secondItem="XB6-9Q-PtT" secondAttribute="width" id="vC4-2A-1A9"/>
+                            <constraint firstItem="Qvy-6r-Ks9" firstAttribute="width" secondItem="Qvy-6r-Ks9" secondAttribute="height" multiplier="100:350" id="vmI-H5-9cQ"/>
+                            <constraint firstItem="Y3e-X7-7nn" firstAttribute="bottom" secondItem="2fi-mo-0CV" secondAttribute="top" id="vtk-5D-ZjZ"/>
+                            <constraint firstItem="5ca-D4-Ea8" firstAttribute="height" secondItem="Y3e-X7-7nn" secondAttribute="height" multiplier="350:600" id="whJ-2c-PXc"/>
+                            <constraint firstAttribute="centerY" secondItem="btO-cs-XtP" secondAttribute="centerY" multiplier="4:3" id="xDq-9o-V0M"/>
+                            <constraint firstAttribute="centerY" secondItem="MIF-Q2-VAn" secondAttribute="centerY" multiplier="5:9" id="zLt-WL-raS"/>
+                            <constraint firstItem="btO-cs-XtP" firstAttribute="height" secondItem="G0c-Sy-RWa" secondAttribute="height" id="zdo-VV-RAy"/>
+                            <constraint firstAttribute="centerY" secondItem="5vd-C8-zQK" secondAttribute="centerY" multiplier="4:3" id="zwx-AF-LZl"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="iN7-M3-CMK"/>
+                                <exclude reference="mce-FN-epB"/>
+                                <exclude reference="kWV-eA-fhW"/>
+                                <exclude reference="2tf-Fk-yIh"/>
+                                <exclude reference="zwx-AF-LZl"/>
+                                <exclude reference="2M8-Ax-2y2"/>
+                                <exclude reference="8oJ-bN-Rxr"/>
+                                <exclude reference="RKf-Ad-vaA"/>
+                                <exclude reference="leF-pE-2f3"/>
+                                <exclude reference="mf3-iP-lgx"/>
+                                <exclude reference="qP4-tj-GlK"/>
+                                <exclude reference="xDq-9o-V0M"/>
+                                <exclude reference="Ruf-aK-fxX"/>
+                                <exclude reference="SD2-px-h3Z"/>
+                                <exclude reference="vmI-H5-9cQ"/>
+                                <exclude reference="Nzn-uJ-nnz"/>
+                            </mask>
+                        </variation>
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                 </viewController>
@@ -34,4 +363,16 @@
             </objects>
         </scene>
     </scenes>
+    <resources>
+        <image name="exit.png" width="256" height="256"/>
+        <image name="flashlight.png" width="128" height="128"/>
+        <image name="flashlight_selected.png" width="128" height="128"/>
+        <image name="flashoff.png" width="300" height="300"/>
+        <image name="flashon.png" width="300" height="300"/>
+        <image name="image.png" width="512" height="512"/>
+        <image name="image_selected.png" width="512" height="512"/>
+        <image name="info.png" width="300" height="300"/>
+        <image name="slider.png" width="348" height="846"/>
+        <image name="zoom.png" width="256" height="256"/>
+    </resources>
 </document>

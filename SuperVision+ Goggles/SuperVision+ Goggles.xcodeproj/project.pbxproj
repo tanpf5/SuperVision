@@ -14,7 +14,21 @@
 		A003EC211B1E4DD900AE8246 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A003EC201B1E4DD900AE8246 /* Images.xcassets */; };
 		A003EC241B1E4DD900AE8246 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A003EC221B1E4DD900AE8246 /* LaunchScreen.xib */; };
 		A003EC301B1E4DDA00AE8246 /* SuperVision__GogglesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A003EC2F1B1E4DDA00AE8246 /* SuperVision__GogglesTests.m */; };
-		A0F0FAA91B3DA652000FC3E9 /* SVScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0F0FAA81B3DA652000FC3E9 /* SVScrollView.m */; };
+		A0F6CBD41B432C7C00460AF3 /* empty.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CBC71B432C7C00460AF3 /* empty.png */; };
+		A0F6CBD51B432C7C00460AF3 /* exit.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CBC81B432C7C00460AF3 /* exit.png */; };
+		A0F6CBD61B432C7C00460AF3 /* flashlight_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CBC91B432C7C00460AF3 /* flashlight_selected.png */; };
+		A0F6CBD71B432C7C00460AF3 /* flashlight.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CBCA1B432C7C00460AF3 /* flashlight.png */; };
+		A0F6CBD81B432C7C00460AF3 /* flashoff.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CBCB1B432C7C00460AF3 /* flashoff.png */; };
+		A0F6CBD91B432C7C00460AF3 /* flashon.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CBCC1B432C7C00460AF3 /* flashon.png */; };
+		A0F6CBDA1B432C7C00460AF3 /* help.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CBCD1B432C7C00460AF3 /* help.png */; };
+		A0F6CBDB1B432C7C00460AF3 /* image_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CBCE1B432C7C00460AF3 /* image_selected.png */; };
+		A0F6CBDC1B432C7C00460AF3 /* image.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CBCF1B432C7C00460AF3 /* image.png */; };
+		A0F6CBDD1B432C7C00460AF3 /* info.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CBD01B432C7C00460AF3 /* info.png */; };
+		A0F6CBDE1B432C7C00460AF3 /* slider.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CBD11B432C7C00460AF3 /* slider.png */; };
+		A0F6CBDF1B432C7C00460AF3 /* sliderthumb.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CBD21B432C7C00460AF3 /* sliderthumb.png */; };
+		A0F6CBE01B432C7C00460AF3 /* zoom.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CBD31B432C7C00460AF3 /* zoom.png */; };
+		A0F6CBE31B432CAB00460AF3 /* SVScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0F6CBE21B432CAB00460AF3 /* SVScrollView.m */; };
+		A0F6CBE61B4337D900460AF3 /* SVSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = A0F6CBE51B4337D900460AF3 /* SVSlider.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,8 +55,23 @@
 		A003EC291B1E4DDA00AE8246 /* SuperVision+ GogglesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SuperVision+ GogglesTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A003EC2E1B1E4DDA00AE8246 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A003EC2F1B1E4DDA00AE8246 /* SuperVision__GogglesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SuperVision__GogglesTests.m; sourceTree = "<group>"; };
-		A0F0FAA71B3DA652000FC3E9 /* SVScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SVScrollView.h; path = Model/SVScrollView.h; sourceTree = "<group>"; };
-		A0F0FAA81B3DA652000FC3E9 /* SVScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SVScrollView.m; path = Model/SVScrollView.m; sourceTree = "<group>"; };
+		A0F6CBC71B432C7C00460AF3 /* empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = empty.png; path = Resources/Images/Buttons/empty.png; sourceTree = "<group>"; };
+		A0F6CBC81B432C7C00460AF3 /* exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = exit.png; path = Resources/Images/Buttons/exit.png; sourceTree = "<group>"; };
+		A0F6CBC91B432C7C00460AF3 /* flashlight_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = flashlight_selected.png; path = Resources/Images/Buttons/flashlight_selected.png; sourceTree = "<group>"; };
+		A0F6CBCA1B432C7C00460AF3 /* flashlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = flashlight.png; path = Resources/Images/Buttons/flashlight.png; sourceTree = "<group>"; };
+		A0F6CBCB1B432C7C00460AF3 /* flashoff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = flashoff.png; path = Resources/Images/Buttons/flashoff.png; sourceTree = "<group>"; };
+		A0F6CBCC1B432C7C00460AF3 /* flashon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = flashon.png; path = Resources/Images/Buttons/flashon.png; sourceTree = "<group>"; };
+		A0F6CBCD1B432C7C00460AF3 /* help.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help.png; path = Resources/Images/Buttons/help.png; sourceTree = "<group>"; };
+		A0F6CBCE1B432C7C00460AF3 /* image_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = image_selected.png; path = Resources/Images/Buttons/image_selected.png; sourceTree = "<group>"; };
+		A0F6CBCF1B432C7C00460AF3 /* image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = image.png; path = Resources/Images/Buttons/image.png; sourceTree = "<group>"; };
+		A0F6CBD01B432C7C00460AF3 /* info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = info.png; path = Resources/Images/Buttons/info.png; sourceTree = "<group>"; };
+		A0F6CBD11B432C7C00460AF3 /* slider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = slider.png; path = Resources/Images/Buttons/slider.png; sourceTree = "<group>"; };
+		A0F6CBD21B432C7C00460AF3 /* sliderthumb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sliderthumb.png; path = Resources/Images/Buttons/sliderthumb.png; sourceTree = "<group>"; };
+		A0F6CBD31B432C7C00460AF3 /* zoom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = zoom.png; path = Resources/Images/Buttons/zoom.png; sourceTree = "<group>"; };
+		A0F6CBE11B432CAB00460AF3 /* SVScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SVScrollView.h; path = Models/SVScrollView.h; sourceTree = "<group>"; };
+		A0F6CBE21B432CAB00460AF3 /* SVScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SVScrollView.m; path = Models/SVScrollView.m; sourceTree = "<group>"; };
+		A0F6CBE41B4337D900460AF3 /* SVSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SVSlider.h; path = Models/SVSlider.h; sourceTree = "<group>"; };
+		A0F6CBE51B4337D900460AF3 /* SVSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SVSlider.m; path = Models/SVSlider.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,8 +114,9 @@
 			isa = PBXGroup;
 			children = (
 				A0F0FA9E1B3DA0B5000FC3E9 /* Main */,
-				A0F0FA9F1B3DA134000FC3E9 /* Section */,
-				A0F0FAA01B3DA18A000FC3E9 /* Model */,
+				A0F0FA9F1B3DA134000FC3E9 /* Sections */,
+				A0F0FAA01B3DA18A000FC3E9 /* Models */,
+				A0F6CBA91B41E49300460AF3 /* Resources */,
 				A003EC201B1E4DD900AE8246 /* Images.xcassets */,
 				A003EC131B1E4DD900AE8246 /* Supporting Files */,
 			);
@@ -132,22 +162,24 @@
 			name = Main;
 			sourceTree = "<group>";
 		};
-		A0F0FA9F1B3DA134000FC3E9 /* Section */ = {
+		A0F0FA9F1B3DA134000FC3E9 /* Sections */ = {
 			isa = PBXGroup;
 			children = (
 				A0F0FAA11B3DA1EC000FC3E9 /* Motion */,
 				A0F0FAA21B3DA1F8000FC3E9 /* Help */,
 			);
-			name = Section;
+			name = Sections;
 			sourceTree = "<group>";
 		};
-		A0F0FAA01B3DA18A000FC3E9 /* Model */ = {
+		A0F0FAA01B3DA18A000FC3E9 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				A0F0FAA71B3DA652000FC3E9 /* SVScrollView.h */,
-				A0F0FAA81B3DA652000FC3E9 /* SVScrollView.m */,
+				A0F6CBE11B432CAB00460AF3 /* SVScrollView.h */,
+				A0F6CBE21B432CAB00460AF3 /* SVScrollView.m */,
+				A0F6CBE41B4337D900460AF3 /* SVSlider.h */,
+				A0F6CBE51B4337D900460AF3 /* SVSlider.m */,
 			);
-			name = Model;
+			name = Models;
 			sourceTree = "<group>";
 		};
 		A0F0FAA11B3DA1EC000FC3E9 /* Motion */ = {
@@ -162,6 +194,50 @@
 			children = (
 			);
 			name = Help;
+			sourceTree = "<group>";
+		};
+		A0F6CBA91B41E49300460AF3 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A0F6CBAA1B41E4AF00460AF3 /* Images */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		A0F6CBAA1B41E4AF00460AF3 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				A0F6CBAC1B41E4C700460AF3 /* Buttons */,
+				A0F6CBAB1B41E4BB00460AF3 /* Icons */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		A0F6CBAB1B41E4BB00460AF3 /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Icons;
+			sourceTree = "<group>";
+		};
+		A0F6CBAC1B41E4C700460AF3 /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				A0F6CBC71B432C7C00460AF3 /* empty.png */,
+				A0F6CBC81B432C7C00460AF3 /* exit.png */,
+				A0F6CBC91B432C7C00460AF3 /* flashlight_selected.png */,
+				A0F6CBCA1B432C7C00460AF3 /* flashlight.png */,
+				A0F6CBCB1B432C7C00460AF3 /* flashoff.png */,
+				A0F6CBCC1B432C7C00460AF3 /* flashon.png */,
+				A0F6CBCD1B432C7C00460AF3 /* help.png */,
+				A0F6CBCE1B432C7C00460AF3 /* image_selected.png */,
+				A0F6CBCF1B432C7C00460AF3 /* image.png */,
+				A0F6CBD01B432C7C00460AF3 /* info.png */,
+				A0F6CBD11B432C7C00460AF3 /* slider.png */,
+				A0F6CBD21B432C7C00460AF3 /* sliderthumb.png */,
+				A0F6CBD31B432C7C00460AF3 /* zoom.png */,
+			);
+			name = Buttons;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -245,9 +321,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0F6CBE01B432C7C00460AF3 /* zoom.png in Resources */,
+				A0F6CBD81B432C7C00460AF3 /* flashoff.png in Resources */,
 				A003EC1F1B1E4DD900AE8246 /* Main.storyboard in Resources */,
+				A0F6CBD91B432C7C00460AF3 /* flashon.png in Resources */,
+				A0F6CBD51B432C7C00460AF3 /* exit.png in Resources */,
+				A0F6CBDE1B432C7C00460AF3 /* slider.png in Resources */,
+				A0F6CBDB1B432C7C00460AF3 /* image_selected.png in Resources */,
+				A0F6CBD61B432C7C00460AF3 /* flashlight_selected.png in Resources */,
 				A003EC241B1E4DD900AE8246 /* LaunchScreen.xib in Resources */,
+				A0F6CBDF1B432C7C00460AF3 /* sliderthumb.png in Resources */,
+				A0F6CBDA1B432C7C00460AF3 /* help.png in Resources */,
 				A003EC211B1E4DD900AE8246 /* Images.xcassets in Resources */,
+				A0F6CBD71B432C7C00460AF3 /* flashlight.png in Resources */,
+				A0F6CBD41B432C7C00460AF3 /* empty.png in Resources */,
+				A0F6CBDD1B432C7C00460AF3 /* info.png in Resources */,
+				A0F6CBDC1B432C7C00460AF3 /* image.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,10 +354,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0F0FAA91B3DA652000FC3E9 /* SVScrollView.m in Sources */,
+				A0F6CBE31B432CAB00460AF3 /* SVScrollView.m in Sources */,
 				A003EC1C1B1E4DD900AE8246 /* ViewController.m in Sources */,
 				A003EC191B1E4DD900AE8246 /* AppDelegate.m in Sources */,
 				A003EC161B1E4DD900AE8246 /* main.m in Sources */,
+				A0F6CBE61B4337D900460AF3 /* SVSlider.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,7 +486,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "SuperVision+ Goggles/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -409,7 +499,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "SuperVision+ Goggles/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
