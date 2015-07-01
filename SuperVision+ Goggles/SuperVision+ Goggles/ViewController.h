@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
+#import "AppDelegate.h"
 #import "SVScrollView.h"
 #import "SVSlider.h"
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController<SVScrollViewTouchDelegate>
 
 //  User Interface
 // scroll views
@@ -36,6 +38,8 @@
 @property (strong, nonatomic) IBOutlet UIButton *infoButtonRight;
 
 // zoom sliders
+@property (strong, nonatomic) IBOutlet UIImageView *sliderBackgroundLeft;
+@property (strong, nonatomic) IBOutlet UIImageView *sliderBackgroundRight;
 @property (strong, nonatomic) IBOutlet SVSlider *zoomSliderLeft;
 @property (strong, nonatomic) IBOutlet SVSlider *zoomSliderRight;
 
@@ -43,7 +47,11 @@
 @property (strong, nonatomic) IBOutlet UILabel *messageLeft;
 @property (strong, nonatomic) IBOutlet UILabel *messageRight;
 
-
+//  Capture
+// capture session is used to control frame flow from camerra
+@property (nonatomic, strong) AVCaptureSession *captureSession;
+//  a state to indicate whether to hide all controls;
+@property (nonatomic, strong) NSString *currentResolution;
 
 
 @end

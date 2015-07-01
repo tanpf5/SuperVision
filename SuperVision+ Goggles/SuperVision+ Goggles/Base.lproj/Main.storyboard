@@ -398,6 +398,8 @@
                         <outlet property="messageRight" destination="kOr-WG-54m" id="h0l-CU-4dy"/>
                         <outlet property="scrollViewLeft" destination="Y3e-X7-7nn" id="25f-wH-4hT"/>
                         <outlet property="scrollViewRight" destination="0gI-NS-mT8" id="XsL-7T-Mdl"/>
+                        <outlet property="sliderBackgroundLeft" destination="5ca-D4-Ea8" id="7HM-wb-4n7"/>
+                        <outlet property="sliderBackgroundRight" destination="Qvy-6r-Ks9" id="sKx-k2-nI7"/>
                         <outlet property="zoomItemLeft" destination="uns-Ig-NvO" id="gHr-YZ-VhG"/>
                         <outlet property="zoomItemRight" destination="btO-cs-XtP" id="egO-lz-uon"/>
                         <outlet property="zoomSliderLeft" destination="ezA-fb-eUd" id="Nvl-kN-6hc"/>

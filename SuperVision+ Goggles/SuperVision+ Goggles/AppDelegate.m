@@ -7,13 +7,13 @@
 //
 
 #import "AppDelegate.h"
+#import "sys/utsname.h"
 
 @interface AppDelegate ()
 
 @end
 
 @implementation AppDelegate
-
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
@@ -40,6 +40,79 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
++ (NSString*)deviceString
+{
+    struct utsname systemInfo;
+    uname(&systemInfo);
+    NSString *deviceString = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+    
+    
+    if ([deviceString rangeOfString:@"iPhone"].location != NSNotFound) {
+        /*
+         iPhone 5 (GSM/LTE 4, 17/North America)
+         iPhone5,1
+         iPhone 5 (CDMA/LTE, Sprint/Verizon/KDDI)
+         iPhone5,2
+         iPhone 5 (GSM/LTE 1, 3, 5/International)
+         iPhone5,1
+         iPhone 5 (CDMA China/UIM/WAPI)
+         iPhone5,2
+         iPhone 5 (GSM/LTE/AWS/North America)
+         iPhone5,1
+         iPhone 5c (GSM/North America/A1532)
+         iPhone5,3
+         iPhone 5c (CDMA/Verizon/A1532)
+         iPhone5,3
+         iPhone 5c (CDMA/China/A1532)
+         iPhone5,3
+         iPhone 5c (CDMA/US/Japan/A1456)
+         iPhone5,3
+         iPhone 5c (UK/Europe/A1507)
+         iPhone5,4
+         iPhone 5c (China/A1526)
+         iPhone5,4
+         iPhone 5c (Asia Pacific/A1529)
+         iPhone5,4
+         iPhone 5s (GSM/North America/A1533)
+         iPhone6,1
+         iPhone 5s (CDMA/Verizon/A1533)
+         iPhone6,1
+         iPhone 5s (CDMA/China/A1533)
+         iPhone6,1
+         iPhone 5s (CDMA/US/Japan/A1453)
+         iPhone6,1
+         iPhone 5s (UK/Europe/A1457)
+         iPhone6,2
+         iPhone 5s (China/A1528)
+         iPhone6,2
+         iPhone 5s (Asia Pacific/A1530)
+         iPhone6,2
+         */
+        if ([deviceString rangeOfString:@"iPhone3"].location != NSNotFound)
+            return @"iPhone4";
+        if ([deviceString rangeOfString:@"iPhone4"].location != NSNotFound)
+            return @"iPhone4S";
+        if ([deviceString rangeOfString:@"iPhone5"].location != NSNotFound)
+            return @"iPhone5";
+        if ([deviceString rangeOfString:@"iPhone6"].location != NSNotFound)
+            return @"iPhone5S";
+        if ([deviceString isEqualToString:@"iPhone7,2"])
+            return @"iPhone6";// this is actually iPhone 6
+        if ([deviceString isEqualToString:@"iPhone7,1"])
+            return @"iPhone6+";// this is actually iPhone 6 plus
+    }
+    return @"iPhone4";
+}
+
++ (BOOL)isIphone4 {
+    NSString *device = [self deviceString];
+    NSRange range = [device rangeOfString:@"iPhone4"];
+    if (range.location != NSNotFound) {
+        return true;
+    }
+    return false;
 }
 
 @end

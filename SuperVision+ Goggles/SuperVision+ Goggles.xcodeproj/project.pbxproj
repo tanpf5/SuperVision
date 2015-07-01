@@ -27,7 +27,6 @@
 		A0F6CBDE1B432C7C00460AF3 /* slider.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CBD11B432C7C00460AF3 /* slider.png */; };
 		A0F6CBDF1B432C7C00460AF3 /* sliderthumb.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CBD21B432C7C00460AF3 /* sliderthumb.png */; };
 		A0F6CBE01B432C7C00460AF3 /* zoom.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CBD31B432C7C00460AF3 /* zoom.png */; };
-		A0F6CBE31B432CAB00460AF3 /* SVScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0F6CBE21B432CAB00460AF3 /* SVScrollView.m */; };
 		A0F6CBE61B4337D900460AF3 /* SVSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = A0F6CBE51B4337D900460AF3 /* SVSlider.m */; };
 		A0F6CC091B443AE400460AF3 /* SV_GoggleIcon-29@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CC031B443AE400460AF3 /* SV_GoggleIcon-29@2x.png */; };
 		A0F6CC0A1B443AE400460AF3 /* SV_GoggleIcon-29@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CC041B443AE400460AF3 /* SV_GoggleIcon-29@3x.png */; };
@@ -35,6 +34,8 @@
 		A0F6CC0C1B443AE400460AF3 /* SV_GoggleIcon-40@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CC061B443AE400460AF3 /* SV_GoggleIcon-40@3x.png */; };
 		A0F6CC0D1B443AE400460AF3 /* SV_GoggleIcon-60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CC071B443AE400460AF3 /* SV_GoggleIcon-60@2x.png */; };
 		A0F6CC0E1B443AE400460AF3 /* SV_GoggleIcon-60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CC081B443AE400460AF3 /* SV_GoggleIcon-60@3x.png */; };
+		A0F6CC111B446FAC00460AF3 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0F6CC101B446FAC00460AF3 /* AVFoundation.framework */; };
+		A0F6CC1B1B44863800460AF3 /* SVScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0F6CC1A1B44863800460AF3 /* SVScrollView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,8 +75,6 @@
 		A0F6CBD11B432C7C00460AF3 /* slider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = slider.png; path = Resources/Images/Buttons/slider.png; sourceTree = "<group>"; };
 		A0F6CBD21B432C7C00460AF3 /* sliderthumb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sliderthumb.png; path = Resources/Images/Buttons/sliderthumb.png; sourceTree = "<group>"; };
 		A0F6CBD31B432C7C00460AF3 /* zoom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = zoom.png; path = Resources/Images/Buttons/zoom.png; sourceTree = "<group>"; };
-		A0F6CBE11B432CAB00460AF3 /* SVScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SVScrollView.h; path = Models/SVScrollView.h; sourceTree = "<group>"; };
-		A0F6CBE21B432CAB00460AF3 /* SVScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SVScrollView.m; path = Models/SVScrollView.m; sourceTree = "<group>"; };
 		A0F6CBE41B4337D900460AF3 /* SVSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SVSlider.h; path = Models/SVSlider.h; sourceTree = "<group>"; };
 		A0F6CBE51B4337D900460AF3 /* SVSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SVSlider.m; path = Models/SVSlider.m; sourceTree = "<group>"; };
 		A0F6CC031B443AE400460AF3 /* SV_GoggleIcon-29@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SV_GoggleIcon-29@2x.png"; path = "Resources/Images/Icons/SV_GoggleIcon-29@2x.png"; sourceTree = "<group>"; };
@@ -84,6 +83,9 @@
 		A0F6CC061B443AE400460AF3 /* SV_GoggleIcon-40@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SV_GoggleIcon-40@3x.png"; path = "Resources/Images/Icons/SV_GoggleIcon-40@3x.png"; sourceTree = "<group>"; };
 		A0F6CC071B443AE400460AF3 /* SV_GoggleIcon-60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SV_GoggleIcon-60@2x.png"; path = "Resources/Images/Icons/SV_GoggleIcon-60@2x.png"; sourceTree = "<group>"; };
 		A0F6CC081B443AE400460AF3 /* SV_GoggleIcon-60@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SV_GoggleIcon-60@3x.png"; path = "Resources/Images/Icons/SV_GoggleIcon-60@3x.png"; sourceTree = "<group>"; };
+		A0F6CC101B446FAC00460AF3 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		A0F6CC191B44863800460AF3 /* SVScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SVScrollView.h; path = Models/SVScrollView.h; sourceTree = "<group>"; };
+		A0F6CC1A1B44863800460AF3 /* SVScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SVScrollView.m; path = Models/SVScrollView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +93,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0F6CC111B446FAC00460AF3 /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,6 +112,7 @@
 			children = (
 				A003EC121B1E4DD900AE8246 /* SuperVision+ Goggles */,
 				A003EC2C1B1E4DDA00AE8246 /* SuperVision+ GogglesTests */,
+				A0F6CC0F1B446F9100460AF3 /* Frameworks */,
 				A003EC111B1E4DD900AE8246 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -186,8 +190,8 @@
 		A0F0FAA01B3DA18A000FC3E9 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				A0F6CBE11B432CAB00460AF3 /* SVScrollView.h */,
-				A0F6CBE21B432CAB00460AF3 /* SVScrollView.m */,
+				A0F6CC191B44863800460AF3 /* SVScrollView.h */,
+				A0F6CC1A1B44863800460AF3 /* SVScrollView.m */,
 				A0F6CBE41B4337D900460AF3 /* SVSlider.h */,
 				A0F6CBE51B4337D900460AF3 /* SVSlider.m */,
 			);
@@ -256,6 +260,14 @@
 				A0F6CBD31B432C7C00460AF3 /* zoom.png */,
 			);
 			name = Buttons;
+			sourceTree = "<group>";
+		};
+		A0F6CC0F1B446F9100460AF3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A0F6CC101B446FAC00460AF3 /* AVFoundation.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -378,9 +390,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0F6CBE31B432CAB00460AF3 /* SVScrollView.m in Sources */,
 				A003EC1C1B1E4DD900AE8246 /* ViewController.m in Sources */,
 				A003EC191B1E4DD900AE8246 /* AppDelegate.m in Sources */,
+				A0F6CC1B1B44863800460AF3 /* SVScrollView.m in Sources */,
 				A003EC161B1E4DD900AE8246 /* main.m in Sources */,
 				A0F6CBE61B4337D900460AF3 /* SVSlider.m in Sources */,
 			);
