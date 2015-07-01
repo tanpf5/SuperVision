@@ -8,8 +8,8 @@
 
 #import "SVSlider.h"
 
-#define EMPTY "empty.png"
-#define SLIDERTHUMB "sliderthumb.png"
+NSString * const EMPTY = @"empty.png";
+NSString * const SLIDERTHUMB = @"sliderthumb.png";
 
 @implementation SVSlider
 
@@ -18,9 +18,9 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect {
     // Drawing code
-    UIImage *maxImage = [UIImage imageNamed:(NSString *)@EMPTY];
-    UIImage *minImage = [UIImage imageNamed:(NSString *)@EMPTY];
-    UIImage *thumbImage = [UIImage imageWithCGImage:[[UIImage imageNamed:@SLIDERTHUMB] CGImage] scale:1.5 orientation:UIImageOrientationUp];
+    UIImage *maxImage = [UIImage imageNamed:EMPTY];
+    UIImage *minImage = [UIImage imageNamed:EMPTY];
+    UIImage *thumbImage = [UIImage imageWithCGImage:[[UIImage imageNamed:SLIDERTHUMB] CGImage] scale:1.5 orientation:UIImageOrientationUp];
     [self setMaximumTrackImage:maxImage forState:UIControlStateNormal];
     [self setMinimumTrackImage:minImage forState:UIControlStateNormal];
     [self setThumbImage:thumbImage forState:UIControlStateNormal];

@@ -29,6 +29,12 @@
 		A0F6CBE01B432C7C00460AF3 /* zoom.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CBD31B432C7C00460AF3 /* zoom.png */; };
 		A0F6CBE31B432CAB00460AF3 /* SVScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0F6CBE21B432CAB00460AF3 /* SVScrollView.m */; };
 		A0F6CBE61B4337D900460AF3 /* SVSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = A0F6CBE51B4337D900460AF3 /* SVSlider.m */; };
+		A0F6CC091B443AE400460AF3 /* SV_GoggleIcon-29@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CC031B443AE400460AF3 /* SV_GoggleIcon-29@2x.png */; };
+		A0F6CC0A1B443AE400460AF3 /* SV_GoggleIcon-29@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CC041B443AE400460AF3 /* SV_GoggleIcon-29@3x.png */; };
+		A0F6CC0B1B443AE400460AF3 /* SV_GoggleIcon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CC051B443AE400460AF3 /* SV_GoggleIcon-40@2x.png */; };
+		A0F6CC0C1B443AE400460AF3 /* SV_GoggleIcon-40@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CC061B443AE400460AF3 /* SV_GoggleIcon-40@3x.png */; };
+		A0F6CC0D1B443AE400460AF3 /* SV_GoggleIcon-60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CC071B443AE400460AF3 /* SV_GoggleIcon-60@2x.png */; };
+		A0F6CC0E1B443AE400460AF3 /* SV_GoggleIcon-60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CC081B443AE400460AF3 /* SV_GoggleIcon-60@3x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +78,12 @@
 		A0F6CBE21B432CAB00460AF3 /* SVScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SVScrollView.m; path = Models/SVScrollView.m; sourceTree = "<group>"; };
 		A0F6CBE41B4337D900460AF3 /* SVSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SVSlider.h; path = Models/SVSlider.h; sourceTree = "<group>"; };
 		A0F6CBE51B4337D900460AF3 /* SVSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SVSlider.m; path = Models/SVSlider.m; sourceTree = "<group>"; };
+		A0F6CC031B443AE400460AF3 /* SV_GoggleIcon-29@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SV_GoggleIcon-29@2x.png"; path = "Resources/Images/Icons/SV_GoggleIcon-29@2x.png"; sourceTree = "<group>"; };
+		A0F6CC041B443AE400460AF3 /* SV_GoggleIcon-29@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SV_GoggleIcon-29@3x.png"; path = "Resources/Images/Icons/SV_GoggleIcon-29@3x.png"; sourceTree = "<group>"; };
+		A0F6CC051B443AE400460AF3 /* SV_GoggleIcon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SV_GoggleIcon-40@2x.png"; path = "Resources/Images/Icons/SV_GoggleIcon-40@2x.png"; sourceTree = "<group>"; };
+		A0F6CC061B443AE400460AF3 /* SV_GoggleIcon-40@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SV_GoggleIcon-40@3x.png"; path = "Resources/Images/Icons/SV_GoggleIcon-40@3x.png"; sourceTree = "<group>"; };
+		A0F6CC071B443AE400460AF3 /* SV_GoggleIcon-60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SV_GoggleIcon-60@2x.png"; path = "Resources/Images/Icons/SV_GoggleIcon-60@2x.png"; sourceTree = "<group>"; };
+		A0F6CC081B443AE400460AF3 /* SV_GoggleIcon-60@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SV_GoggleIcon-60@3x.png"; path = "Resources/Images/Icons/SV_GoggleIcon-60@3x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,6 +228,12 @@
 		A0F6CBAB1B41E4BB00460AF3 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				A0F6CC031B443AE400460AF3 /* SV_GoggleIcon-29@2x.png */,
+				A0F6CC041B443AE400460AF3 /* SV_GoggleIcon-29@3x.png */,
+				A0F6CC051B443AE400460AF3 /* SV_GoggleIcon-40@2x.png */,
+				A0F6CC061B443AE400460AF3 /* SV_GoggleIcon-40@3x.png */,
+				A0F6CC071B443AE400460AF3 /* SV_GoggleIcon-60@2x.png */,
+				A0F6CC081B443AE400460AF3 /* SV_GoggleIcon-60@3x.png */,
 			);
 			name = Icons;
 			sourceTree = "<group>";
@@ -322,12 +340,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				A0F6CBE01B432C7C00460AF3 /* zoom.png in Resources */,
+				A0F6CC0B1B443AE400460AF3 /* SV_GoggleIcon-40@2x.png in Resources */,
+				A0F6CC091B443AE400460AF3 /* SV_GoggleIcon-29@2x.png in Resources */,
 				A0F6CBD81B432C7C00460AF3 /* flashoff.png in Resources */,
+				A0F6CC0E1B443AE400460AF3 /* SV_GoggleIcon-60@3x.png in Resources */,
 				A003EC1F1B1E4DD900AE8246 /* Main.storyboard in Resources */,
 				A0F6CBD91B432C7C00460AF3 /* flashon.png in Resources */,
 				A0F6CBD51B432C7C00460AF3 /* exit.png in Resources */,
 				A0F6CBDE1B432C7C00460AF3 /* slider.png in Resources */,
+				A0F6CC0C1B443AE400460AF3 /* SV_GoggleIcon-40@3x.png in Resources */,
+				A0F6CC0A1B443AE400460AF3 /* SV_GoggleIcon-29@3x.png in Resources */,
 				A0F6CBDB1B432C7C00460AF3 /* image_selected.png in Resources */,
+				A0F6CC0D1B443AE400460AF3 /* SV_GoggleIcon-60@2x.png in Resources */,
 				A0F6CBD61B432C7C00460AF3 /* flashlight_selected.png in Resources */,
 				A003EC241B1E4DD900AE8246 /* LaunchScreen.xib in Resources */,
 				A0F6CBDF1B432C7C00460AF3 /* sliderthumb.png in Resources */,
