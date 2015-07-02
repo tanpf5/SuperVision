@@ -24,7 +24,7 @@ NSString * const SLIDERTHUMB = @"sliderthumb.png";
     [self setMaximumTrackImage:maxImage forState:UIControlStateNormal];
     [self setMinimumTrackImage:minImage forState:UIControlStateNormal];
     [self setThumbImage:thumbImage forState:UIControlStateNormal];
-    CGAffineTransform transformRotate = CGAffineTransformMakeRotation(M_PI * 0.5);
+    CGAffineTransform transformRotate = CGAffineTransformMakeRotation(-M_PI * 0.5);
     self.transform = transformRotate;
 }
 

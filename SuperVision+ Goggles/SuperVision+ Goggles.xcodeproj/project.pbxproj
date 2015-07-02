@@ -14,6 +14,7 @@
 		A003EC211B1E4DD900AE8246 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A003EC201B1E4DD900AE8246 /* Images.xcassets */; };
 		A003EC241B1E4DD900AE8246 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A003EC221B1E4DD900AE8246 /* LaunchScreen.xib */; };
 		A003EC301B1E4DDA00AE8246 /* SuperVision__GogglesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A003EC2F1B1E4DDA00AE8246 /* SuperVision__GogglesTests.m */; };
+		A037E8F21B4583FA00DA7961 /* SV_GoggleIcon-original.png in Resources */ = {isa = PBXBuildFile; fileRef = A037E8F11B4583FA00DA7961 /* SV_GoggleIcon-original.png */; };
 		A0F6CBD41B432C7C00460AF3 /* empty.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CBC71B432C7C00460AF3 /* empty.png */; };
 		A0F6CBD51B432C7C00460AF3 /* exit.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CBC81B432C7C00460AF3 /* exit.png */; };
 		A0F6CBD61B432C7C00460AF3 /* flashlight_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CBC91B432C7C00460AF3 /* flashlight_selected.png */; };
@@ -62,6 +63,7 @@
 		A003EC291B1E4DDA00AE8246 /* SuperVision+ GogglesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SuperVision+ GogglesTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A003EC2E1B1E4DDA00AE8246 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A003EC2F1B1E4DDA00AE8246 /* SuperVision__GogglesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SuperVision__GogglesTests.m; sourceTree = "<group>"; };
+		A037E8F11B4583FA00DA7961 /* SV_GoggleIcon-original.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SV_GoggleIcon-original.png"; path = "Resources/Images/Icons/SV_GoggleIcon-original.png"; sourceTree = "<group>"; };
 		A0F6CBC71B432C7C00460AF3 /* empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = empty.png; path = Resources/Images/Buttons/empty.png; sourceTree = "<group>"; };
 		A0F6CBC81B432C7C00460AF3 /* exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = exit.png; path = Resources/Images/Buttons/exit.png; sourceTree = "<group>"; };
 		A0F6CBC91B432C7C00460AF3 /* flashlight_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = flashlight_selected.png; path = Resources/Images/Buttons/flashlight_selected.png; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 		A0F6CBAA1B41E4AF00460AF3 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				A037E8F11B4583FA00DA7961 /* SV_GoggleIcon-original.png */,
 				A0F6CBAC1B41E4C700460AF3 /* Buttons */,
 				A0F6CBAB1B41E4BB00460AF3 /* Icons */,
 			);
@@ -368,6 +371,7 @@
 				A003EC241B1E4DD900AE8246 /* LaunchScreen.xib in Resources */,
 				A0F6CBDF1B432C7C00460AF3 /* sliderthumb.png in Resources */,
 				A0F6CBDA1B432C7C00460AF3 /* help.png in Resources */,
+				A037E8F21B4583FA00DA7961 /* SV_GoggleIcon-original.png in Resources */,
 				A003EC211B1E4DD900AE8246 /* Images.xcassets in Resources */,
 				A0F6CBD71B432C7C00460AF3 /* flashlight.png in Resources */,
 				A0F6CBD41B432C7C00460AF3 /* empty.png in Resources */,

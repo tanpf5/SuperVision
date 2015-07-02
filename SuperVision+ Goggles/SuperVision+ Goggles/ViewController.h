@@ -42,6 +42,8 @@
 @property (strong, nonatomic) IBOutlet UIImageView *sliderBackgroundRight;
 @property (strong, nonatomic) IBOutlet SVSlider *zoomSliderLeft;
 @property (strong, nonatomic) IBOutlet SVSlider *zoomSliderRight;
+//  current zoomlevel
+@property (assign, nonatomic) float currentZoomLevel;
 
 // messages
 @property (strong, nonatomic) IBOutlet UILabel *messageLeft;

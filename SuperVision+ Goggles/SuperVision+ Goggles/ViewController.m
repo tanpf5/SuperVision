@@ -19,7 +19,7 @@
 @interface ViewController ()
 //  User Interface Control
 @property (assign, nonatomic) BOOL isMenuHidden;
-@property (assign, nonatomic) BOOL isButtonHidden;
+@property (assign, nonatomic) BOOL isControlHidden;
 
 
 @end
@@ -48,13 +48,14 @@
 @synthesize imageButtonRight;
 @synthesize infoButtonLeft;
 @synthesize infoButtonRight;
-@synthesize isButtonHidden; // all buttons
+@synthesize isControlHidden; // all buttons
 
 // zoom sliders
 @synthesize sliderBackgroundLeft;
 @synthesize sliderBackgroundRight;
 @synthesize zoomSliderLeft;
 @synthesize zoomSliderRight;
+@synthesize currentZoomLevel;
 
 // messages
 @synthesize messageLeft;
@@ -75,13 +76,14 @@
 
 - (void)initialView {
     self.isMenuHidden = true;
-    self.isButtonHidden = true;
-    [self hideAllControls];
+    self.isControlHidden = true;
+    [self hideMenuAndControl];
 }
 
 - (void)initialSettings {
     self.scrollViewLeft.touchDelegate = self;
     self.scrollViewRight.touchDelegate = self;
+    [self setZoomLevel:1];
     if ([self isIphone4]) {
         self.currentResolution = IP4RESOLUTION;
         /*self.featureWindowHeight = 72;
@@ -158,10 +160,26 @@
     [self.captureSession startRunning];
 }
 
-#pragma mark - 
-#pragma mark UI Controls
+#pragma mark -
+#pragma mark Basic Controls
+- (void)setZoomLevel:(float)zoomLevel{
+    self.currentZoomLevel = zoomLevel;
+    [self.scrollViewLeft setZoomScale:zoomLevel animated:YES];
+    [self.scrollViewRight setZoomScale:zoomLevel animated:YES];
+    [self.zoomSliderLeft setValue:zoomLevel animated:YES];
+    [self.zoomSliderRight setValue:zoomLevel animated:YES];
+}
 
-- (void)hideAllControls {
+- (IBAction)zoomLevelChanged:(SVSlider *)slider {
+    [self setZoomLevel:slider.value];
+}
+
+
+
+#pragma mark - 
+#pragma mark UI Display Controls
+
+- (void)hideMenuAndControl {
     //  Menu
     [self.zoomItemLeft setHidden:YES];
     [self.zoomItemRight setHidden:YES];
@@ -171,7 +189,7 @@
     [self.imageItemRight setHidden:YES];
     [self.exitItemLeft setHidden:YES];
     [self.exitItemRight setHidden:YES];
-    //  Buttons
+    //  Control
     [self.flashButtonLeft setHidden:YES];
     [self.flashButtonRight setHidden:YES];
     [self.imageButtonLeft setHidden:YES];
@@ -188,7 +206,49 @@
     [self.messageRight setHidden:YES];
 }
 
-- (void) showMessage:(NSString*)s {
+- (void)hideControl {
+    //  Control
+    [self.flashButtonLeft setHidden:YES];
+    [self.flashButtonRight setHidden:YES];
+    [self.imageButtonLeft setHidden:YES];
+    [self.imageButtonRight setHidden:YES];
+    [self.infoButtonLeft setHidden:YES];
+    [self.infoButtonRight setHidden:YES];
+    
+    //  Zoom sliders
+    [self hideZoom];
+}
+
+- (void)showControl {
+    //  Control
+    [self.flashButtonLeft setHidden:NO];
+    [self.flashButtonRight setHidden:NO];
+    [self.imageButtonLeft setHidden:NO];
+    [self.imageButtonRight setHidden:NO];
+    [self.infoButtonLeft setHidden:NO];
+    [self.infoButtonRight setHidden:NO];
+    
+    //  Zoom sliders
+    [self showZoom];
+}
+
+- (void)hideZoom {
+    //  Zoom sliders
+    [self.sliderBackgroundLeft setHidden:YES];
+    [self.sliderBackgroundRight setHidden:YES];
+    [self.zoomSliderLeft setHidden:YES];
+    [self.zoomSliderRight setHidden:YES];
+}
+
+- (void)showZoom {
+    //  Zoom sliders
+    [self.sliderBackgroundLeft setHidden:NO];
+    [self.sliderBackgroundRight setHidden:NO];
+    [self.zoomSliderLeft setHidden:NO];
+    [self.zoomSliderRight setHidden:NO];
+}
+
+- (void)showMessage:(NSString *)s {
     dispatch_async(dispatch_get_main_queue(), ^{
         self.messageLeft.text = s;
         self.messageRight.text = s;
@@ -203,13 +263,20 @@
     });
 }
 
+
+
 #pragma mark -
-#pragma mark UI Controls
-- (void)handleDoubleTap:(UIGestureRecognizer *)gesture {
-    [self showMessage:@"double Tap"];
+#pragma mark SVScrollView TouchDelegate
+- (void)scrollViewDoubleTapped:(UIGestureRecognizer *)gesture {
+    if (isControlHidden) {
+        [self showControl];
+    } else {
+        [self hideControl];
+    }
+    self.isControlHidden = !self.isControlHidden;
 }
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView {
-    
+    [self setZoomLevel:scrollView.zoomScale];
 }
 
 #pragma mark -
