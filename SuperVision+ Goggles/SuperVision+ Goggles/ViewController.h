@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
+#import <CoreMotion/CoreMotion.h>
 #import "AppDelegate.h"
 #import "SVScrollView.h"
 #import "SVSlider.h"

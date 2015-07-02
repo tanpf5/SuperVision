@@ -7,6 +7,8 @@
 //
 
 #import "ViewController.h"
+#import "MagnetSensor.h"
+#import "Accelerometer.h"
 
 #pragma mark - resolution settings
 #define RESOLUTION1 AVCaptureSessionPreset1920x1080
@@ -15,17 +17,33 @@
 #define RESOLUTION4 AVCaptureSessionPreset640x480
 #define OTHERRESOLUTION RESOLUTION1
 #define IP4RESOLUTION RESOLUTION3
+#define FREQUENCY 50
 
 @interface ViewController ()
 //  User Interface Control
 @property (assign, nonatomic) BOOL isMenuHidden;
 @property (assign, nonatomic) BOOL isControlHidden;
+@property (assign, nonatomic) BOOL isFlashOn;
+@property (assign, nonatomic) BOOL isImageModeOn;
 
+//  Motion
+@property (strong, nonatomic) CMMotionManager * motionManager;
+// Magnet
+@property (assign, nonatomic) SuperVision::MagnetSensor * magnetSensor;
+// Accelerometer
+@property (assign, nonatomic) SuperVision::Accelerometer * accerometer;
 
 @end
 
 @implementation ViewController
 //  User Interface
+// control
+@synthesize isMenuHidden; // all menu items
+@synthesize isControlHidden; // all buttons
+@synthesize isFlashOn;
+@synthesize isImageModeOn;
+
+
 // scroll views
 @synthesize scrollViewLeft;
 @synthesize scrollViewRight;
@@ -39,7 +57,6 @@
 @synthesize imageItemRight;
 @synthesize exitItemLeft;
 @synthesize exitItemRight;
-@synthesize isMenuHidden; // all menu items
 
 // buttons
 @synthesize flashButtonLeft;
@@ -48,7 +65,6 @@
 @synthesize imageButtonRight;
 @synthesize infoButtonLeft;
 @synthesize infoButtonRight;
-@synthesize isControlHidden; // all buttons
 
 // zoom sliders
 @synthesize sliderBackgroundLeft;
@@ -72,6 +88,7 @@
     [self initialView];
     [self initialSettings];
     [self initialCapture];
+    [self initialMotion];
 }
 
 - (void)initialView {
@@ -83,7 +100,11 @@
 - (void)initialSettings {
     self.scrollViewLeft.touchDelegate = self;
     self.scrollViewRight.touchDelegate = self;
+    // set initial zoom level
     [self setZoomLevel:1];
+    // set initial controls
+    self.isFlashOn = false;
+    self.isImageModeOn = false;
     if ([self isIphone4]) {
         self.currentResolution = IP4RESOLUTION;
         /*self.featureWindowHeight = 72;
@@ -160,6 +181,30 @@
     [self.captureSession startRunning];
 }
 
+- (void) initialMotion {
+    //self.gyro = [[NSMutableArray alloc] init];
+    self.motionManager = [[CMMotionManager alloc] init];
+    self.motionManager.gyroUpdateInterval = 1.0 / FREQUENCY;
+    //self.gyroLock = [[NSLock alloc] init];
+    
+    
+    //  Magnet
+    self.magnetSensor = new SuperVision::MagnetSensor();
+    _magnetSensor->start();
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(magneticTriggerPressed)
+                                                 name:SuperVision::CBDTriggerPressedNotification
+                                               object:nil];
+    
+    //  Accelerometer
+    self.accelerometer = new SuperVision::Accelerometer;
+    _acc->start();
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(doubleTapPressed)
+                                                 name:SuperVision::DoubleTapsNotification
+                                               object:nil];
+}
+
 #pragma mark -
 #pragma mark Basic Controls
 - (void)setZoomLevel:(float)zoomLevel{
@@ -170,8 +215,57 @@
     [self.zoomSliderRight setValue:zoomLevel animated:YES];
 }
 
+
+
 - (IBAction)zoomLevelChanged:(SVSlider *)slider {
     [self setZoomLevel:slider.value];
+}
+
+- (IBAction)flashTapped {
+    if (self.isFlashOn) {
+        [self turnFlashOff];
+        [self showMessage:@"Turned off"];
+    } else {
+        [self turnFlashOn];
+        [self showMessage:@"Turned on"];
+    }
+    self.isFlashOn = !self.isFlashOn;
+}
+
+- (void)turnFlashOn {
+    AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    if ([device hasTorch]) {
+        [device lockForConfiguration:nil];
+        [device setTorchMode:AVCaptureTorchModeOn];
+        //  use AVCaptureTorchModeOff to turn off
+        [device unlockForConfiguration];
+    }
+}
+
+- (void)turnFlashOff {
+    AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    if ([device hasTorch]) {
+        [device lockForConfiguration:nil];
+        [device setTorchMode:AVCaptureTorchModeOff];
+        //  use AVCaptureTorchModeOff to turn off
+        [device unlockForConfiguration];
+    }
+}
+
+- (IBAction)imageModeTapped {
+    if (self.isImageModeOn) {
+        [self showMessage:@"Color"];
+        [self messageChangeColor:[UIColor blackColor]];
+    } else {
+        [self showMessage:@"Black and white"];
+        [self messageChangeColor:[UIColor whiteColor]];
+    }
+    self.isImageModeOn = !self.isImageModeOn;
+}
+
+- (void) messageChangeColor:(UIColor *)color {
+    self.messageLeft.textColor = color;
+    self.messageRight.textColor = color;
 }
 
 

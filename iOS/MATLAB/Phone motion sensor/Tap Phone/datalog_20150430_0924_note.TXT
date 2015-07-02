@@ -1,0 +1,13 @@
+high sampling rate
+
+With screen facing observer, power button up, home button on right
+
+double tap back 3 times
+
+triple tap back 3 times
+
+yaw to right back to center, then yaw to lef backto center, 3 times
+
+pitch up back to center, then pitch down back to center, 3 times
+
+laterally tap the home button side 3 times,

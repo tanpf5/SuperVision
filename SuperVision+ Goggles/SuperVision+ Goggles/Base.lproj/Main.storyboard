@@ -79,6 +79,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="flashTapped" destination="vXZ-lx-hvc" eventType="touchUpInside" id="hxn-XK-Sk3"/>
+                                </connections>
                             </button>
                             <button opaque="NO" alpha="0.60000002384185791" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GeK-8e-2ie">
                                 <rect key="frame" x="328" y="516" width="46" height="46"/>
@@ -94,6 +97,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="flashTapped" destination="vXZ-lx-hvc" eventType="touchUpInside" id="a7P-ZC-3v5"/>
+                                </connections>
                             </button>
                             <button opaque="NO" alpha="0.60000002384185791" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uWO-LI-UrR">
                                 <rect key="frame" x="77" y="516" width="46" height="46"/>
@@ -104,6 +110,9 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <state key="selected" image="image_selected.png"/>
+                                <connections>
+                                    <action selector="imageModeTapped" destination="vXZ-lx-hvc" eventType="touchUpInside" id="prv-yq-0Nc"/>
+                                </connections>
                             </button>
                             <button opaque="NO" alpha="0.60000002384185791" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MIF-Q2-VAn">
                                 <rect key="frame" x="378" y="516" width="46" height="46"/>

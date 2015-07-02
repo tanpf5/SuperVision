@@ -1,0 +1,431 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A0F9EA011B276A2500851363 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A0F9EA001B276A2500851363 /* main.m */; };
+		A0F9EA041B276A2500851363 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A0F9EA031B276A2500851363 /* AppDelegate.m */; };
+		A0F9EA071B276A2500851363 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0F9EA061B276A2500851363 /* ViewController.m */; };
+		A0F9EA0A1B276A2500851363 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0F9EA081B276A2500851363 /* Main.storyboard */; };
+		A0F9EA0C1B276A2500851363 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0F9EA0B1B276A2500851363 /* Images.xcassets */; };
+		A0F9EA0F1B276A2500851363 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0F9EA0D1B276A2500851363 /* LaunchScreen.xib */; };
+		A0F9EA1B1B276A2600851363 /* Invert_ImageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A0F9EA1A1B276A2600851363 /* Invert_ImageTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A0F9EA151B276A2500851363 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A0F9E9F31B276A2500851363 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A0F9E9FA1B276A2500851363;
+			remoteInfo = "Invert Image";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		A0F9E9FB1B276A2500851363 /* Invert Image.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Invert Image.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A0F9E9FF1B276A2500851363 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A0F9EA001B276A2500851363 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A0F9EA021B276A2500851363 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		A0F9EA031B276A2500851363 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		A0F9EA051B276A2500851363 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		A0F9EA061B276A2500851363 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		A0F9EA091B276A2500851363 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A0F9EA0B1B276A2500851363 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		A0F9EA0E1B276A2500851363 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		A0F9EA141B276A2500851363 /* Invert ImageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Invert ImageTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A0F9EA191B276A2600851363 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A0F9EA1A1B276A2600851363 /* Invert_ImageTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Invert_ImageTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A0F9E9F81B276A2500851363 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A0F9EA111B276A2500851363 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A0F9E9F21B276A2500851363 = {
+			isa = PBXGroup;
+			children = (
+				A0F9E9FD1B276A2500851363 /* Invert Image */,
+				A0F9EA171B276A2500851363 /* Invert ImageTests */,
+				A0F9E9FC1B276A2500851363 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A0F9E9FC1B276A2500851363 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A0F9E9FB1B276A2500851363 /* Invert Image.app */,
+				A0F9EA141B276A2500851363 /* Invert ImageTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A0F9E9FD1B276A2500851363 /* Invert Image */ = {
+			isa = PBXGroup;
+			children = (
+				A0F9EA021B276A2500851363 /* AppDelegate.h */,
+				A0F9EA031B276A2500851363 /* AppDelegate.m */,
+				A0F9EA051B276A2500851363 /* ViewController.h */,
+				A0F9EA061B276A2500851363 /* ViewController.m */,
+				A0F9EA081B276A2500851363 /* Main.storyboard */,
+				A0F9EA0B1B276A2500851363 /* Images.xcassets */,
+				A0F9EA0D1B276A2500851363 /* LaunchScreen.xib */,
+				A0F9E9FE1B276A2500851363 /* Supporting Files */,
+			);
+			path = "Invert Image";
+			sourceTree = "<group>";
+		};
+		A0F9E9FE1B276A2500851363 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A0F9E9FF1B276A2500851363 /* Info.plist */,
+				A0F9EA001B276A2500851363 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A0F9EA171B276A2500851363 /* Invert ImageTests */ = {
+			isa = PBXGroup;
+			children = (
+				A0F9EA1A1B276A2600851363 /* Invert_ImageTests.m */,
+				A0F9EA181B276A2600851363 /* Supporting Files */,
+			);
+			path = "Invert ImageTests";
+			sourceTree = "<group>";
+		};
+		A0F9EA181B276A2600851363 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A0F9EA191B276A2600851363 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A0F9E9FA1B276A2500851363 /* Invert Image */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A0F9EA1E1B276A2600851363 /* Build configuration list for PBXNativeTarget "Invert Image" */;
+			buildPhases = (
+				A0F9E9F71B276A2500851363 /* Sources */,
+				A0F9E9F81B276A2500851363 /* Frameworks */,
+				A0F9E9F91B276A2500851363 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Invert Image";
+			productName = "Invert Image";
+			productReference = A0F9E9FB1B276A2500851363 /* Invert Image.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A0F9EA131B276A2500851363 /* Invert ImageTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A0F9EA211B276A2600851363 /* Build configuration list for PBXNativeTarget "Invert ImageTests" */;
+			buildPhases = (
+				A0F9EA101B276A2500851363 /* Sources */,
+				A0F9EA111B276A2500851363 /* Frameworks */,
+				A0F9EA121B276A2500851363 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A0F9EA161B276A2500851363 /* PBXTargetDependency */,
+			);
+			name = "Invert ImageTests";
+			productName = "Invert ImageTests";
+			productReference = A0F9EA141B276A2500851363 /* Invert ImageTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A0F9E9F31B276A2500851363 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0630;
+				ORGANIZATIONNAME = "Massachusetts Eye and Ear Infirmary";
+				TargetAttributes = {
+					A0F9E9FA1B276A2500851363 = {
+						CreatedOnToolsVersion = 6.3.2;
+					};
+					A0F9EA131B276A2500851363 = {
+						CreatedOnToolsVersion = 6.3.2;
+						TestTargetID = A0F9E9FA1B276A2500851363;
+					};
+				};
+			};
+			buildConfigurationList = A0F9E9F61B276A2500851363 /* Build configuration list for PBXProject "Invert Image" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A0F9E9F21B276A2500851363;
+			productRefGroup = A0F9E9FC1B276A2500851363 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A0F9E9FA1B276A2500851363 /* Invert Image */,
+				A0F9EA131B276A2500851363 /* Invert ImageTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A0F9E9F91B276A2500851363 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A0F9EA0A1B276A2500851363 /* Main.storyboard in Resources */,
+				A0F9EA0F1B276A2500851363 /* LaunchScreen.xib in Resources */,
+				A0F9EA0C1B276A2500851363 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A0F9EA121B276A2500851363 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A0F9E9F71B276A2500851363 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A0F9EA071B276A2500851363 /* ViewController.m in Sources */,
+				A0F9EA041B276A2500851363 /* AppDelegate.m in Sources */,
+				A0F9EA011B276A2500851363 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A0F9EA101B276A2500851363 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A0F9EA1B1B276A2600851363 /* Invert_ImageTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A0F9EA161B276A2500851363 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A0F9E9FA1B276A2500851363 /* Invert Image */;
+			targetProxy = A0F9EA151B276A2500851363 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		A0F9EA081B276A2500851363 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A0F9EA091B276A2500851363 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		A0F9EA0D1B276A2500851363 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A0F9EA0E1B276A2500851363 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A0F9EA1C1B276A2600851363 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		A0F9EA1D1B276A2600851363 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A0F9EA1F1B276A2600851363 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "Invert Image/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		A0F9EA201B276A2600851363 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "Invert Image/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		A0F9EA221B276A2600851363 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Invert ImageTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Invert Image.app/Invert Image";
+			};
+			name = Debug;
+		};
+		A0F9EA231B276A2600851363 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Invert ImageTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Invert Image.app/Invert Image";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A0F9E9F61B276A2500851363 /* Build configuration list for PBXProject "Invert Image" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A0F9EA1C1B276A2600851363 /* Debug */,
+				A0F9EA1D1B276A2600851363 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A0F9EA1E1B276A2600851363 /* Build configuration list for PBXNativeTarget "Invert Image" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A0F9EA1F1B276A2600851363 /* Debug */,
+				A0F9EA201B276A2600851363 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		A0F9EA211B276A2600851363 /* Build configuration list for PBXNativeTarget "Invert ImageTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A0F9EA221B276A2600851363 /* Debug */,
+				A0F9EA231B276A2600851363 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A0F9E9F31B276A2500851363 /* Project object */;
+}

@@ -1,0 +1,26 @@
+% [filename,pathname] = uigetfile('datalog*', 'sensor datafile');
+% 
+% data=ReadPhoneSensorData([pathname,filename]);
+% data = ReadPhoneSensorData('C:\Projects\Phone motion sensor\Tap Phone\datalog_20150430_152304');
+data = ReadPhoneSensorData('C:\Projects\Phone motion sensor\Tap Phone\datalog_20150430_092420');
+
+% if ~isempty(data.acc)
+%     figure(1);
+% %     plot(data.acc(:,3));
+%     len=length(data.acc(:,1));
+%     frequency=len/data.acc(len,1)*1000;
+%     buf=sprintf('Accelerometer (%3.1f Hz)',frequency);
+%     title(buf);
+% end
+% tap_res = TapDetectionBySensor(-data.acc(:,3),frequency,0.2,0.4);
+
+if ~isempty(data.gyro)
+    figure(2);
+%     plot(data.gyro(:,1),data.gyro(:,2));
+    len=length(data.gyro(:,1));
+    frequency=len/data.gyro(len,1)*1000;
+    buf=sprintf('Gyroscope (%3.1f Hz)',frequency);
+    title(buf);
+end
+
+tap_res = TapDetectionBySensor(data.gyro(:,2),frequency,0.03,0.1);

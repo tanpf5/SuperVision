@@ -15,6 +15,11 @@
 		A003EC241B1E4DD900AE8246 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A003EC221B1E4DD900AE8246 /* LaunchScreen.xib */; };
 		A003EC301B1E4DDA00AE8246 /* SuperVision__GogglesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A003EC2F1B1E4DDA00AE8246 /* SuperVision__GogglesTests.m */; };
 		A037E8F21B4583FA00DA7961 /* SV_GoggleIcon-original.png in Resources */ = {isa = PBXBuildFile; fileRef = A037E8F11B4583FA00DA7961 /* SV_GoggleIcon-original.png */; };
+		A037E8F61B45CB3400DA7961 /* helpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A037E8F41B45CB3400DA7961 /* helpViewController.m */; };
+		A037E8F71B45CB3400DA7961 /* helpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A037E8F51B45CB3400DA7961 /* helpViewController.xib */; };
+		A037E9041B45D9E300DA7961 /* MagnetSensor.mm in Sources */ = {isa = PBXBuildFile; fileRef = A037E9031B45D9E300DA7961 /* MagnetSensor.mm */; };
+		A037E9071B45DB7100DA7961 /* Accelerometer.mm in Sources */ = {isa = PBXBuildFile; fileRef = A037E9051B45DB7100DA7961 /* Accelerometer.mm */; };
+		A037E9091B45DBDC00DA7961 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A037E9081B45DBDC00DA7961 /* CoreMotion.framework */; };
 		A0F6CBD41B432C7C00460AF3 /* empty.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CBC71B432C7C00460AF3 /* empty.png */; };
 		A0F6CBD51B432C7C00460AF3 /* exit.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CBC81B432C7C00460AF3 /* exit.png */; };
 		A0F6CBD61B432C7C00460AF3 /* flashlight_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CBC91B432C7C00460AF3 /* flashlight_selected.png */; };
@@ -64,6 +69,14 @@
 		A003EC2E1B1E4DDA00AE8246 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A003EC2F1B1E4DDA00AE8246 /* SuperVision__GogglesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SuperVision__GogglesTests.m; sourceTree = "<group>"; };
 		A037E8F11B4583FA00DA7961 /* SV_GoggleIcon-original.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SV_GoggleIcon-original.png"; path = "Resources/Images/Icons/SV_GoggleIcon-original.png"; sourceTree = "<group>"; };
+		A037E8F31B45CB3400DA7961 /* helpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = helpViewController.h; path = Sections/Help/helpViewController.h; sourceTree = "<group>"; };
+		A037E8F41B45CB3400DA7961 /* helpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = helpViewController.m; path = Sections/Help/helpViewController.m; sourceTree = "<group>"; };
+		A037E8F51B45CB3400DA7961 /* helpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = helpViewController.xib; path = Sections/Help/helpViewController.xib; sourceTree = "<group>"; };
+		A037E8FE1B45D91300DA7961 /* MagnetSensor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MagnetSensor.h; path = Sections/Motion/MagnetSensor.h; sourceTree = "<group>"; };
+		A037E9031B45D9E300DA7961 /* MagnetSensor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MagnetSensor.mm; path = Sections/Motion/MagnetSensor.mm; sourceTree = "<group>"; };
+		A037E9051B45DB7100DA7961 /* Accelerometer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Accelerometer.mm; path = Sections/Motion/Accelerometer.mm; sourceTree = "<group>"; };
+		A037E9061B45DB7100DA7961 /* Accelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Accelerometer.h; path = Sections/Motion/Accelerometer.h; sourceTree = "<group>"; };
+		A037E9081B45DBDC00DA7961 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		A0F6CBC71B432C7C00460AF3 /* empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = empty.png; path = Resources/Images/Buttons/empty.png; sourceTree = "<group>"; };
 		A0F6CBC81B432C7C00460AF3 /* exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = exit.png; path = Resources/Images/Buttons/exit.png; sourceTree = "<group>"; };
 		A0F6CBC91B432C7C00460AF3 /* flashlight_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = flashlight_selected.png; path = Resources/Images/Buttons/flashlight_selected.png; sourceTree = "<group>"; };
@@ -95,6 +108,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A037E9091B45DBDC00DA7961 /* CoreMotion.framework in Frameworks */,
 				A0F6CC111B446FAC00460AF3 /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -203,6 +217,10 @@
 		A0F0FAA11B3DA1EC000FC3E9 /* Motion */ = {
 			isa = PBXGroup;
 			children = (
+				A037E8FE1B45D91300DA7961 /* MagnetSensor.h */,
+				A037E9031B45D9E300DA7961 /* MagnetSensor.mm */,
+				A037E9061B45DB7100DA7961 /* Accelerometer.h */,
+				A037E9051B45DB7100DA7961 /* Accelerometer.mm */,
 			);
 			name = Motion;
 			sourceTree = "<group>";
@@ -210,6 +228,9 @@
 		A0F0FAA21B3DA1F8000FC3E9 /* Help */ = {
 			isa = PBXGroup;
 			children = (
+				A037E8F31B45CB3400DA7961 /* helpViewController.h */,
+				A037E8F41B45CB3400DA7961 /* helpViewController.m */,
+				A037E8F51B45CB3400DA7961 /* helpViewController.xib */,
 			);
 			name = Help;
 			sourceTree = "<group>";
@@ -268,6 +289,7 @@
 		A0F6CC0F1B446F9100460AF3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A037E9081B45DBDC00DA7961 /* CoreMotion.framework */,
 				A0F6CC101B446FAC00460AF3 /* AVFoundation.framework */,
 			);
 			name = Frameworks;
@@ -369,6 +391,7 @@
 				A0F6CC0D1B443AE400460AF3 /* SV_GoggleIcon-60@2x.png in Resources */,
 				A0F6CBD61B432C7C00460AF3 /* flashlight_selected.png in Resources */,
 				A003EC241B1E4DD900AE8246 /* LaunchScreen.xib in Resources */,
+				A037E8F71B45CB3400DA7961 /* helpViewController.xib in Resources */,
 				A0F6CBDF1B432C7C00460AF3 /* sliderthumb.png in Resources */,
 				A0F6CBDA1B432C7C00460AF3 /* help.png in Resources */,
 				A037E8F21B4583FA00DA7961 /* SV_GoggleIcon-original.png in Resources */,
@@ -395,10 +418,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				A003EC1C1B1E4DD900AE8246 /* ViewController.m in Sources */,
+				A037E8F61B45CB3400DA7961 /* helpViewController.m in Sources */,
 				A003EC191B1E4DD900AE8246 /* AppDelegate.m in Sources */,
 				A0F6CC1B1B44863800460AF3 /* SVScrollView.m in Sources */,
 				A003EC161B1E4DD900AE8246 /* main.m in Sources */,
+				A037E9071B45DB7100DA7961 /* Accelerometer.mm in Sources */,
 				A0F6CBE61B4337D900460AF3 /* SVSlider.m in Sources */,
+				A037E9041B45D9E300DA7961 /* MagnetSensor.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

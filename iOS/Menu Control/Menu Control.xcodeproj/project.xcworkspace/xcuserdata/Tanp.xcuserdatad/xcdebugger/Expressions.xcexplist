@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "-[ViewController updateOffset]:ViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.y_number">
+            </PersistentString>
+            <PersistentString
+               value = "self.y_offset">
+            </PersistentString>
+            <PersistentString
+               value = "self.x_offset">
+            </PersistentString>
+            <PersistentString
+               value = "self.x_number">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ViewController targetCursorChangedByMostion:]:ViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "(x - TARGETOFFSET) * 0.05 * TARGETRATIO">
+            </PersistentString>
+            <PersistentString
+               value = "self.targetCursor">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
