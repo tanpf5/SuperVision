@@ -17,7 +17,7 @@
 namespace SuperVision
 {
     
-    NSString *const CBDTriggerPressedNotification = @"CBTriggerPressedNotification";
+    NSString *const MagnetSensorTriggerDidPressNotification = @"MagnetSensorTriggerDidPressNotification";
     
     class MagnetSensor
     {

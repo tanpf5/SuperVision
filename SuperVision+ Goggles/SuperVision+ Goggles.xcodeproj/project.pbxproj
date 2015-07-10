@@ -9,17 +9,30 @@
 /* Begin PBXBuildFile section */
 		A003EC161B1E4DD900AE8246 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A003EC151B1E4DD900AE8246 /* main.m */; };
 		A003EC191B1E4DD900AE8246 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A003EC181B1E4DD900AE8246 /* AppDelegate.m */; };
-		A003EC1C1B1E4DD900AE8246 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A003EC1B1B1E4DD900AE8246 /* ViewController.m */; };
+		A003EC1C1B1E4DD900AE8246 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = A003EC1B1B1E4DD900AE8246 /* ViewController.mm */; };
 		A003EC1F1B1E4DD900AE8246 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A003EC1D1B1E4DD900AE8246 /* Main.storyboard */; };
 		A003EC211B1E4DD900AE8246 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A003EC201B1E4DD900AE8246 /* Images.xcassets */; };
 		A003EC241B1E4DD900AE8246 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A003EC221B1E4DD900AE8246 /* LaunchScreen.xib */; };
 		A003EC301B1E4DDA00AE8246 /* SuperVision__GogglesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A003EC2F1B1E4DDA00AE8246 /* SuperVision__GogglesTests.m */; };
+		A00D071F1B4AF9DA00ED27FD /* Gyro.mm in Sources */ = {isa = PBXBuildFile; fileRef = A00D071D1B4AF9DA00ED27FD /* Gyro.mm */; };
+		A00D07251B4DB18C00ED27FD /* HelpViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = A00D07231B4DB18C00ED27FD /* HelpViewController.mm */; };
+		A00D07261B4DB18C00ED27FD /* HelpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A00D07241B4DB18C00ED27FD /* HelpViewController.xib */; };
+		A00D072D1B4DB47300ED27FD /* undo.png in Resources */ = {isa = PBXBuildFile; fileRef = A00D072C1B4DB47300ED27FD /* undo.png */; };
+		A00D07301B4EB9A600ED27FD /* SVHelpScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = A00D072F1B4EB9A600ED27FD /* SVHelpScrollView.m */; };
 		A037E8F21B4583FA00DA7961 /* SV_GoggleIcon-original.png in Resources */ = {isa = PBXBuildFile; fileRef = A037E8F11B4583FA00DA7961 /* SV_GoggleIcon-original.png */; };
-		A037E8F61B45CB3400DA7961 /* helpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A037E8F41B45CB3400DA7961 /* helpViewController.m */; };
-		A037E8F71B45CB3400DA7961 /* helpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A037E8F51B45CB3400DA7961 /* helpViewController.xib */; };
 		A037E9041B45D9E300DA7961 /* MagnetSensor.mm in Sources */ = {isa = PBXBuildFile; fileRef = A037E9031B45D9E300DA7961 /* MagnetSensor.mm */; };
 		A037E9071B45DB7100DA7961 /* Accelerometer.mm in Sources */ = {isa = PBXBuildFile; fileRef = A037E9051B45DB7100DA7961 /* Accelerometer.mm */; };
 		A037E9091B45DBDC00DA7961 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A037E9081B45DBDC00DA7961 /* CoreMotion.framework */; };
+		A05C11021B4EF66500B409B6 /* ImageProcess.mm in Sources */ = {isa = PBXBuildFile; fileRef = A05C11011B4EF66500B409B6 /* ImageProcess.mm */; };
+		A05C11041B4EF6E400B409B6 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A05C11031B4EF6E400B409B6 /* opencv2.framework */; };
+		A05C11061B4EF84400B409B6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A05C11051B4EF84400B409B6 /* Foundation.framework */; };
+		A05C11081B4F0BEE00B409B6 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A05C11071B4F0BEE00B409B6 /* CoreMedia.framework */; };
+		A05C110A1B4F0BF600B409B6 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A05C11091B4F0BF600B409B6 /* CoreVideo.framework */; };
+		A05C110C1B4F0BFD00B409B6 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A05C110B1B4F0BFD00B409B6 /* ImageIO.framework */; };
+		A05C110E1B504C5400B409B6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A05C110D1B504C5400B409B6 /* CoreGraphics.framework */; };
+		A05C11101B504C9600B409B6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A05C110F1B504C9600B409B6 /* UIKit.framework */; };
+		A05C11121B504D5C00B409B6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A05C11111B504D5C00B409B6 /* QuartzCore.framework */; };
+		A05C11161B50557F00B409B6 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A05C11151B50557F00B409B6 /* GLKit.framework */; };
 		A0F6CBD41B432C7C00460AF3 /* empty.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CBC71B432C7C00460AF3 /* empty.png */; };
 		A0F6CBD51B432C7C00460AF3 /* exit.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CBC81B432C7C00460AF3 /* exit.png */; };
 		A0F6CBD61B432C7C00460AF3 /* flashlight_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CBC91B432C7C00460AF3 /* flashlight_selected.png */; };
@@ -61,22 +74,38 @@
 		A003EC171B1E4DD900AE8246 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A003EC181B1E4DD900AE8246 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		A003EC1A1B1E4DD900AE8246 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		A003EC1B1B1E4DD900AE8246 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		A003EC1B1B1E4DD900AE8246 /* ViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
 		A003EC1E1B1E4DD900AE8246 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A003EC201B1E4DD900AE8246 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		A003EC231B1E4DD900AE8246 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		A003EC291B1E4DDA00AE8246 /* SuperVision+ GogglesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SuperVision+ GogglesTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A003EC2E1B1E4DDA00AE8246 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A003EC2F1B1E4DDA00AE8246 /* SuperVision__GogglesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SuperVision__GogglesTests.m; sourceTree = "<group>"; };
+		A00D071D1B4AF9DA00ED27FD /* Gyro.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Gyro.mm; path = Sections/Motion/Gyro.mm; sourceTree = "<group>"; };
+		A00D071E1B4AF9DA00ED27FD /* Gyro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gyro.h; path = Sections/Motion/Gyro.h; sourceTree = "<group>"; };
+		A00D07221B4DB18C00ED27FD /* HelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelpViewController.h; path = Sections/Help/HelpViewController.h; sourceTree = "<group>"; };
+		A00D07231B4DB18C00ED27FD /* HelpViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = HelpViewController.mm; path = Sections/Help/HelpViewController.mm; sourceTree = "<group>"; };
+		A00D07241B4DB18C00ED27FD /* HelpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HelpViewController.xib; path = Sections/Help/HelpViewController.xib; sourceTree = "<group>"; };
+		A00D072C1B4DB47300ED27FD /* undo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = undo.png; path = Resources/Images/Buttons/undo.png; sourceTree = "<group>"; };
+		A00D072E1B4EB9A600ED27FD /* SVHelpScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SVHelpScrollView.h; path = Models/SVHelpScrollView.h; sourceTree = "<group>"; };
+		A00D072F1B4EB9A600ED27FD /* SVHelpScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SVHelpScrollView.m; path = Models/SVHelpScrollView.m; sourceTree = "<group>"; };
 		A037E8F11B4583FA00DA7961 /* SV_GoggleIcon-original.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SV_GoggleIcon-original.png"; path = "Resources/Images/Icons/SV_GoggleIcon-original.png"; sourceTree = "<group>"; };
-		A037E8F31B45CB3400DA7961 /* helpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = helpViewController.h; path = Sections/Help/helpViewController.h; sourceTree = "<group>"; };
-		A037E8F41B45CB3400DA7961 /* helpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = helpViewController.m; path = Sections/Help/helpViewController.m; sourceTree = "<group>"; };
-		A037E8F51B45CB3400DA7961 /* helpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = helpViewController.xib; path = Sections/Help/helpViewController.xib; sourceTree = "<group>"; };
 		A037E8FE1B45D91300DA7961 /* MagnetSensor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MagnetSensor.h; path = Sections/Motion/MagnetSensor.h; sourceTree = "<group>"; };
 		A037E9031B45D9E300DA7961 /* MagnetSensor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MagnetSensor.mm; path = Sections/Motion/MagnetSensor.mm; sourceTree = "<group>"; };
 		A037E9051B45DB7100DA7961 /* Accelerometer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Accelerometer.mm; path = Sections/Motion/Accelerometer.mm; sourceTree = "<group>"; };
 		A037E9061B45DB7100DA7961 /* Accelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Accelerometer.h; path = Sections/Motion/Accelerometer.h; sourceTree = "<group>"; };
 		A037E9081B45DBDC00DA7961 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		A05C11001B4EF66500B409B6 /* ImageProcess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageProcess.h; path = "Sections/Image Process/ImageProcess.h"; sourceTree = "<group>"; };
+		A05C11011B4EF66500B409B6 /* ImageProcess.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ImageProcess.mm; path = "Sections/Image Process/ImageProcess.mm"; sourceTree = "<group>"; };
+		A05C11031B4EF6E400B409B6 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = Framework/opencv2.framework; sourceTree = "<group>"; };
+		A05C11051B4EF84400B409B6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		A05C11071B4F0BEE00B409B6 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		A05C11091B4F0BF600B409B6 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		A05C110B1B4F0BFD00B409B6 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		A05C110D1B504C5400B409B6 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		A05C110F1B504C9600B409B6 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		A05C11111B504D5C00B409B6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		A05C11151B50557F00B409B6 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		A0F6CBC71B432C7C00460AF3 /* empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = empty.png; path = Resources/Images/Buttons/empty.png; sourceTree = "<group>"; };
 		A0F6CBC81B432C7C00460AF3 /* exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = exit.png; path = Resources/Images/Buttons/exit.png; sourceTree = "<group>"; };
 		A0F6CBC91B432C7C00460AF3 /* flashlight_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = flashlight_selected.png; path = Resources/Images/Buttons/flashlight_selected.png; sourceTree = "<group>"; };
@@ -108,6 +137,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A05C11161B50557F00B409B6 /* GLKit.framework in Frameworks */,
+				A05C11121B504D5C00B409B6 /* QuartzCore.framework in Frameworks */,
+				A05C11101B504C9600B409B6 /* UIKit.framework in Frameworks */,
+				A05C110E1B504C5400B409B6 /* CoreGraphics.framework in Frameworks */,
+				A05C110C1B4F0BFD00B409B6 /* ImageIO.framework in Frameworks */,
+				A05C110A1B4F0BF600B409B6 /* CoreVideo.framework in Frameworks */,
+				A05C11081B4F0BEE00B409B6 /* CoreMedia.framework in Frameworks */,
+				A05C11061B4EF84400B409B6 /* Foundation.framework in Frameworks */,
+				A05C11041B4EF6E400B409B6 /* opencv2.framework in Frameworks */,
 				A037E9091B45DBDC00DA7961 /* CoreMotion.framework in Frameworks */,
 				A0F6CC111B446FAC00460AF3 /* AVFoundation.framework in Frameworks */,
 			);
@@ -181,6 +219,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		A05C10FF1B4EF64400B409B6 /* Image Process */ = {
+			isa = PBXGroup;
+			children = (
+				A05C11001B4EF66500B409B6 /* ImageProcess.h */,
+				A05C11011B4EF66500B409B6 /* ImageProcess.mm */,
+			);
+			name = "Image Process";
+			sourceTree = "<group>";
+		};
 		A0F0FA9E1B3DA0B5000FC3E9 /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -189,7 +236,7 @@
 				A003EC181B1E4DD900AE8246 /* AppDelegate.m */,
 				A003EC221B1E4DD900AE8246 /* LaunchScreen.xib */,
 				A003EC1A1B1E4DD900AE8246 /* ViewController.h */,
-				A003EC1B1B1E4DD900AE8246 /* ViewController.m */,
+				A003EC1B1B1E4DD900AE8246 /* ViewController.mm */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -199,6 +246,7 @@
 			children = (
 				A0F0FAA11B3DA1EC000FC3E9 /* Motion */,
 				A0F0FAA21B3DA1F8000FC3E9 /* Help */,
+				A05C10FF1B4EF64400B409B6 /* Image Process */,
 			);
 			name = Sections;
 			sourceTree = "<group>";
@@ -208,6 +256,8 @@
 			children = (
 				A0F6CC191B44863800460AF3 /* SVScrollView.h */,
 				A0F6CC1A1B44863800460AF3 /* SVScrollView.m */,
+				A00D072E1B4EB9A600ED27FD /* SVHelpScrollView.h */,
+				A00D072F1B4EB9A600ED27FD /* SVHelpScrollView.m */,
 				A0F6CBE41B4337D900460AF3 /* SVSlider.h */,
 				A0F6CBE51B4337D900460AF3 /* SVSlider.m */,
 			);
@@ -221,6 +271,8 @@
 				A037E9031B45D9E300DA7961 /* MagnetSensor.mm */,
 				A037E9061B45DB7100DA7961 /* Accelerometer.h */,
 				A037E9051B45DB7100DA7961 /* Accelerometer.mm */,
+				A00D071E1B4AF9DA00ED27FD /* Gyro.h */,
+				A00D071D1B4AF9DA00ED27FD /* Gyro.mm */,
 			);
 			name = Motion;
 			sourceTree = "<group>";
@@ -228,9 +280,9 @@
 		A0F0FAA21B3DA1F8000FC3E9 /* Help */ = {
 			isa = PBXGroup;
 			children = (
-				A037E8F31B45CB3400DA7961 /* helpViewController.h */,
-				A037E8F41B45CB3400DA7961 /* helpViewController.m */,
-				A037E8F51B45CB3400DA7961 /* helpViewController.xib */,
+				A00D07221B4DB18C00ED27FD /* HelpViewController.h */,
+				A00D07231B4DB18C00ED27FD /* HelpViewController.mm */,
+				A00D07241B4DB18C00ED27FD /* HelpViewController.xib */,
 			);
 			name = Help;
 			sourceTree = "<group>";
@@ -269,6 +321,7 @@
 		A0F6CBAC1B41E4C700460AF3 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
+				A00D072C1B4DB47300ED27FD /* undo.png */,
 				A0F6CBC71B432C7C00460AF3 /* empty.png */,
 				A0F6CBC81B432C7C00460AF3 /* exit.png */,
 				A0F6CBC91B432C7C00460AF3 /* flashlight_selected.png */,
@@ -289,6 +342,15 @@
 		A0F6CC0F1B446F9100460AF3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A05C11151B50557F00B409B6 /* GLKit.framework */,
+				A05C11111B504D5C00B409B6 /* QuartzCore.framework */,
+				A05C110F1B504C9600B409B6 /* UIKit.framework */,
+				A05C110D1B504C5400B409B6 /* CoreGraphics.framework */,
+				A05C110B1B4F0BFD00B409B6 /* ImageIO.framework */,
+				A05C11091B4F0BF600B409B6 /* CoreVideo.framework */,
+				A05C11071B4F0BEE00B409B6 /* CoreMedia.framework */,
+				A05C11051B4EF84400B409B6 /* Foundation.framework */,
+				A05C11031B4EF6E400B409B6 /* opencv2.framework */,
 				A037E9081B45DBDC00DA7961 /* CoreMotion.framework */,
 				A0F6CC101B446FAC00460AF3 /* AVFoundation.framework */,
 			);
@@ -382,16 +444,17 @@
 				A0F6CBD81B432C7C00460AF3 /* flashoff.png in Resources */,
 				A0F6CC0E1B443AE400460AF3 /* SV_GoggleIcon-60@3x.png in Resources */,
 				A003EC1F1B1E4DD900AE8246 /* Main.storyboard in Resources */,
+				A00D07261B4DB18C00ED27FD /* HelpViewController.xib in Resources */,
 				A0F6CBD91B432C7C00460AF3 /* flashon.png in Resources */,
 				A0F6CBD51B432C7C00460AF3 /* exit.png in Resources */,
 				A0F6CBDE1B432C7C00460AF3 /* slider.png in Resources */,
 				A0F6CC0C1B443AE400460AF3 /* SV_GoggleIcon-40@3x.png in Resources */,
+				A00D072D1B4DB47300ED27FD /* undo.png in Resources */,
 				A0F6CC0A1B443AE400460AF3 /* SV_GoggleIcon-29@3x.png in Resources */,
 				A0F6CBDB1B432C7C00460AF3 /* image_selected.png in Resources */,
 				A0F6CC0D1B443AE400460AF3 /* SV_GoggleIcon-60@2x.png in Resources */,
 				A0F6CBD61B432C7C00460AF3 /* flashlight_selected.png in Resources */,
 				A003EC241B1E4DD900AE8246 /* LaunchScreen.xib in Resources */,
-				A037E8F71B45CB3400DA7961 /* helpViewController.xib in Resources */,
 				A0F6CBDF1B432C7C00460AF3 /* sliderthumb.png in Resources */,
 				A0F6CBDA1B432C7C00460AF3 /* help.png in Resources */,
 				A037E8F21B4583FA00DA7961 /* SV_GoggleIcon-original.png in Resources */,
@@ -417,13 +480,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A003EC1C1B1E4DD900AE8246 /* ViewController.m in Sources */,
-				A037E8F61B45CB3400DA7961 /* helpViewController.m in Sources */,
+				A05C11021B4EF66500B409B6 /* ImageProcess.mm in Sources */,
+				A00D071F1B4AF9DA00ED27FD /* Gyro.mm in Sources */,
+				A00D07301B4EB9A600ED27FD /* SVHelpScrollView.m in Sources */,
+				A003EC1C1B1E4DD900AE8246 /* ViewController.mm in Sources */,
 				A003EC191B1E4DD900AE8246 /* AppDelegate.m in Sources */,
 				A0F6CC1B1B44863800460AF3 /* SVScrollView.m in Sources */,
 				A003EC161B1E4DD900AE8246 /* main.m in Sources */,
 				A037E9071B45DB7100DA7961 /* Accelerometer.mm in Sources */,
 				A0F6CBE61B4337D900460AF3 /* SVSlider.m in Sources */,
+				A00D07251B4DB18C00ED27FD /* HelpViewController.mm in Sources */,
 				A037E9041B45D9E300DA7961 /* MagnetSensor.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -551,6 +617,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Framework",
+				);
 				INFOPLIST_FILE = "SuperVision+ Goggles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -564,6 +634,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Framework",
+				);
 				INFOPLIST_FILE = "SuperVision+ Goggles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

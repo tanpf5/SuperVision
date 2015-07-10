@@ -26,7 +26,6 @@
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="600"/>
                                     </imageView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="eIe-g1-12a" firstAttribute="top" secondItem="Y3e-X7-7nn" secondAttribute="top" id="CKG-Ue-2z1"/>
                                     <constraint firstAttribute="centerX" secondItem="eIe-g1-12a" secondAttribute="centerX" id="Ey5-I8-o7R"/>
@@ -43,7 +42,6 @@
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="600"/>
                                     </imageView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="1dx-fV-AHL" secondAttribute="bottom" id="3l8-gW-3sE"/>
                                     <constraint firstItem="1dx-fV-AHL" firstAttribute="top" secondItem="0gI-NS-mT8" secondAttribute="top" id="Czi-rf-HOE"/>
@@ -138,6 +136,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="infoTapped" destination="vXZ-lx-hvc" eventType="touchUpInside" id="tsw-OA-Nw1"/>
+                                </connections>
                             </button>
                             <button opaque="NO" alpha="0.60000002384185791" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZXk-Cw-zRx">
                                 <rect key="frame" x="127" y="516" width="46" height="46"/>
@@ -154,6 +155,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="infoTapped" destination="vXZ-lx-hvc" eventType="touchUpInside" id="ZNV-s9-byz"/>
+                                </connections>
                             </button>
                             <button opaque="NO" alpha="0.60000002384185791" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HkX-dz-Smk">
                                 <rect key="frame" x="393" y="157" width="46" height="46"/>
@@ -274,7 +278,7 @@
                             <slider opaque="NO" alpha="0.60000002384185791" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.5" maxValue="8" translatesAutoresizingMaskIntoConstraints="NO" id="XB6-9Q-PtT" customClass="SVSlider">
                                 <rect key="frame" x="373" y="285" width="354" height="31"/>
                                 <connections>
-                                    <action selector="zoomLevelChanged:" destination="vXZ-lx-hvc" eventType="valueChanged" id="0CB-bC-Olq"/>
+                                    <action selector="ZoomScaleChanged:" destination="vXZ-lx-hvc" eventType="valueChanged" id="ioR-SR-CDV"/>
                                 </connections>
                             </slider>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kOr-WG-54m">
@@ -296,7 +300,7 @@
                             <slider opaque="NO" alpha="0.59999999999999998" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.5" maxValue="8" translatesAutoresizingMaskIntoConstraints="NO" id="ezA-fb-eUd" customClass="SVSlider">
                                 <rect key="frame" x="73" y="285" width="354" height="31"/>
                                 <connections>
-                                    <action selector="zoomLevelChanged:" destination="vXZ-lx-hvc" eventType="valueChanged" id="Ink-Bb-DtR"/>
+                                    <action selector="ZoomScaleChanged:" destination="vXZ-lx-hvc" eventType="valueChanged" id="R3P-iE-Z5K"/>
                                 </connections>
                             </slider>
                         </subviews>

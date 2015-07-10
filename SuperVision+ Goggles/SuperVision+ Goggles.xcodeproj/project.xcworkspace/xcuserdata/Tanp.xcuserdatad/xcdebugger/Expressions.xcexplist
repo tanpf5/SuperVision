@@ -3,10 +3,122 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "-[SVScrollView changeImageViewFrame:]:SVScrollView.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.imageView.frame">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ViewController zoomSliderChanged:]:ViewController.mm">
+      </ContextState>
+      <ContextState
          contextName = "-[SVScrollView handleDoubleTap:]:SVScrollView.m">
          <PersistentStrings>
             <PersistentString
                value = "self.touchDelegate">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "SuperVision::Gyro::valueChanged(bool):Gyro.mm">
+         <PersistentStrings>
+            <PersistentString
+               value = "second-_x_offset">
+            </PersistentString>
+            <PersistentString
+               value = "_x_number">
+            </PersistentString>
+            <PersistentString
+               value = "_x_offset">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ViewController ZoomScaleChanged:]:ViewController.mm">
+         <PersistentStrings>
+            <PersistentString
+               value = "slider.value">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[SVHelpScrollView initialImageView]:SVHelpScrollView.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.imageView.frame">
+            </PersistentString>
+            <PersistentString
+               value = "self.bounds.size.height">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ViewController viewDidLoad]:ViewController.mm">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.zoomSliderLeft.value">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[SVScrollView initialSettings]:SVScrollView.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[HelpViewController initialView]:HelpViewController.mm">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.scrollView.minimumZoomScale">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[SVScrollView initWithCoder:]:SVScrollView.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.gestureRecognizer">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ViewController targetCursorChanged:]:ViewController.mm">
+      </ContextState>
+      <ContextState
+         contextName = "-[ViewController setZoomScale:]:ViewController.mm">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.zoomSliderLeft.value">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "SuperVision::Gyro::computeOffsets():Gyro.mm">
+         <PersistentStrings>
+            <PersistentString
+               value = "_x_offset">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ViewController initialSettings]:ViewController.mm">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.scrollViewLeft.imageView.frame.size.width">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ViewController captureOutput:didOutputSampleBuffer:fromConnection:]:ViewController.mm">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.offsetArray">
+            </PersistentString>
+            <PersistentString
+               value = "self.motionX">
+            </PersistentString>
+            <PersistentString
+               value = "self.motionY">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

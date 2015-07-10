@@ -70,7 +70,9 @@ namespace SuperVision
         if (minimums[0] < 30.0f && maximums[1] > 130.0f)
         {
             _sampleIndex = 0;
-            [[NSNotificationCenter defaultCenter] postNotificationName:CBDTriggerPressedNotification object:nil];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:MagnetSensorTriggerDidPressNotification object:nil];
+            });
         }
     }
     

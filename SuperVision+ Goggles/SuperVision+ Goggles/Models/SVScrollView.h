@@ -17,4 +17,8 @@
 @property (strong, nonatomic) UIImageView *imageView;
 //  delegate to the view controller
 @property (assign, nonatomic) id<SVScrollViewTouchDelegate> touchDelegate;
+
+//  set the image in imageview
+- (void)setImage:(UIImage *)image;
+- (void)changeImageViewFrame:(CGRect)frame;
 @end

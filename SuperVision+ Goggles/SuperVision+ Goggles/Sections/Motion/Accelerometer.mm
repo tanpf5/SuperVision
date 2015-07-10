@@ -116,7 +116,7 @@ namespace SuperVision
         {
             NSLog(@"n = %d", n);
             _sampleIndex = 0;
-            [[NSNotificationCenter defaultCenter] postNotificationName:DoubleTapsNotification object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:AccelerometerDidDoubleTapNotification object:nil];
         }
     }
     

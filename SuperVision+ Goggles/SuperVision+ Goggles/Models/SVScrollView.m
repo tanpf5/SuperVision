@@ -13,35 +13,56 @@
 @synthesize imageView;
 @synthesize touchDelegate;
 
-- (void)viewDidLoad {
-
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    if ((self = [super initWithCoder:aDecoder])) {
+        [self initialSettings];
+        [self initialImageView];
+    }
+    return self;
 }
 
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    [self initalSettings];
+- (void)initialSettings {
+    self.delegate = self; // events will trigger the overload functions
+    [self setScrollEnabled:NO]; // disable scroll
+    self.maximumZoomScale = 8;
+    [self setZoomScale:1];
+    // add double tap gesture
     UITapGestureRecognizer *doubleTapGesture = [[UITapGestureRecognizer alloc]
                                                 initWithTarget:self
                                                 action:@selector
                                                 (scrollViewDoubleTapped:)];
     [doubleTapGesture setNumberOfTapsRequired:2];
     [self addGestureRecognizer:doubleTapGesture];
-    [self initImageView];
+    // disable pinch and pan
+    for (UIGestureRecognizer* recog in self.gestureRecognizers) {
+        if ([recog isKindOfClass:[UIPanGestureRecognizer class]])
+            [self removeGestureRecognizer:recog];
+        if ([recog isKindOfClass:[UIPinchGestureRecognizer class]] )
+            [self removeGestureRecognizer:recog];
+    }
 }
 
-- (void)initalSettings {
-    self.delegate = self; // events will trigger the overload functions
-    [self setScrollEnabled:NO]; // disable scroll
-    self.minimumZoomScale = 0.5;
-    self.maximumZoomScale = 8;
-    [self setZoomScale:1];
-}
-
-- (void)initImageView {
+- (void)initialImageView {
     self.imageView = self.subviews[0];
-    self.imageView.image = [UIImage imageNamed:@"SV_GoggleIcon-60@3x.png"];
     [self.imageView setContentMode:UIViewContentModeCenter];
+}
+
+- (void)changeImageViewFrame:(CGRect) frame {
+    self.contentSize = frame.size;
+    [self.imageView setFrame:frame];
+    [self adjustImageViewCenter];
+}
+
+- (void)adjustImageViewCenter {
+    CGFloat offsetX = (self.bounds.size.width > self.contentSize.width)?
+    (self.bounds.size.width - self.contentSize.width) * 0.5 : 0.0;
+    CGFloat offsetY = (self.bounds.size.height > self.contentSize.height)?
+    (self.bounds.size.height - self.contentSize.height) * 0.5: 0.0;
+    self.imageView.center = CGPointMake(self.contentSize.width * 0.5 + offsetX, self.contentSize.height*0.5 + offsetY);
+}
+
+- (void)setImage:(UIImage *)image {
+    [self.imageView performSelectorOnMainThread:@selector(setImage:) withObject:image waitUntilDone:YES];
 }
 
 - (void)scrollViewDoubleTapped:(UIGestureRecognizer *)gesture {

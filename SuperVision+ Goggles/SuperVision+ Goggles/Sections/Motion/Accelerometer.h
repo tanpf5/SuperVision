@@ -17,7 +17,7 @@
 namespace SuperVision
 {
     
-    NSString *const DoubleTapsNotification = @"DoubleTapsNotification";
+    NSString *const AccelerometerDidDoubleTapNotification = @"AccelerometerDidDoubleTapNotification";
     
     class Accelerometer
     {
