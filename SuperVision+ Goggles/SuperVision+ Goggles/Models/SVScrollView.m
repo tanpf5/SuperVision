@@ -81,8 +81,4 @@
     return self.imageView;
 }
 
-- (void)scrollViewDidZoom:(UIScrollView *)scrollView {
-    [self scrollToCenter];
-    [self.touchDelegate scrollViewDidZoom:scrollView];
-}
 @end

@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 @protocol SVScrollViewTouchDelegate
 - (void)scrollViewDoubleTapped:(UIGestureRecognizer *)gesture;
-- (void)scrollViewDidZoom:(UIScrollView *)scrollView;
 @end
 
 @interface SVScrollView : UIScrollView<UIScrollViewDelegate>

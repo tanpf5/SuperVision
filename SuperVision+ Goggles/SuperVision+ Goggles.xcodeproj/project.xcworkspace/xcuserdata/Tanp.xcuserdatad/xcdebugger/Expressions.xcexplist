@@ -44,17 +44,6 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[SVHelpScrollView initialImageView]:SVHelpScrollView.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.imageView.frame">
-            </PersistentString>
-            <PersistentString
-               value = "self.bounds.size.height">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "-[ViewController viewDidLoad]:ViewController.mm">
          <PersistentStrings>
             <PersistentString
@@ -63,13 +52,19 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[SVScrollView initialSettings]:SVScrollView.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[HelpViewController initialView]:HelpViewController.mm">
+         contextName = "-[SVHelpScrollView initialImageView]:SVHelpScrollView.m">
          <PersistentStrings>
             <PersistentString
-               value = "self.scrollView.minimumZoomScale">
+               value = "self.imageView.frame">
+            </PersistentString>
+            <PersistentString
+               value = "self.bounds.size.height">
+            </PersistentString>
+            <PersistentString
+               value = "self.height">
+            </PersistentString>
+            <PersistentString
+               value = "self.width">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -80,6 +75,17 @@
                value = "self.gestureRecognizer">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[HelpViewController initialView]:HelpViewController.mm">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.scrollView.minimumZoomScale">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[SVScrollView initialSettings]:SVScrollView.m">
       </ContextState>
       <ContextState
          contextName = "-[ViewController targetCursorChanged:]:ViewController.mm">
@@ -119,6 +125,14 @@
             </PersistentString>
             <PersistentString
                value = "self.motionY">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ViewController zoomControl]:ViewController.mm">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.currentZoomScale">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

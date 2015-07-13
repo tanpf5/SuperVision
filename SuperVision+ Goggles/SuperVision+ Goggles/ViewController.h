@@ -22,8 +22,6 @@
 #import "Accelerometer.h"
 #import "Gyro.h"
 
-@class ImageProcess;
-
 @interface ViewController : UIViewController<AVCaptureVideoDataOutputSampleBufferDelegate, SVScrollViewTouchDelegate>
 
 //  User Interface
@@ -55,7 +53,7 @@
 @property (strong, nonatomic) IBOutlet SVSlider *zoomSliderLeft;
 @property (strong, nonatomic) IBOutlet SVSlider *zoomSliderRight;
 //  current ZoomScale
-@property (assign, nonatomic) float currentZoomScale;
+@property (nonatomic) float currentZoomScale;
 
 // messages
 @property (strong, nonatomic) IBOutlet UILabel *messageLeft;
@@ -66,59 +64,61 @@
 
 //  Capture
 // capture session is used to control frame flow from camerra
-@property (nonatomic, strong) AVCaptureSession *captureSession;
+@property (strong, nonatomic) AVCaptureSession *captureSession;
 //  image process logic class
-@property (nonatomic, strong) ImageProcess *imageProcess;
+@property (strong, nonatomic) ImageProcess *imageProcess;
 //  a state to indicate whether to hide all controls;
-@property (nonatomic, strong) NSString *currentResolution;
+@property (strong, nonatomic) NSString *currentResolution;
 // lock state for application
-@property (nonatomic, assign) BOOL isLocked;
+@property (nonatomic, getter=isLocked) BOOL locked;
 //  to change it 1080p for ip4S
-@property (nonatomic, assign) BOOL beforeLock;
+@property (nonatomic, getter=isBeforeLocked) BOOL beforeLocked;
 // count the current frame number of image number, starts with 0
-@property (nonatomic, assign) int imageNo;
+@property (nonatomic) int imageNo;
 // accumulate the motion vector on x and y axis
-@property (nonatomic, assign) float motionX;
-@property (nonatomic, assign) float motionY;
+@property (nonatomic) float motionX;
+@property (nonatomic) float motionY;
 // feature detection window size
-@property (nonatomic, assign) int featureWindowWidth;
-@property (nonatomic, assign) int featureWindowHeight;
+@property (nonatomic) int featureWindowWidth;
+@property (nonatomic) int featureWindowHeight;
 /* store the highest variance's image */
-@property (nonatomic, strong) UIImage *highVarImg;
-@property (nonatomic, assign) double maxVariance;
-@property (nonatomic, assign) CGImageRef maxVarImg;
-@property (nonatomic, assign) BOOL adjustingFocus;
-@property (nonatomic, assign) int lockDelay;
+@property (strong, nonatomic) UIImage *highVarImg;
+@property (nonatomic) double maxVariance;
+@property (nonatomic) CGImageRef maxVarImg;
+@property (nonatomic) BOOL adjustingFocus;
+@property (nonatomic) int lockDelay;
 //  offset array
-@property (nonatomic, strong) NSMutableArray* offsetArray;
+@property (strong, nonatomic) NSMutableArray* offsetArray;
 // release stablization
-@property (assign, nonatomic) BOOL isStabilizationEnable;
-@property (assign, nonatomic) BOOL releasing;
-@property (assign, nonatomic) NSInteger increasing;
-@property (assign, nonatomic) float move_x;
-@property (assign, nonatomic) float move_y;
+@property (nonatomic, getter=isStabilizationEnabled) BOOL stabilizationEnabled;
+@property (nonatomic, getter=isBeingReleased) BOOL beingReleased;
+@property (nonatomic) NSInteger increasing;
+@property (nonatomic) float move_x;
+@property (nonatomic) float move_y;
 
 //  User Interface Control
-@property (assign, nonatomic) BOOL isMenuHidden;
-@property (assign, nonatomic) BOOL isControlHidden;
-@property (assign, nonatomic) BOOL isFlashOn;
-@property (assign, nonatomic) BOOL isImageModeOn;
+@property (nonatomic, getter=isMenuHidden) BOOL menuHidden;
+@property (nonatomic, getter=isControlHidden) BOOL controlHidden;
+@property (nonatomic, getter=isFlashOn) BOOL flashOn;
+@property (nonatomic, getter=isImageModeOn) BOOL imageModeOn;
 // Menu Target Control
-@property (assign, nonatomic) BOOL isZoomTargetted;
-@property (assign, nonatomic) BOOL isFlashTargetted;
-@property (assign, nonatomic) BOOL isImageTargetted;
-@property (assign, nonatomic) BOOL isExitTargetted;
-@property (assign, nonatomic) float targetCursor;
-@property (assign, nonatomic) BOOL zoomIsSelected;
+@property (nonatomic, getter=isZoomTargetted) BOOL zoomTargetted;
+@property (nonatomic, getter=isFlashTargetted) BOOL flashTargetted;
+@property (nonatomic, getter=isImageTargetted) BOOL imageTargetted;
+@property (nonatomic, getter=isExitTargetted) BOOL exitTargetted;
+@property (nonatomic) float targetCursor;
+@property (nonatomic, getter=isZoomSelected) BOOL zoomSelected;
+// Quickly Zoom Out
+@property (nonatomic, getter=isZoomOutModeOn) BOOL zoomOutModeOn;
 
 //  Motion
 @property (strong, nonatomic) CMMotionManager * motionManager;
 // Magnet
-@property (assign, nonatomic) SuperVision::MagnetSensor * magnetSensor;
+@property (nonatomic) SuperVision::MagnetSensor * magnetSensor;
 // Accelerometer
-@property (assign, nonatomic) SuperVision::Accelerometer * accelerometer;
+@property (nonatomic) SuperVision::Accelerometer * accelerometer;
 // Gyro
-@property (assign, nonatomic) SuperVision::Gyro * gyro;
+@property (nonatomic) SuperVision::Gyro * gyro;
 
 @end
 

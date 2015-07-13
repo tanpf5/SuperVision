@@ -23,6 +23,7 @@
 //  menu target
 #define TARGET_INTERVAL 4
 #define TARGETRATIO 3
+#define ZOOMRATIO 4
 
 //  release stablization
 #define RELEASE_TIME 30 //frame
@@ -43,84 +44,13 @@
 @end
 
 @implementation ViewController
-//  User Interface
-// control
-@synthesize isMenuHidden; // all menu items
-@synthesize isControlHidden; // all buttons
-@synthesize isFlashOn;
-@synthesize isImageModeOn;
-// menu target control
-@synthesize isZoomTargetted;
-@synthesize isFlashTargetted;
-@synthesize isImageTargetted;
-@synthesize isExitTargetted;
-@synthesize targetCursor;
-@synthesize zoomIsSelected;
-
-
-// scroll views
-@synthesize scrollViewLeft;
-@synthesize scrollViewRight;
-
-// menu items
-@synthesize zoomItemLeft;
-@synthesize zoomItemRight;
-@synthesize flashItemLeft;
-@synthesize flashItemRight;
-@synthesize imageItemLeft;
-@synthesize imageItemRight;
-@synthesize exitItemLeft;
-@synthesize exitItemRight;
-
-// buttons
-@synthesize flashButtonLeft;
-@synthesize flashButtonRight;
-@synthesize imageButtonLeft;
-@synthesize imageButtonRight;
-@synthesize infoButtonLeft;
-@synthesize infoButtonRight;
-
-// zoom sliders
-@synthesize sliderBackgroundLeft;
-@synthesize sliderBackgroundRight;
-@synthesize zoomSliderLeft;
-@synthesize zoomSliderRight;
-@synthesize currentZoomScale;
-
-// messages
-@synthesize messageLeft;
-@synthesize messageRight;
-
-//  HelperView
-@synthesize helpViewController;
-
-//  Capture
-@synthesize captureSession;
-@synthesize isLocked;
-@synthesize beforeLock;
-@synthesize imageNo;
-@synthesize motionX;
-@synthesize motionY;
-@synthesize featureWindowHeight;
-@synthesize featureWindowWidth;
-@synthesize highVarImg;
-@synthesize maxVariance;
-@synthesize maxVarImg;
-@synthesize adjustingFocus;
-@synthesize lockDelay;
-@synthesize offsetArray;
-//  Stablization
-@synthesize isStabilizationEnable;
-@synthesize releasing;
-@synthesize increasing;
-@synthesize move_x;
-@synthesize move_y;
 
 #pragma mark -
 #pragma mark Initial Functions
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self firstLaunch];
     [self initialView];
     [self initialSettings];
     [self initialCapture];
@@ -128,8 +58,8 @@
 }
 
 - (void)initialView {
-    self.isMenuHidden = true;
-    self.isControlHidden = true;
+    self.menuHidden = true;
+    self.controlHidden = true;
     [self hideMenuAndControl];
 }
 
@@ -139,15 +69,18 @@
     // set initial zoom level
     [self setZoomScale:1];
     // set initial controls
-    self.isFlashOn = false;
-    self.isImageModeOn = false;
-    self.zoomIsSelected = false;
-    [self.scrollViewLeft changeImageViewFrame:CGRectMake(0, 0, 1920, 1080)];
+    self.flashOn = false;
+    self.imageModeOn = false;
+    self.zoomSelected = false;
+    self.zoomOutModeOn = false;
+    // set min zoom scale
+    /*[self.scrollViewLeft changeImageViewFrame:CGRectMake(0, 0, 1920, 1080)];
     [self.scrollViewRight changeImageViewFrame:CGRectMake(0, 0, 1920, 1080)];
     float viewScale = fmax(ScreenWidth / self.scrollViewLeft.imageView.frame.size.width,
                            ScreenHeight / self.scrollViewLeft.imageView.frame.size.height);
     
-    [self setMinimalZoomScale:viewScale];
+    [self setMinimalZoomScale:viewScale];*/
+    [self setMinimalZoomScale:0.5];
     self.imageProcess = [[ImageProcess alloc] init];
     self.offsetArray = [[NSMutableArray alloc] init];
     if ([self isIphone4]) {
@@ -162,10 +95,6 @@
         self.lockDelay = 10;
     } else {
         self.currentResolution = OTHERRESOLUTION;
-        [self.scrollViewLeft setZoomScale:1];
-        [self.scrollViewRight setZoomScale:1];
-        [self.zoomSliderRight setValue:1];
-        [self.zoomSliderRight setValue:1];
         self.featureWindowWidth = 284;
         self.featureWindowHeight = 320;
         [self.imageProcess setMaxFeatureNumber:20];
@@ -226,6 +155,21 @@
     self.gyro = new SuperVision::Gyro();
 }
 
+- (void)firstLaunch {
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"hasPerformedFirstLaunch"]) {
+        // On first launch, this block will execute
+        [self showHelpViewController];
+        NSLog(@"firstlaunch");
+        // Set the "hasPerformedFirstLaunch" key so this block won't execute again
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hasPerformedFirstLaunch"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    else {
+        // On subsequent launches, this block will execute
+        NSLog(@"notfirstlaunch");
+    }
+}
+
 #pragma mark -
 #pragma mark Capture Management
 
@@ -265,14 +209,14 @@
 }
 
 - (void)startReleaseStabilization {
-    self.releasing = true;
+    self.beingReleased = true;
     self.increasing = 0;
     self.move_x = self.motionX / RELEASE_TIME;
     self.move_y = self.motionY / RELEASE_TIME;
 }
 
 - (void)endReleaseStabilization {
-    self.releasing = false;
+    self.beingReleased = false;
 }
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput
@@ -315,7 +259,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     CGContextRelease(context);
     CGColorSpaceRelease(colorSpace);
     
-    if (self.beforeLock) {
+    if (self.isBeforeLocked) {
         
         CGImageRef processCGImageRef = CGImageCreateWithImageInRect(originalCGImage, CGRectMake(width/2 - self.featureWindowWidth/2, height/2 - self.featureWindowHeight/2, self.featureWindowWidth, self.featureWindowHeight));
         // we crop a part of cgimage to uiimage to do feature detect and track.
@@ -332,12 +276,12 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                 //[self adjustForHighResolution];
                 [self.scrollViewLeft setImage:self.highVarImg];
                 [self.scrollViewRight setImage:self.highVarImg];
-                self.isLocked = true;
+                self.locked = true;
                 //[self.scrollViewLeft setContentOffset:self.correctContentOffset animated:NO];
                 //[self.scrollViewRight setContentOffset:self.correctContentOffset animated:NO];
                 self.maxVariance = 0;
             } else {
-                self.isLocked = true;
+                self.locked = true;
                 [self.scrollViewLeft setImage:self.highVarImg];
                 [self.scrollViewRight setImage:self.highVarImg];
                 self.maxVariance = 0;
@@ -394,16 +338,16 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                 mean_y /= [self.offsetArray count];
                 //NSLog(@"x = %.05f, y = %.05f", self.motionX, self.motionY);
                 //NSLog(@"x = %.05f, y = %.05f, mean_x = %.05f, mean_y = %.05f", motionVector.x, motionVector.y, mean_x, mean_y);
-                if (fabs(mean_x) < MEAN_STABLE_THRESHOLD_LEFT_RIGHT && fabs(mean_y) < MEAN_STABLE_THRESHOLD_UP_DOWN && !self.releasing) {
-                    if (!self.isStabilizationEnable) {
-                        self.isStabilizationEnable = true;
+                if (fabs(mean_x) < MEAN_STABLE_THRESHOLD_LEFT_RIGHT && fabs(mean_y) < MEAN_STABLE_THRESHOLD_UP_DOWN && !self.isBeingReleased) {
+                    if (!self.isStabilizationEnabled) {
+                        self.stabilizationEnabled = true;
                         //[self displayMessage:@"start stable"];
                         [self reSet];
                     }
                 }
                 if (fabs(mean_x) > MEAN_NOT_STABLE_THRESHOLD_LEFT_RIGHT || fabs(mean_y) > MEAN_NOT_STABLE_THRESHOLD_UP_DOWN || fabs(motionVector.x) > MOVEMENT_LEFT_RIGHT / sqrt(self.currentZoomScale) || fabs(motionVector.y) > MOVEMENT_UP_DOWN / sqrt(self.currentZoomScale) || fabs(self.motionX) > MOVEMENT_THRESHOLD_LEFT_RIGHT || fabs(self.motionY) > MOVEMENT_THRESHOLD_UP_DOWN) {
-                    if (self.isStabilizationEnable) {
-                        self.isStabilizationEnable = false;
+                    if (self.isStabilizationEnabled) {
+                        self.stabilizationEnabled = false;
                         //[self displayMessage:@"end stable"];
                         [self startReleaseStabilization];
                     }
@@ -412,7 +356,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
             
             
             //  if stabilization function is disabled
-            if (self.releasing) {
+            if (self.isBeingReleased) {
                 CGRect windowBounds = [[UIScreen mainScreen] bounds];
                 ++self.increasing;
                 float x = self.move_x * (RELEASE_TIME - self.increasing);
@@ -434,7 +378,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                     [self endReleaseStabilization];
                 }
             } else {
-                if (!self.isStabilizationEnable) {
+                if (!self.isStabilizationEnabled) {
                     [self.scrollViewLeft setImage:originalUIImage];
                     [self.scrollViewRight setImage:originalUIImage];
                 }
@@ -524,7 +468,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         [self.flashButtonRight setSelected:YES];
         [self displayMessage:@"Turned on"];
     }
-    self.isFlashOn = !self.isFlashOn;
+    self.flashOn = !_flashOn;
 }
 
 - (void)turnFlashOn {
@@ -563,7 +507,12 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         [self displayMessage:@"Black and white"];
         [self messageChangeColor:[UIColor whiteColor]];
     }
-    self.isImageModeOn = !self.isImageModeOn;
+    self.imageModeOn = !_imageModeOn;
+}
+
+- (void) messageChangeText:(NSString *)text {
+    self.messageLeft.text = text;
+    self.messageRight.text = text;
 }
 
 - (void) messageChangeColor:(UIColor *)color {
@@ -578,8 +527,8 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 - (IBAction)freezeScreen {
     // unlock screen
     if (self.isLocked) {
-        self.beforeLock = false;
-        self.isLocked = false;
+        self.beforeLocked = false;
+        self.locked = false;
         [self reSet];
         /*if ([self isIphone4]) {
             self.currentResolution = IP4RESOLUTION;
@@ -594,8 +543,8 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     }
     // lock screen
     else {
-        self.isLocked = false;
-        self.beforeLock = true;
+        self.locked = false;
+        self.beforeLocked = true;
         [self reSet];
         /*if ([self isIphone4]) {
             //  1080p
@@ -795,14 +744,14 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     //  zoom in/out
     if (self.isZoomTargetted) {
         [self freezeScreen];
-        if (self.zoomIsSelected) {
-            self.zoomIsSelected = false;
+        if (self.isZoomSelected) {
+            self.zoomSelected = false;
             [self stopGyroUpAndDown];
             [self startGyroLeftAndRight];
             [self showMenuExceptZoom];
             [self exitMenu];
         } else {
-            self.zoomIsSelected = true;
+            self.zoomSelected = true;
             [self hideMenuExceptZoom];
             [self stopGyroLeftAndRight];
             [self startGyroUpAndDown];
@@ -828,19 +777,40 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
      }
 }
 
+- (void) zoomControl {
+    if (self.isZoomOutModeOn) {
+        [self displayMessage:@"Normal Mode"];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.zoomSliderLeft setValue:self.currentZoomScale animated:YES];
+            [self.zoomSliderRight setValue:self.currentZoomScale animated:YES];
+            [self.scrollViewLeft setZoomScale:self.currentZoomScale animated:YES];
+            [self.scrollViewRight setZoomScale:self.currentZoomScale animated:YES];
+        });
+        
+    } else {
+        [self displayMessage:@"Zoom Mode"];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.zoomSliderLeft setValue:0.5 animated:YES];
+            [self.zoomSliderRight setValue:0.5 animated:YES];
+            [self.scrollViewLeft setZoomScale:0.5 animated:YES];
+            [self.scrollViewRight setZoomScale:0.5 animated:YES];
+        });
+    }
+    self.zoomOutModeOn = !_zoomOutModeOn;
+}
+
 - (void)enterMenu {
     // stop acc
     [self stopAccelerometer];
     // start gyro
     [self startGyro];
     [self resetTargetCursor];
-    [self checkTargetCursor];
-    self.isMenuHidden = false;
+    self.menuHidden = false;
     [self showMenuExceptZoom];
 }
 
 - (void)exitMenu {
-    self.isMenuHidden = true;
+    self.menuHidden = true;
     [self hideMessage];
     [self hideMenu];
     // stop gyro
@@ -851,121 +821,12 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 
 - (void) resetTargetCursor {
     // target at zoom
-    self.messageLeft.text = @"Zoom";
-    self.messageRight.text = @"Zoom";
-    self.isZoomTargetted = true;
-    self.isFlashTargetted = false;
-    self.isImageTargetted = false;
-    self.isExitTargetted = false;
+    [self messageChangeText:@"Zoom"];
+    self.zoomTargetted = true;
+    self.flashTargetted = false;
+    self.imageTargetted = false;
+    self.exitTargetted = false;
     self.targetCursor = 1.0;
-}
-
-// notification is in main thread, so this function also run in main thread
-- (void)checkTargetCursor {
-    if (self.isZoomTargetted) {
-        // set message zoom
-        self.messageLeft.text = @"Zoom";
-        self.messageRight.text = @"Zoom";
-        // zoom
-        [self.zoomItemLeft setBackgroundColor:[UIColor redColor]];
-        [self.zoomItemRight setBackgroundColor:[UIColor redColor]];
-        self.zoomItemLeft.layer.borderColor = [[UIColor redColor] CGColor];
-        self.zoomItemRight.layer.borderColor = [[UIColor redColor] CGColor];
-        // flash
-        [self.flashItemLeft setBackgroundColor:nil];
-        [self.flashItemRight setBackgroundColor:nil];
-        self.flashItemLeft.layer.borderColor = nil;
-        self.flashItemRight.layer.borderColor = nil;
-        // image
-        [self.imageItemLeft setBackgroundColor:nil];
-        [self.imageItemRight setBackgroundColor:nil];
-        self.imageItemLeft.layer.borderColor = nil;
-        self.imageItemRight.layer.borderColor = nil;
-        // exit
-        [self.exitItemLeft setBackgroundColor:nil];
-        [self.exitItemRight setBackgroundColor:nil];
-        self.exitItemLeft.layer.borderColor = nil;
-        self.exitItemRight.layer.borderColor = nil;
-        return;
-    }
-    if (self.isFlashTargetted) {
-        // set message flashlight
-        self.messageLeft.text = @"Flashlight";
-        self.messageRight.text = @"Flashlight";
-        // zoom
-        [self.zoomItemLeft setBackgroundColor:nil];
-        [self.zoomItemRight setBackgroundColor:nil];
-        self.zoomItemLeft.layer.borderColor = nil;
-        self.zoomItemRight.layer.borderColor = nil;
-        // flash
-        [self.flashItemLeft setBackgroundColor:[UIColor redColor]];
-        [self.flashItemRight setBackgroundColor:[UIColor redColor]];
-        self.flashItemLeft.layer.borderColor = [[UIColor redColor] CGColor];
-        self.flashItemRight.layer.borderColor = [[UIColor redColor] CGColor];
-        // image
-        [self.imageItemLeft setBackgroundColor:nil];
-        [self.imageItemRight setBackgroundColor:nil];
-        self.imageItemLeft.layer.borderColor = nil;
-        self.imageItemRight.layer.borderColor = nil;
-        // exit
-        [self.exitItemLeft setBackgroundColor:nil];
-        [self.exitItemRight setBackgroundColor:nil];
-        self.exitItemLeft.layer.borderColor = nil;
-        self.exitItemRight.layer.borderColor = nil;
-        return;
-    }
-    if (self.isImageTargetted) {
-        // set message Image Mode
-        self.messageLeft.text = @"Image Mode";
-        self.messageRight.text = @"Image Mode";
-        // zoom
-        [self.zoomItemLeft setBackgroundColor:nil];
-        [self.zoomItemRight setBackgroundColor:nil];
-        self.zoomItemLeft.layer.borderColor = nil;
-        self.zoomItemRight.layer.borderColor = nil;
-        // flash
-        [self.flashItemLeft setBackgroundColor:nil];
-        [self.flashItemRight setBackgroundColor:nil];
-        self.flashItemLeft.layer.borderColor = nil;
-        self.flashItemRight.layer.borderColor = nil;
-        // image
-        [self.imageItemLeft setBackgroundColor:[UIColor redColor]];
-        [self.imageItemRight setBackgroundColor:[UIColor redColor]];
-        self.imageItemLeft.layer.borderColor = [[UIColor redColor] CGColor];
-        self.imageItemRight.layer.borderColor = [[UIColor redColor] CGColor];
-        // exit
-        [self.exitItemLeft setBackgroundColor:nil];
-        [self.exitItemRight setBackgroundColor:nil];
-        self.exitItemLeft.layer.borderColor = nil;
-        self.exitItemRight.layer.borderColor = nil;
-        return;
-    }
-    if (self.isExitTargetted) {
-        // set message Exit
-        self.messageLeft.text = @"Exit";
-        self.messageRight.text = @"Exit";
-        // zoom
-        [self.zoomItemLeft setBackgroundColor:nil];
-        [self.zoomItemRight setBackgroundColor:nil];
-        self.zoomItemLeft.layer.borderColor = nil;
-        self.zoomItemRight.layer.borderColor = nil;
-        // flash
-        [self.flashItemLeft setBackgroundColor:nil];
-        [self.flashItemRight setBackgroundColor:nil];
-        self.flashItemLeft.layer.borderColor = nil;
-        self.flashItemRight.layer.borderColor = nil;
-        // image
-        [self.imageItemLeft setBackgroundColor:nil];
-        [self.imageItemRight setBackgroundColor:nil];
-        self.imageItemLeft.layer.borderColor = nil;
-        self.imageItemRight.layer.borderColor = nil;
-        // exit
-        [self.exitItemLeft setBackgroundColor:[UIColor redColor]];
-        [self.exitItemRight setBackgroundColor:[UIColor redColor]];
-        self.exitItemLeft.layer.borderColor = [[UIColor redColor] CGColor];
-        self.exitItemRight.layer.borderColor = [[UIColor redColor] CGColor];
-        return;
-    }
 }
 
 #pragma mark -
@@ -1035,7 +896,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 
 - (void)doubleTapTriggered {
     if (self.isMenuHidden && self.isControlHidden) {
-        //[self zoomControl];
+        [self zoomControl];
     }
 }
 
@@ -1048,7 +909,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 - (void)zoomSliderChanged:(NSNotification *) notification {
     //[self displayMessage:@"up and down"];
     NSNumber * movement = [notification.userInfo objectForKey:@"Value"];
-    float scale = self.currentZoomScale - movement.floatValue * 0.05 * 80;
+    float scale = self.currentZoomScale - movement.floatValue * ZOOMRATIO;
     if (scale > 8) {
         scale = 8;
     } else if (scale < 0.5) {
@@ -1069,43 +930,39 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     }
     
     if (scale >= 0 && scale < TARGET_INTERVAL) {
-        self.isZoomTargetted = true;
-        self.isFlashTargetted = false;
-        self.isImageTargetted = false;
-        self.isExitTargetted = false;
+        self.zoomTargetted = true;
+        self.flashTargetted = false;
+        self.imageTargetted = false;
+        self.exitTargetted = false;
     } else if (scale >= TARGET_INTERVAL && scale < 2 * TARGET_INTERVAL) {
-        self.isZoomTargetted = false;
-        self.isFlashTargetted = true;
-        self.isImageTargetted = false;
-        self.isExitTargetted = false;
+        self.zoomTargetted = false;
+        self.flashTargetted = true;
+        self.imageTargetted = false;
+        self.exitTargetted = false;
     } else if (scale >= 2 * TARGET_INTERVAL && scale < 3 * TARGET_INTERVAL) {
-        self.isZoomTargetted = false;
-        self.isFlashTargetted = false;
-        self.isImageTargetted = true;
-        self.isExitTargetted = false;
+        self.zoomTargetted = false;
+        self.flashTargetted = false;
+        self.imageTargetted = true;
+        self.exitTargetted = false;
     } else if (scale >= 3 * TARGET_INTERVAL && scale <= 4 * TARGET_INTERVAL) {
-        self.isZoomTargetted = false;
-        self.isFlashTargetted = false;
-        self.isImageTargetted = false;
-        self.isExitTargetted = true;
+        self.zoomTargetted = false;
+        self.flashTargetted = false;
+        self.imageTargetted = false;
+        self.exitTargetted = true;
     }
     self.targetCursor = scale;
-    [self checkTargetCursor];
 }
 
 
 #pragma mark -
 #pragma mark SVScrollView TouchDelegate
 - (void)scrollViewDoubleTapped:(UIGestureRecognizer *)gesture {
-    if (isControlHidden) {
+    if (self.isControlHidden) {
         [self showControl];
     } else {
         [self hideControl];
     }
-    self.isControlHidden = !self.isControlHidden;
-}
-- (void)scrollViewDidZoom:(UIScrollView *)scrollView {
-    [self setZoomScale:scrollView.zoomScale];
+    self.controlHidden = !_controlHidden;
 }
 
 #pragma mark -
@@ -1116,10 +973,89 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 }
 
 #pragma mark -
+#pragma mark Setters and Getters
+
+- (void)setZoomTargetted:(BOOL)zoomTargetted {
+    _zoomTargetted = zoomTargetted;
+    if (_zoomTargetted) {
+        // set message Zoom
+        [self messageChangeText:@"Zoom"];
+        // zoom
+        [self.zoomItemLeft setBackgroundColor:[UIColor redColor]];
+        [self.zoomItemRight setBackgroundColor:[UIColor redColor]];
+        self.zoomItemLeft.layer.borderColor = [[UIColor redColor] CGColor];
+        self.zoomItemRight.layer.borderColor = [[UIColor redColor] CGColor];
+    } else {
+        [self.zoomItemLeft setBackgroundColor:nil];
+        [self.zoomItemRight setBackgroundColor:nil];
+        self.zoomItemLeft.layer.borderColor = nil;
+        self.zoomItemRight.layer.borderColor = nil;
+    }
+}
+
+- (void)setFlashTargetted:(BOOL)flashTargetted {
+    _flashTargetted = flashTargetted;
+    if (_flashTargetted) {
+        // set message Flashlight
+        [self messageChangeText:@"Flash"];
+        // flash
+        [self.flashItemLeft setBackgroundColor:[UIColor redColor]];
+        [self.flashItemRight setBackgroundColor:[UIColor redColor]];
+        self.flashItemLeft.layer.borderColor = [[UIColor redColor] CGColor];
+        self.flashItemRight.layer.borderColor = [[UIColor redColor] CGColor];
+    } else {
+        // flash
+        [self.flashItemLeft setBackgroundColor:nil];
+        [self.flashItemRight setBackgroundColor:nil];
+        self.flashItemLeft.layer.borderColor = nil;
+        self.flashItemRight.layer.borderColor = nil;
+    }
+}
+
+- (void)setImageTargetted:(BOOL)imageTargetted {
+    _imageTargetted = imageTargetted;
+    if (_imageTargetted) {
+        // set message Image Mode
+        [self messageChangeText:@"Image"];
+        // image
+        [self.imageItemLeft setBackgroundColor:[UIColor redColor]];
+        [self.imageItemRight setBackgroundColor:[UIColor redColor]];
+        self.imageItemLeft.layer.borderColor = [[UIColor redColor] CGColor];
+        self.imageItemRight.layer.borderColor = [[UIColor redColor] CGColor];
+    } else {
+        // image
+        [self.imageItemLeft setBackgroundColor:nil];
+        [self.imageItemRight setBackgroundColor:nil];
+        self.imageItemLeft.layer.borderColor = nil;
+        self.imageItemRight.layer.borderColor = nil;
+    }
+}
+
+- (void)setExitTargetted:(BOOL)exitTargetted {
+    _exitTargetted = exitTargetted;
+    if (_exitTargetted) {
+        // set message Exit
+        [self messageChangeText:@"Exit"];
+        // exit
+        [self.exitItemLeft setBackgroundColor:[UIColor redColor]];
+        [self.exitItemRight setBackgroundColor:[UIColor redColor]];
+        self.exitItemLeft.layer.borderColor = [[UIColor redColor] CGColor];
+        self.exitItemRight.layer.borderColor = [[UIColor redColor] CGColor];
+    } else {
+        // exit
+        [self.exitItemLeft setBackgroundColor:nil];
+        [self.exitItemRight setBackgroundColor:nil];
+        self.exitItemLeft.layer.borderColor = nil;
+        self.exitItemRight.layer.borderColor = nil;
+    }
+}
+
+#pragma mark -
 #pragma mark Memory management
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 @end
