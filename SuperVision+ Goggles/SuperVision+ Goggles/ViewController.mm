@@ -276,31 +276,30 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     
     UIImage *originalUIImage = [UIImage imageWithCGImage:self.cgImageRef];
     
+    // cut a particle of a cgimage to process fast feature detect
+    CGImageRef processCGImageRef = CGImageCreateWithImageInRect(self.cgImageRef, CGRectMake(width/2 - self.featureWindowWidth/2, height/2 - self.featureWindowHeight/2, self.featureWindowWidth, self.featureWindowHeight));
+    // we crop a part of cgimage to uiimage to do feature detect and track.
+    UIImage *processUIImage = [UIImage imageWithCGImage:processCGImageRef];
+    /* release original cgimage */
+    CGImageRelease(processCGImageRef);
+    
+    UIImage *finalUIImage = originalUIImage;
+    
     if (self.isBeforeLocked) {
-        
-        CGImageRef processCGImageRef = CGImageCreateWithImageInRect(self.cgImageRef, CGRectMake(width/2 - self.featureWindowWidth/2, height/2 - self.featureWindowHeight/2, self.featureWindowWidth, self.featureWindowHeight));
-        // we crop a part of cgimage to uiimage to do feature detect and track.
-        UIImage *processUIImage = originalUIImage
-        //UIImage *processUIImage = [UIImage imageWithCGImage:processCGImageRef];
-        
         [self.imageProcess setCurrentImageMat:processUIImage];
-        
         double var = [self.imageProcess calVariance];
-        
         if (self.imageNo >= self.lockDelay) {
             if ((width != 960) && ([self isIphone4])) {
                 // show to screen.
                 //[self adjustForHighResolution];
-                [self.scrollViewLeft setImage:self.highVarImg];
-                [self.scrollViewRight setImage:self.highVarImg];
+                finalUIImage = self.highVarImg;
                 self.locked = true;
                 //[self.scrollViewLeft setContentOffset:self.correctContentOffset animated:NO];
                 //[self.scrollViewRight setContentOffset:self.correctContentOffset animated:NO];
                 self.maxVariance = 0;
             } else {
                 self.locked = true;
-                [self.scrollViewLeft setImage:self.highVarImg];
-                [self.scrollViewRight setImage:self.highVarImg];
+                finalUIImage = self.highVarImg;
                 self.maxVariance = 0;
             }
         }
@@ -311,121 +310,87 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                 self.maxVariance = var;
             }
         }
-        
-        /* release original cgimage */
-        CGImageRelease(processCGImageRef);
-        
     }
     // normal state that not locked.
     else {
-        //  for ip4 resolution may not get changed that fast
-        if (false) {//(([self isIphone4]) && (width != 960)) {
-            // do nothing
+        float mean_x = 0;
+        float mean_y = 0;
+        if (self.imageNo == 0) {
+            [self.imageProcess setLastImageMat:processUIImage];
         }
         else {
-            // cut a particle of a cgimage to process fast feature detect
-            CGImageRef processCGImageRef = CGImageCreateWithImageInRect(self.cgImageRef, CGRectMake(width/2 - self.featureWindowWidth/2, height/2 - self.featureWindowHeight/2, self.featureWindowWidth, self.featureWindowHeight));
-            // we crop a part of cgimage to uiimage to do feature detect and track.
-            UIImage *processUIImage = [UIImage imageWithCGImage:processCGImageRef];
-            //UIImage *processUIImage = originalUIImage;
-            float mean_x = 0;
-            float mean_y = 0;
-            if (self.imageNo == 0) {
-                [self.imageProcess setLastImageMat:processUIImage];
+            //  add offset into offset array
+            if ([self.offsetArray count] == POINT_WND) {
+                [self.offsetArray removeObjectAtIndex:0];
             }
-            else {
-                //  add offset into offset array
-                if ([self.offsetArray count] == POINT_WND) {
-                    [self.offsetArray removeObjectAtIndex:0];
-                }
-                /* set up images */
-                [self.imageProcess setCurrentImageMat:processUIImage];
-                /* calculate motion vector */
-                CGPoint motionVector = [self.imageProcess motionEstimation];
-                [self.offsetArray addObject:[NSValue valueWithCGPoint:motionVector]];
-                
-                //  calculate total of offsets
-                for (int i = 0; i < [self.offsetArray count]; i++) {
-                    NSValue *val = [self.offsetArray objectAtIndex:i];
-                    CGPoint p = [val CGPointValue];
-                    mean_x += p.x;
-                    mean_y += p.y;
-                }
-                mean_x /= [self.offsetArray count];
-                mean_y /= [self.offsetArray count];
-                if (fabs(mean_x) < MEAN_STABLE_THRESHOLD_LEFT_RIGHT && fabs(mean_y) < MEAN_STABLE_THRESHOLD_UP_DOWN && !self.isBeingReleased) {
-                    if (!self.isStabilizationEnabled) {
-                        self.stabilizationEnabled = true;
-                        //[self displayMessage:@"start stable"];
-                        [self reSet];
-                    }
-                }
-                if (fabs(mean_x) > MEAN_NOT_STABLE_THRESHOLD_LEFT_RIGHT || fabs(mean_y) > MEAN_NOT_STABLE_THRESHOLD_UP_DOWN || fabs(motionVector.x) > MOVEMENT_LEFT_RIGHT / sqrt(self.currentZoomScale) || fabs(motionVector.y) > MOVEMENT_UP_DOWN / sqrt(self.currentZoomScale) || fabs(self.motionX) > MOVEMENT_THRESHOLD_LEFT_RIGHT || fabs(self.motionY) > MOVEMENT_THRESHOLD_UP_DOWN) {
-                    if (self.isStabilizationEnabled) {
-                        self.stabilizationEnabled = false;
-                        //[self displayMessage:@"end stable"];
-                        [self startReleaseStabilization];
-                    }
-                }
-            }
+            /* set up images */
+            [self.imageProcess setCurrentImageMat:processUIImage];
+            /* calculate motion vector */
+            CGPoint motionVector = [self.imageProcess motionEstimation];
+            [self.offsetArray addObject:[NSValue valueWithCGPoint:motionVector]];
             
-            //  if stabilization function is disabled
-            if (self.isBeingReleased) {
-                CGRect windowBounds = [[UIScreen mainScreen] bounds];
-                ++self.increasing;
-                float x = self.move_x * (RELEASE_TIME - self.increasing);
-                float y = self.move_y * (RELEASE_TIME - self.increasing);
-                CGRect resultRect = [self.imageProcess calculateMyCroppedImage:x ypos:y width:width height:height scale:self.currentZoomScale bounds:CGRectMake(0, 0, windowBounds.size.width / 2, windowBounds.size.height)];
-                //NSLog(@"result rect: origin:%f, %f: w:%f,h:%f\n", resultRect.origin.x, resultRect.origin.y, resultRect.size.width, resultRect.size.height);
-                //  cut from original to move the image
-                CGImageRef finalProcessImage = CGImageCreateWithImageInRect(self.cgImageRef, resultRect);
-                UIImage *finalUIImage;
-                /*if (self.isImageModeOn) {
-                    finalUIImage = [UIImage imageWithCGImage:[self addFilter:finalProcessImage]];
-                } else {
-                    finalUIImage = [UIImage imageWithCGImage:finalProcessImage];
-                }*/
-                finalUIImage = [UIImage imageWithCGImage:self.cgImageRef];
-                [self.scrollViewLeft setImage:finalUIImage];
-                [self.scrollViewRight setImage:finalUIImage];
-                CGImageRelease(finalProcessImage);
-                if (self.increasing == RELEASE_TIME) {
-                    [self endReleaseStabilization];
-                }
-            } else {
+            //  calculate total of offsets
+            for (int i = 0; i < [self.offsetArray count]; i++) {
+                NSValue *val = [self.offsetArray objectAtIndex:i];
+                CGPoint p = [val CGPointValue];
+                mean_x += p.x;
+                mean_y += p.y;
+            }
+            mean_x /= [self.offsetArray count];
+            mean_y /= [self.offsetArray count];
+            if (fabs(mean_x) < MEAN_STABLE_THRESHOLD_LEFT_RIGHT && fabs(mean_y) < MEAN_STABLE_THRESHOLD_UP_DOWN && !self.isBeingReleased) {
                 if (!self.isStabilizationEnabled) {
-                    [self.scrollViewLeft setImage:originalUIImage];
-                    [self.scrollViewRight setImage:originalUIImage];
-                }
-                else {
-                    if (self.imageNo == 0) {
-                        [self.scrollViewLeft setImage:originalUIImage];
-                        [self.scrollViewRight setImage:originalUIImage];
-                    }
-                    else {
-                        NSValue *val = [self.offsetArray objectAtIndex:[self.offsetArray count] - 1];
-                        CGPoint p = [val CGPointValue];
-                        self.motionX += p.x;
-                        self.motionY += p.y;
-                        
-                        CGRect windowBounds = [[UIScreen mainScreen] bounds];
-                        CGRect resultRect = [self.imageProcess calculateMyCroppedImage:self.motionX ypos:self.motionY width:width height:height scale:self.currentZoomScale bounds:CGRectMake(0, 0, windowBounds.size.width / 2, windowBounds.size.height)];
-                        
-                        //  cut from original to move the image
-                        CGImageRef finalProcessImage = CGImageCreateWithImageInRect(self.cgImageRef, resultRect);
-                        UIImage *finalUIImage;
-                        finalUIImage = [UIImage imageWithCGImage:finalProcessImage];
-                        [self.scrollViewLeft setImage:finalUIImage];
-                        [self.scrollViewRight setImage:finalUIImage];
-                        CGImageRelease(finalProcessImage);
-                        
-                    }
+                    self.stabilizationEnabled = true;
+                    //[self displayMessage:@"start stable"];
+                    [self reSet];
                 }
             }
-            CGImageRelease(processCGImageRef);
+            if (fabs(mean_x) > MEAN_NOT_STABLE_THRESHOLD_LEFT_RIGHT || fabs(mean_y) > MEAN_NOT_STABLE_THRESHOLD_UP_DOWN || fabs(motionVector.x) > MOVEMENT_LEFT_RIGHT / sqrt(self.currentZoomScale) || fabs(motionVector.y) > MOVEMENT_UP_DOWN / sqrt(self.currentZoomScale) || fabs(self.motionX) > MOVEMENT_THRESHOLD_LEFT_RIGHT || fabs(self.motionY) > MOVEMENT_THRESHOLD_UP_DOWN) {
+                if (self.isStabilizationEnabled) {
+                    self.stabilizationEnabled = false;
+                    //[self displayMessage:@"end stable"];
+                    [self startReleaseStabilization];
+                }
+            }
+        }
+        
+        //  if stabilization function is disabled
+        if (self.isBeingReleased) {
+            CGRect windowBounds = [[UIScreen mainScreen] bounds];
+            ++self.increasing;
+            float x = self.move_x * (RELEASE_TIME - self.increasing);
+            float y = self.move_y * (RELEASE_TIME - self.increasing);
+            CGRect resultRect = [self.imageProcess calculateMyCroppedImage:x ypos:y width:width height:height scale:self.currentZoomScale bounds:CGRectMake(0, 0, windowBounds.size.width / 2, windowBounds.size.height)];
+            //  cut from original to move the image
+            CGImageRef finalProcessImage = CGImageCreateWithImageInRect(self.cgImageRef, resultRect);
+            finalUIImage = [UIImage imageWithCGImage:finalProcessImage];
+            CGImageRelease(finalProcessImage);
+            if (self.increasing == RELEASE_TIME) {
+                [self endReleaseStabilization];
+            }
+        } else {
+            // if statbilization disabled, just use original image
+            if (self.isStabilizationEnabled) {
+                if (self.imageNo != 0) {
+                    NSValue *val = [self.offsetArray objectAtIndex:[self.offsetArray count] - 1];
+                    CGPoint p = [val CGPointValue];
+                    self.motionX += p.x;
+                    self.motionY += p.y;
+                    
+                    CGRect windowBounds = [[UIScreen mainScreen] bounds];
+                    CGRect resultRect = [self.imageProcess calculateMyCroppedImage:self.motionX ypos:self.motionY width:width height:height scale:self.currentZoomScale bounds:CGRectMake(0, 0, windowBounds.size.width / 2, windowBounds.size.height)];
+                    
+                    //  cut from original to move the image
+                    CGImageRef finalProcessImage = CGImageCreateWithImageInRect(self.cgImageRef, resultRect);
+                    finalUIImage = [UIImage imageWithCGImage:finalProcessImage];
+                    CGImageRelease(finalProcessImage);
+                }
+            }
         }
     }
-    
+    // set image
+    [self.scrollViewLeft setImage:finalUIImage];
+    [self.scrollViewRight setImage:finalUIImage];
     /*We relase the CGImageRef*/
     CGImageRelease(self.cgImageRef);
     /*We unlock the  image buffer*/
