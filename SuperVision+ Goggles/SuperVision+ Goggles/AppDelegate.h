@@ -13,6 +13,7 @@
 @property (strong, nonatomic) UIWindow *window;
 
 + (BOOL)isIphone4;
++ (BOOL)isIpad;
 
 @end
 

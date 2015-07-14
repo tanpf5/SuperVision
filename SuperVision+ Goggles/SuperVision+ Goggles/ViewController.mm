@@ -50,17 +50,19 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self checkIphone];
     [self firstLaunch];
     [self initialView];
     [self initialSettings];
     [self initialCapture];
     [self initialMotion];
+    [self initialNotification];
 }
 
 - (void)initialView {
     self.menuHidden = true;
     self.controlHidden = true;
-    [self hideMenuAndControl];
+    //[self hideMenuAndControl];
 }
 
 - (void)initialSettings {
@@ -108,10 +110,9 @@
 
 - (void) initialCapture {
     /*We setup the input*/
-    AVCaptureDeviceInput *captureInput = [AVCaptureDeviceInput
-                                          deviceInputWithDevice:[AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo]
-                                          error:nil];
-    /*We setupt the output*/
+    AVCaptureDeviceInput *captureInput = [AVCaptureDeviceInput deviceInputWithDevice:[AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo]
+                                                                               error:nil];
+    /*We setup the output*/
     AVCaptureVideoDataOutput *captureOutput = [[AVCaptureVideoDataOutput alloc] init];
     /*While a frame is processes in -captureOutput:didOutputSampleBuffer:fromConnection: delegate methods no other frames are added in the queue.
      If you don't want this behaviour set the property to NO */
@@ -142,7 +143,7 @@
     [self.captureSession startRunning];
 }
 
-- (void) initialMotion {
+- (void)initialMotion {
     //  Magnet
     self.magnetSensor = new SuperVision::MagnetSensor();
     [self startMagnetSensor];
@@ -153,6 +154,41 @@
     
     //  Gyro
     self.gyro = new SuperVision::Gyro();
+}
+
+- (void)initialNotification {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationWillResignActive)
+                                                 name:UIApplicationWillResignActiveNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationDidBecomeActive)
+                                                 name:UIApplicationDidBecomeActiveNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationDidEnterBackground)
+                                                 name:UIApplicationDidEnterBackgroundNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationWillEnterForeground)
+                                                 name:UIApplicationWillEnterForegroundNotification
+                                               object:nil];
+}
+
+- (void)checkIphone {
+    if ([self isIpad]) {
+        [self alertWithMessage:@"This app is designed to be used on iPhone together with cardboard 3D glasses. Using this app on iPad will not achieve the intended purpose."];
+    }
+}
+
+- (void)alertWithMessage:(NSString*) message {
+    /* open an alert with an OK button */
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"SuperVision+ Goggles"
+                                                    message:message
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles: nil];
+    [alert show];
 }
 
 - (void)firstLaunch {
@@ -173,20 +209,14 @@
 #pragma mark -
 #pragma mark Capture Management
 
-
-- (UIImage *)addFilter:(CGImageRef) originalCGImage {
+- (void)addFilter:(CGImageRef) cgImageRef {
     // add filter
-    CIImage *image = [CIImage imageWithCGImage:originalCGImage];
+    CIImage *image = [CIImage imageWithCGImage:cgImageRef];
+    CGImageRelease(cgImageRef);
     CIContext *cicontext = [CIContext contextWithOptions:nil];
     
-    //image = [CIFilter filterWithName:@"CIColorControls" keysAndValues:kCIInputImageKey, image, @"inputBrightness", [NSNumber numberWithFloat:0.0], @"inputContrast", [NSNumber numberWithFloat:2], @"inputSaturation", [NSNumber numberWithFloat:0.3], nil].outputImage;
+    // exposure help make picture clear when high contrast
     image = [CIFilter filterWithName:@"CIExposureAdjust" keysAndValues:kCIInputImageKey, image, @"inputEV", [NSNumber numberWithFloat:1], nil].outputImage;
-    //image = [CIFilter filterWithName:@"CIColorInvert" keysAndValues:kCIInputImageKey, image, nil].outputImage;
-    
-    /*CIFilter* photoEffectMonoFilter = [CIFilter filterWithName:@"CIPhotoEffectNoir"];
-     [photoEffectMonoFilter setDefaults];
-     [photoEffectMonoFilter setValue:image forKey:@"inputImage"];
-     image = [photoEffectMonoFilter valueForKey:@"outputImage"];*/
     
     CIFilter* colorInvertFilter = [CIFilter filterWithName:@"CIColorInvert"];
     [colorInvertFilter setDefaults];
@@ -196,16 +226,10 @@
     CIFilter* colorControlsFilter = [CIFilter filterWithName:@"CIColorControls"];
     [colorControlsFilter setDefaults];
     [colorControlsFilter setValue:@5 forKey:@"inputContrast"];
-    //[colorControlsFilter setValue:@0 forKey:@"inputBrightness"];
     [colorControlsFilter setValue:@0 forKey:@"inputSaturation"];
     [colorControlsFilter setValue:image forKey:@"inputImage"];
     image = [colorControlsFilter valueForKey:@"outputImage"];
-    
-    CGImageRef cgimg = [cicontext createCGImage:image fromRect:[image extent]];
-    UIImage *uiImage = [UIImage imageWithCGImage:cgimg];
-    
-    CGImageRelease(cgimg);
-    return uiImage;
+    self.cgImageRef = [cicontext createCGImage:image fromRect:[image extent]];
 }
 
 - (void)startReleaseStabilization {
@@ -221,8 +245,7 @@
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput
 didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
-       fromConnection:(AVCaptureConnection *)connection
-{
+       fromConnection:(AVCaptureConnection *)connection {
     if (self.isLocked) {
         return;
     }
@@ -242,29 +265,23 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     CGContextRef context = CGBitmapContextCreate(baseAddress, width, height, 8, bytesPerRow, colorSpace, kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
     
     // create a cgimgRef from original source.
-    CGImageRef originalCGImage = CGBitmapContextCreateImage(context);
-    
-    UIImage *originalUIImage;
+    self.cgImageRef = CGBitmapContextCreateImage(context);
     if (self.isImageModeOn) {
-        originalUIImage = [self addFilter:originalCGImage];
-    } else {
-        originalUIImage = [UIImage imageWithCGImage:originalCGImage];
+        [self addFilter:self.cgImageRef];
     }
-    
-    
-    /*We display the result on the image view (We need to change the orientation of the image so that the video is displayed correctly).
-     Same thing as for the CALayer we are not in the main thread so ...*/
     
     /*We release some components*/
     CGContextRelease(context);
     CGColorSpaceRelease(colorSpace);
     
+    UIImage *originalUIImage = [UIImage imageWithCGImage:self.cgImageRef];
+    
     if (self.isBeforeLocked) {
         
-        CGImageRef processCGImageRef = CGImageCreateWithImageInRect(originalCGImage, CGRectMake(width/2 - self.featureWindowWidth/2, height/2 - self.featureWindowHeight/2, self.featureWindowWidth, self.featureWindowHeight));
+        CGImageRef processCGImageRef = CGImageCreateWithImageInRect(self.cgImageRef, CGRectMake(width/2 - self.featureWindowWidth/2, height/2 - self.featureWindowHeight/2, self.featureWindowWidth, self.featureWindowHeight));
         // we crop a part of cgimage to uiimage to do feature detect and track.
-        UIImage *processUIImage = [UIImage imageWithCGImage:processCGImageRef];
-        //UIImage *processUIImage = originalUIImage;
+        UIImage *processUIImage = originalUIImage
+        //UIImage *processUIImage = [UIImage imageWithCGImage:processCGImageRef];
         
         [self.imageProcess setCurrentImageMat:processUIImage];
         
@@ -289,7 +306,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         }
         // if not reaching lock delay.
         else {
-            if ((self.maxVariance < var)||(self.maxVariance == 0)) {
+            if ((self.maxVariance < var) || (self.maxVariance == 0)) {
                 self.highVarImg = originalUIImage;
                 self.maxVariance = var;
             }
@@ -307,7 +324,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         }
         else {
             // cut a particle of a cgimage to process fast feature detect
-            CGImageRef processCGImageRef = CGImageCreateWithImageInRect(originalCGImage, CGRectMake(width/2 - self.featureWindowWidth/2, height/2 - self.featureWindowHeight/2, self.featureWindowWidth, self.featureWindowHeight));
+            CGImageRef processCGImageRef = CGImageCreateWithImageInRect(self.cgImageRef, CGRectMake(width/2 - self.featureWindowWidth/2, height/2 - self.featureWindowHeight/2, self.featureWindowWidth, self.featureWindowHeight));
             // we crop a part of cgimage to uiimage to do feature detect and track.
             UIImage *processUIImage = [UIImage imageWithCGImage:processCGImageRef];
             //UIImage *processUIImage = originalUIImage;
@@ -336,8 +353,6 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                 }
                 mean_x /= [self.offsetArray count];
                 mean_y /= [self.offsetArray count];
-                //NSLog(@"x = %.05f, y = %.05f", self.motionX, self.motionY);
-                //NSLog(@"x = %.05f, y = %.05f, mean_x = %.05f, mean_y = %.05f", motionVector.x, motionVector.y, mean_x, mean_y);
                 if (fabs(mean_x) < MEAN_STABLE_THRESHOLD_LEFT_RIGHT && fabs(mean_y) < MEAN_STABLE_THRESHOLD_UP_DOWN && !self.isBeingReleased) {
                     if (!self.isStabilizationEnabled) {
                         self.stabilizationEnabled = true;
@@ -354,7 +369,6 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                 }
             }
             
-            
             //  if stabilization function is disabled
             if (self.isBeingReleased) {
                 CGRect windowBounds = [[UIScreen mainScreen] bounds];
@@ -364,13 +378,14 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                 CGRect resultRect = [self.imageProcess calculateMyCroppedImage:x ypos:y width:width height:height scale:self.currentZoomScale bounds:CGRectMake(0, 0, windowBounds.size.width / 2, windowBounds.size.height)];
                 //NSLog(@"result rect: origin:%f, %f: w:%f,h:%f\n", resultRect.origin.x, resultRect.origin.y, resultRect.size.width, resultRect.size.height);
                 //  cut from original to move the image
-                CGImageRef finalProcessImage = CGImageCreateWithImageInRect(originalCGImage, resultRect);
+                CGImageRef finalProcessImage = CGImageCreateWithImageInRect(self.cgImageRef, resultRect);
                 UIImage *finalUIImage;
-                if (self.isImageModeOn) {
-                    finalUIImage = [self addFilter:finalProcessImage];
+                /*if (self.isImageModeOn) {
+                    finalUIImage = [UIImage imageWithCGImage:[self addFilter:finalProcessImage]];
                 } else {
                     finalUIImage = [UIImage imageWithCGImage:finalProcessImage];
-                }
+                }*/
+                finalUIImage = [UIImage imageWithCGImage:self.cgImageRef];
                 [self.scrollViewLeft setImage:finalUIImage];
                 [self.scrollViewRight setImage:finalUIImage];
                 CGImageRelease(finalProcessImage);
@@ -396,15 +411,10 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                         CGRect windowBounds = [[UIScreen mainScreen] bounds];
                         CGRect resultRect = [self.imageProcess calculateMyCroppedImage:self.motionX ypos:self.motionY width:width height:height scale:self.currentZoomScale bounds:CGRectMake(0, 0, windowBounds.size.width / 2, windowBounds.size.height)];
                         
-                        //NSLog(@"result rect: origin:%f, %f: w:%f,h:%f\n", resultRect.origin.x, resultRect.origin.y, resultRect.size.width, resultRect.size.height);
                         //  cut from original to move the image
-                        CGImageRef finalProcessImage = CGImageCreateWithImageInRect(originalCGImage, resultRect);
+                        CGImageRef finalProcessImage = CGImageCreateWithImageInRect(self.cgImageRef, resultRect);
                         UIImage *finalUIImage;
-                        if (self.isImageModeOn) {
-                            finalUIImage = [self addFilter:finalProcessImage];
-                        } else {
-                            finalUIImage = [UIImage imageWithCGImage:finalProcessImage];
-                        }
+                        finalUIImage = [UIImage imageWithCGImage:finalProcessImage];
                         [self.scrollViewLeft setImage:finalUIImage];
                         [self.scrollViewRight setImage:finalUIImage];
                         CGImageRelease(finalProcessImage);
@@ -417,7 +427,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     }
     
     /*We relase the CGImageRef*/
-    CGImageRelease(originalCGImage);
+    CGImageRelease(self.cgImageRef);
     /*We unlock the  image buffer*/
     CVPixelBufferUnlockBaseAddress(imageBuffer,0);
     self.imageNo++;
@@ -652,8 +662,6 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 
 
 - (void)showMenuExceptZoom {
-    // message
-    [self showMessage];
     // menu
     [self showMenu];
     // zoom
@@ -661,8 +669,6 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 }
 
 - (void)hideMenuExceptZoom {
-    // message
-    [self hideMessage];
     // menu
     [self hideMenu];
     // zoom
@@ -688,6 +694,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     [self.imageItemRight setHidden:NO];
     [self.exitItemLeft setHidden:NO];
     [self.exitItemRight setHidden:NO];
+    [self showMessage];
 }
 
 - (void)hideMenu {
@@ -699,6 +706,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     [self.imageItemRight setHidden:YES];
     [self.exitItemLeft setHidden:YES];
     [self.exitItemRight setHidden:YES];
+    [self hideMessage];
 }
 
 - (void)showZoom {
@@ -806,12 +814,10 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     [self startGyro];
     [self resetTargetCursor];
     self.menuHidden = false;
-    [self showMenuExceptZoom];
 }
 
 - (void)exitMenu {
     self.menuHidden = true;
-    [self hideMessage];
     [self hideMenu];
     // stop gyro
     [self stopGyro];
@@ -957,11 +963,6 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 #pragma mark -
 #pragma mark SVScrollView TouchDelegate
 - (void)scrollViewDoubleTapped:(UIGestureRecognizer *)gesture {
-    if (self.isControlHidden) {
-        [self showControl];
-    } else {
-        [self hideControl];
-    }
     self.controlHidden = !_controlHidden;
 }
 
@@ -972,8 +973,30 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     return [AppDelegate isIphone4];
 }
 
+- (BOOL)isIpad {
+    return [AppDelegate isIpad];
+}
+
 #pragma mark -
 #pragma mark Setters and Getters
+
+- (void)setControlHidden:(BOOL)controlHidden {
+    _controlHidden = controlHidden;
+    if (controlHidden) {
+        [self hideControl];
+    } else {
+        [self showControl];
+    }
+}
+
+- (void)setMenuHidden:(BOOL)menuHidden {
+    _menuHidden = menuHidden;
+    if (menuHidden) {
+        [self hideMenu];
+    } else {
+        [self showMenuExceptZoom];
+    }
+}
 
 - (void)setZoomTargetted:(BOOL)zoomTargetted {
     _zoomTargetted = zoomTargetted;
@@ -997,7 +1020,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     _flashTargetted = flashTargetted;
     if (_flashTargetted) {
         // set message Flashlight
-        [self messageChangeText:@"Flash"];
+        [self messageChangeText:@"Flashlight"];
         // flash
         [self.flashItemLeft setBackgroundColor:[UIColor redColor]];
         [self.flashItemRight setBackgroundColor:[UIColor redColor]];
@@ -1016,7 +1039,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     _imageTargetted = imageTargetted;
     if (_imageTargetted) {
         // set message Image Mode
-        [self messageChangeText:@"Image"];
+        [self messageChangeText:@"Image Mode"];
         // image
         [self.imageItemLeft setBackgroundColor:[UIColor redColor]];
         [self.imageItemRight setBackgroundColor:[UIColor redColor]];
@@ -1050,12 +1073,46 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     }
 }
 
+
 #pragma mark -
-#pragma mark Memory management
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma mark System Notification Methods
+
+- (void)applicationWillResignActive {
+    if (!self.isMenuHidden) {
+        self.menuHidden = true;
+        [self stopGyro];
+    }
+    if (!self.isControlHidden) {
+        self.controlHidden = true;
+    }
 }
 
+- (void)applicationDidBecomeActive {
+    if (self.isFlashOn) {
+        [self turnFlashOn];
+    }
+}
+
+- (void)applicationDidEnterBackground {
+    [self stopPlaying];
+    [self stopAccelerometer];
+    [self stopMagnetSensor];
+}
+
+- (void)applicationWillEnterForeground {
+    [self startMagnetSensor];
+    [self startAccelerometer];
+    [self resumePlaying];
+}
+
+- (void) stopPlaying {
+    [[AVAudioSession sharedInstance] setActive:NO error:nil];
+    [self.captureSession stopRunning];
+}
+
+- (void) resumePlaying {
+    [self.captureSession startRunning];
+    [[AVAudioSession sharedInstance] setActive:YES error:nil];
+}
 
 @end

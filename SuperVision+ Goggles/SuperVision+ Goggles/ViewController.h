@@ -65,6 +65,8 @@
 //  Capture
 // capture session is used to control frame flow from camerra
 @property (strong, nonatomic) AVCaptureSession *captureSession;
+// CGImageRef
+@property (nonatomic) CGImageRef cgImageRef;
 //  image process logic class
 @property (strong, nonatomic) ImageProcess *imageProcess;
 //  a state to indicate whether to hide all controls;
