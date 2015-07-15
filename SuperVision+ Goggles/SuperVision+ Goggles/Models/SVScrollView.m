@@ -1,3 +1,4 @@
+
 //
 //  SVScrollView.m
 //  SuperVision+ Goggles
@@ -25,7 +26,6 @@
     self.delegate = self; // events will trigger the overload functions
     [self setScrollEnabled:NO]; // disable scroll
     self.maximumZoomScale = 8;
-    [self setZoomScale:1];
     // add double tap gesture
     UITapGestureRecognizer *doubleTapGesture = [[UITapGestureRecognizer alloc]
                                                 initWithTarget:self
@@ -43,22 +43,29 @@
 }
 
 - (void)initialImageView {
-    self.imageView = self.subviews[0];
+    self.imageView = [[UIImageView alloc] init];
     [self.imageView setContentMode:UIViewContentModeCenter];
+    [self addSubview:imageView];
 }
 
 - (void)changeImageViewFrame:(CGRect) frame {
     self.contentSize = frame.size;
     [self.imageView setFrame:frame];
     [self adjustImageViewCenter];
+    [self scrollToCenter];
+}
+
+- (void) scrollToCenter {
+    CGPoint toCenter = CGPointMake(self.contentSize.width/2 - self.frame.size.width/2, self.contentSize.height/2 - self.frame.size.height/2);
+    [self setContentOffset:toCenter animated:NO];
 }
 
 - (void)adjustImageViewCenter {
     CGFloat offsetX = (self.bounds.size.width > self.contentSize.width)?
     (self.bounds.size.width - self.contentSize.width) * 0.5 : 0.0;
     CGFloat offsetY = (self.bounds.size.height > self.contentSize.height)?
-    (self.bounds.size.height - self.contentSize.height) * 0.5: 0.0;
-    self.imageView.center = CGPointMake(self.contentSize.width * 0.5 + offsetX, self.contentSize.height*0.5 + offsetY);
+    (self.bounds.size.height - self.contentSize.height) * 0.5 : 0.0;
+    self.imageView.center = CGPointMake(self.contentSize.width * 0.5 + offsetX, self.contentSize.height * 0.5 + offsetY);
 }
 
 - (void)setImage:(UIImage *)image {
@@ -69,10 +76,6 @@
     if (([gesture state] == UIGestureRecognizerStateEnded) || ([gesture state] == UIGestureRecognizerStateFailed))
         [self touchesEnded:nil withEvent:nil];
     [self.touchDelegate scrollViewDoubleTapped:gesture];
-}
-- (void) scrollToCenter {
-    CGPoint toCenter = CGPointMake(self.contentSize.width/2 - self.frame.size.width/2, self.contentSize.height/2 - self.frame.size.height/2);
-    [self setContentOffset:toCenter animated:NO];
 }
 
 #pragma mark

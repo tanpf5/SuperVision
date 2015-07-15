@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 
-#pragma mark - resolution settings
+#define SYSTEM_VERSION_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
 
 #define ScreenWidth      ceil(CGRectGetWidth([[UIScreen mainScreen] bounds])/2)
 #define ScreenHeight     CGRectGetHeight([[UIScreen mainScreen] bounds])
@@ -60,9 +60,9 @@
 }
 
 - (void)initialView {
+    // hide menu and control
     self.menuHidden = true;
     self.controlHidden = true;
-    //[self hideMenuAndControl];
 }
 
 - (void)initialSettings {
@@ -71,10 +71,10 @@
     // set initial zoom level
     [self setZoomScale:1];
     // set initial controls
-    self.flashOn = false;
-    self.imageModeOn = false;
-    self.zoomSelected = false;
-    self.zoomOutModeOn = false;
+    self.flashOn = false; // flashlight off
+    self.imageModeOn = false; // image mode off
+    self.zoomSelected = false; // zoom item don't select
+    self.zoomOutModeOn = false; // not in zoom out mode
     // set min zoom scale
     /*[self.scrollViewLeft changeImageViewFrame:CGRectMake(0, 0, 1920, 1080)];
     [self.scrollViewRight changeImageViewFrame:CGRectMake(0, 0, 1920, 1080)];
@@ -82,28 +82,36 @@
                            ScreenHeight / self.scrollViewLeft.imageView.frame.size.height);
     
     [self setMinimalZoomScale:viewScale];*/
-    [self setMinimalZoomScale:0.5];
+    [self setMinimalZoomScale:0.4]; // this zoom scale keeps iPhone 6 no white edge when stabilization
+    // init instance
     self.imageProcess = [[ImageProcess alloc] init];
     self.offsetArray = [[NSMutableArray alloc] init];
+    // iPhone 4 need low resolution because of performance
     if ([self isIphone4]) {
         self.currentResolution = IP4RESOLUTION;
         self.featureWindowHeight = 72;
         self.featureWindowWidth = 128;
         [self.imageProcess setMaxFeatureNumber:6];
-        //[self.scrollView changeImageViewFrame:CGRectMake(0, 0, 540*self.currentZoomRate, 960*self.currentZoomRate)];
-        //[self.scrollViewRight changeImageViewFrame:CGRectMake(0, 0, 540*self.currentZoomRate, 960*self.currentZoomRate)];
-        //self.resolutionWidth = 540*self.currentZoomRate;
-        //self.resolutionHeight = 960*self.currentZoomRate;
-        self.lockDelay = 10;
+        if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
+            self.resolutionWidth = 540;
+            self.resolutionHeight = 960;
+        } else {
+            self.resolutionWidth = 960;
+            self.resolutionHeight = 540;
+        }
+        self.lockDelay = 8;
     } else {
         self.currentResolution = OTHERRESOLUTION;
         self.featureWindowWidth = 284;
         self.featureWindowHeight = 320;
         [self.imageProcess setMaxFeatureNumber:20];
-        //[self.scrollViewLeft changeImageViewFrame:CGRectMake(0, 0, 1080, 1920)];
-        //[self.scrollViewRight changeImageViewFrame:CGRectMake(0, 0, 1080, 1920)];
-        //self.resolutionWidth = 1080;
-        //self.resolutionHeight = 1920;
+        if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
+            self.resolutionWidth = 1080;
+            self.resolutionHeight = 1920;
+        } else {
+            self.resolutionWidth = 1920;
+            self.resolutionHeight = 1080;
+        }
         self.lockDelay = 10;
     }
 }
@@ -153,7 +161,7 @@
     [self startAccelerometer];
     
     //  Gyro
-    self.gyro = new SuperVision::Gyro();
+    self.gyro = new SuperVision::Gyro(); // gyro will start when enter menu
 }
 
 - (void)initialNotification {
@@ -206,42 +214,14 @@
     }
 }
 
+// the frame of ui change to the true value when view did appear
+- (void)viewDidAppear:(BOOL)animated {
+    [self.scrollViewLeft changeImageViewFrame:CGRectMake(0, 0, self.resolutionWidth, self.resolutionHeight)];
+    [self.scrollViewRight changeImageViewFrame:CGRectMake(0, 0, self.resolutionWidth, self.resolutionHeight)];
+}
+
 #pragma mark -
 #pragma mark Capture Management
-
-- (void)addFilter:(CGImageRef) cgImageRef {
-    // add filter
-    CIImage *image = [CIImage imageWithCGImage:cgImageRef];
-    CGImageRelease(cgImageRef);
-    CIContext *cicontext = [CIContext contextWithOptions:nil];
-    
-    // exposure help make picture clear when high contrast
-    image = [CIFilter filterWithName:@"CIExposureAdjust" keysAndValues:kCIInputImageKey, image, @"inputEV", [NSNumber numberWithFloat:1], nil].outputImage;
-    
-    CIFilter* colorInvertFilter = [CIFilter filterWithName:@"CIColorInvert"];
-    [colorInvertFilter setDefaults];
-    [colorInvertFilter setValue:image forKey:@"inputImage"];
-    image = [colorInvertFilter valueForKey:@"outputImage"];
-    
-    CIFilter* colorControlsFilter = [CIFilter filterWithName:@"CIColorControls"];
-    [colorControlsFilter setDefaults];
-    [colorControlsFilter setValue:@5 forKey:@"inputContrast"];
-    [colorControlsFilter setValue:@0 forKey:@"inputSaturation"];
-    [colorControlsFilter setValue:image forKey:@"inputImage"];
-    image = [colorControlsFilter valueForKey:@"outputImage"];
-    self.cgImageRef = [cicontext createCGImage:image fromRect:[image extent]];
-}
-
-- (void)startReleaseStabilization {
-    self.beingReleased = true;
-    self.increasing = 0;
-    self.move_x = self.motionX / RELEASE_TIME;
-    self.move_y = self.motionY / RELEASE_TIME;
-}
-
-- (void)endReleaseStabilization {
-    self.beingReleased = false;
-}
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput
 didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
@@ -263,7 +243,6 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     /*Create a CGImageRef from the CVImageBufferRef*/
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     CGContextRef context = CGBitmapContextCreate(baseAddress, width, height, 8, bytesPerRow, colorSpace, kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
-    
     // create a cgimgRef from original source.
     self.cgImageRef = CGBitmapContextCreateImage(context);
     if (self.isImageModeOn) {
@@ -276,13 +255,13 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     
     UIImage *originalUIImage = [UIImage imageWithCGImage:self.cgImageRef];
     
+    
     // cut a particle of a cgimage to process fast feature detect
     CGImageRef processCGImageRef = CGImageCreateWithImageInRect(self.cgImageRef, CGRectMake(width/2 - self.featureWindowWidth/2, height/2 - self.featureWindowHeight/2, self.featureWindowWidth, self.featureWindowHeight));
     // we crop a part of cgimage to uiimage to do feature detect and track.
     UIImage *processUIImage = [UIImage imageWithCGImage:processCGImageRef];
     /* release original cgimage */
     CGImageRelease(processCGImageRef);
-    
     UIImage *finalUIImage = originalUIImage;
     
     if (self.isBeforeLocked) {
@@ -291,7 +270,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         if (self.imageNo >= self.lockDelay) {
             if ((width != 960) && ([self isIphone4])) {
                 // show to screen.
-                //[self adjustForHighResolution];
+                [self adjustForHighResolution];
                 finalUIImage = self.highVarImg;
                 self.locked = true;
                 //[self.scrollViewLeft setContentOffset:self.correctContentOffset animated:NO];
@@ -353,7 +332,6 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                 }
             }
         }
-        
         //  if stabilization function is disabled
         if (self.isBeingReleased) {
             CGRect windowBounds = [[UIScreen mainScreen] bounds];
@@ -398,12 +376,98 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     self.imageNo++;
     return;
 }
+
+- (void)addFilter:(CGImageRef) cgImageRef {
+    // add filter
+    CIImage *image = [CIImage imageWithCGImage:cgImageRef];
+    CGImageRelease(cgImageRef);
+    CIContext *cicontext = [CIContext contextWithOptions:nil];
+    
+    // exposure help make picture clear when high contrast
+    image = [CIFilter filterWithName:@"CIExposureAdjust" keysAndValues:kCIInputImageKey, image, @"inputEV", [NSNumber numberWithFloat:1], nil].outputImage;
+    
+    // coler invert filter
+    CIFilter* colorInvertFilter = [CIFilter filterWithName:@"CIColorInvert"];
+    [colorInvertFilter setDefaults];
+    [colorInvertFilter setValue:image forKey:@"inputImage"];
+    image = [colorInvertFilter valueForKey:@"outputImage"];
+    
+    // color control filter
+    CIFilter* colorControlsFilter = [CIFilter filterWithName:@"CIColorControls"];
+    [colorControlsFilter setDefaults];
+    [colorControlsFilter setValue:@5 forKey:@"inputContrast"];
+    [colorControlsFilter setValue:@0 forKey:@"inputSaturation"];
+    [colorControlsFilter setValue:image forKey:@"inputImage"];
+    image = [colorControlsFilter valueForKey:@"outputImage"];
+    
+    self.cgImageRef = [cicontext createCGImage:image fromRect:[image extent]];
+}
+
+- (void)startReleaseStabilization {
+    self.beingReleased = true;
+    self.increasing = 0;
+    self.move_x = self.motionX / RELEASE_TIME;
+    self.move_y = self.motionY / RELEASE_TIME;
+}
+
+- (void)endReleaseStabilization {
+    self.beingReleased = false;
+}
+
 //  reSet all settings
 - (void) reSet {
     self.motionX = 0;
     self.motionY = 0;
     self.imageNo = 0;
     self.adjustingFocus = NO;
+}
+
+- (void) adjustForHighResolution {
+    /* needs rescaling sicne resolution changed! for
+     iphone4 and 4s other than iPhone5. */
+    float adjustScale = 540.0 / self.resolutionWidth;
+    //  iPhone4 needs further more zooming scale, no idea why!
+    float newMax = self.scrollViewLeft.maximumZoomScale * adjustScale;
+    float newMin = self.scrollViewLeft.minimumZoomScale * adjustScale;
+    [self.scrollViewLeft setMaximumZoomScale:newMax];
+    [self.scrollViewRight setMaximumZoomScale:newMax];
+    [self.scrollViewLeft setMinimumZoomScale:newMin];
+    [self.scrollViewRight setMinimumZoomScale:newMin];
+    self.currentZoomScale = self.scrollViewLeft.zoomScale * adjustScale;
+    self.scrollViewLeft.zoomScale = self.currentZoomScale;
+    self.scrollViewRight.zoomScale = self.currentZoomScale;
+    [self.zoomSliderLeft setMaximumValue:newMax];
+    [self.zoomSliderRight setMaximumValue:newMax];
+    [self.zoomSliderLeft setMinimumValue:newMin];
+    [self.zoomSliderRight setMinimumValue:newMin];
+    [self.zoomSliderLeft setValue:self.currentZoomScale animated:NO];
+    [self.zoomSliderRight setValue:self.currentZoomScale animated:NO];
+    [self.scrollViewLeft changeImageViewFrame:CGRectMake(0, 0, self.resolutionHeight * self.currentZoomScale, self.resolutionWidth * self.currentZoomScale)];
+    [self.scrollViewRight changeImageViewFrame:CGRectMake(0, 0, self.resolutionHeight * self.currentZoomScale, self.resolutionWidth * self.currentZoomScale)];
+}
+
+- (void) adjustForLowResolution {
+    /* needs rescaling sicne resolution changed! for
+     iphone4 and 4s other than iPhone5. */
+    float adjustScale = self.resolutionWidth / 540.0;
+    float newMax = self.scrollViewLeft.maximumZoomScale * adjustScale;
+    float newMin = self.scrollViewLeft.minimumZoomScale * adjustScale;
+    [self.scrollViewLeft setMaximumZoomScale:newMax];
+    [self.scrollViewRight setMaximumZoomScale:newMax];
+    [self.scrollViewLeft setMinimumZoomScale:newMin];
+    [self.scrollViewRight setMinimumZoomScale:newMin];
+    self.currentZoomScale = self.scrollViewLeft.zoomScale * adjustScale;
+    self.scrollViewLeft.zoomScale = self.currentZoomScale;
+    self.scrollViewRight.zoomScale = self.currentZoomScale;
+    [self.zoomSliderLeft setMaximumValue:newMax];
+    [self.zoomSliderRight setMaximumValue:newMax];
+    [self.zoomSliderLeft setMinimumValue:newMin];
+    [self.zoomSliderRight setMinimumValue:newMin];
+    [self.zoomSliderLeft setValue:self.currentZoomScale animated:NO];
+    [self.zoomSliderRight setValue:self.currentZoomScale animated:NO];
+
+    [self.scrollViewLeft changeImageViewFrame:CGRectMake(0, 0, 960 * self.currentZoomScale, 540 * self.currentZoomScale)];
+    [self.scrollViewRight changeImageViewFrame:CGRectMake(0, 0, 960 * self.currentZoomScale, 540 * self.currentZoomScale)];
 }
 
 #pragma mark -
@@ -505,23 +569,23 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         self.beforeLocked = false;
         self.locked = false;
         [self reSet];
-        /*if ([self isIphone4]) {
+        if ([self isIphone4]) {
             self.currentResolution = IP4RESOLUTION;
             [self.captureSession beginConfiguration];
             [self.captureSession setSessionPreset:self.currentResolution];
             [self.captureSession commitConfiguration];
             [self recoverFlash];
-            //[self adjustForLowResolution];
+            [self adjustForLowResolution];
             self.resolutionWidth = 540;
             self.resolutionHeight = 960;
-        }*/
+        }
     }
     // lock screen
     else {
         self.locked = false;
         self.beforeLocked = true;
         [self reSet];
-        /*if ([self isIphone4]) {
+        if ([self isIphone4]) {
             //  1080p
             self.currentResolution = OTHERRESOLUTION;
             self.resolutionWidth = 1080;
@@ -536,8 +600,8 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
             [self.captureSession setSessionPreset:self.currentResolution];
             [self.captureSession commitConfiguration];
             [self recoverFlash];
-            //self.correctContentOffset = self.scrollView.contentOffset;
-        }*/
+            self.correctContentOffset = self.scrollViewLeft.contentOffset;
+        }
     }
 }
 
@@ -1053,9 +1117,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 }
 
 - (void)applicationDidBecomeActive {
-    if (self.isFlashOn) {
-        [self turnFlashOn];
-    }
+    [self recoverFlash];
 }
 
 - (void)applicationDidEnterBackground {

@@ -80,6 +80,11 @@
 // accumulate the motion vector on x and y axis
 @property (nonatomic) float motionX;
 @property (nonatomic) float motionY;
+// resulution of the image
+@property (nonatomic) int resolutionWidth;
+@property (nonatomic) int resolutionHeight;
+// offset
+@property (nonatomic) CGPoint correctContentOffset;
 // feature detection window size
 @property (nonatomic) int featureWindowWidth;
 @property (nonatomic) int featureWindowHeight;

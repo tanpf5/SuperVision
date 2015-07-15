@@ -3,15 +3,7 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "-[SVScrollView changeImageViewFrame:]:SVScrollView.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.imageView.frame">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "-[ViewController zoomSliderChanged:]:ViewController.mm">
+         contextName = "-[ViewController targetCursorChanged:]:ViewController.mm">
       </ContextState>
       <ContextState
          contextName = "-[SVScrollView handleDoubleTap:]:SVScrollView.m">
@@ -44,39 +36,6 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[ViewController viewDidLoad]:ViewController.mm">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.zoomSliderLeft.value">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "-[SVHelpScrollView initialImageView]:SVHelpScrollView.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.imageView.frame">
-            </PersistentString>
-            <PersistentString
-               value = "self.bounds.size.height">
-            </PersistentString>
-            <PersistentString
-               value = "self.height">
-            </PersistentString>
-            <PersistentString
-               value = "self.width">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "-[SVScrollView initWithCoder:]:SVScrollView.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.gestureRecognizer">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "-[HelpViewController initialView]:HelpViewController.mm">
          <PersistentStrings>
             <PersistentString
@@ -88,7 +47,31 @@
          contextName = "-[SVScrollView initialSettings]:SVScrollView.m">
       </ContextState>
       <ContextState
-         contextName = "-[ViewController targetCursorChanged:]:ViewController.mm">
+         contextName = "-[ViewController viewDidLoad]:ViewController.mm">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.zoomSliderLeft.value">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[SVScrollView adjustImageViewCenter]:SVScrollView.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.bounds.size.width">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[SVScrollView initialImageView]:SVScrollView.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.imageView.frame.size">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ViewController zoomSliderChanged:]:ViewController.mm">
       </ContextState>
       <ContextState
          contextName = "-[ViewController setZoomScale:]:ViewController.mm">
@@ -107,10 +90,10 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[ViewController initialSettings]:ViewController.mm">
+         contextName = "-[SVScrollView initWithCoder:]:SVScrollView.m">
          <PersistentStrings>
             <PersistentString
-               value = "self.scrollViewLeft.imageView.frame.size.width">
+               value = "self.gestureRecognizer">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -118,13 +101,26 @@
          contextName = "-[ViewController captureOutput:didOutputSampleBuffer:fromConnection:]:ViewController.mm">
          <PersistentStrings>
             <PersistentString
-               value = "self.offsetArray">
+               value = "finalUIImage.size.width">
             </PersistentString>
             <PersistentString
-               value = "self.motionX">
+               value = "finalUIImage.size.height">
             </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[SVScrollView scrollToCenter]:SVScrollView.m">
+         <PersistentStrings>
             <PersistentString
-               value = "self.motionY">
+               value = "self.center">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[SVScrollView changeImageViewFrame:]:SVScrollView.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.imageView.frame">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -133,6 +129,42 @@
          <PersistentStrings>
             <PersistentString
                value = "self.currentZoomScale">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[SVHelpScrollView initialImageView]:SVHelpScrollView.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.imageView.frame">
+            </PersistentString>
+            <PersistentString
+               value = "self.height">
+            </PersistentString>
+            <PersistentString
+               value = "self.bounds.size.height">
+            </PersistentString>
+            <PersistentString
+               value = "self.width">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ViewController initialSettings]:ViewController.mm">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.scrollViewLeft.imageView.frame.size.width">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[SVScrollView setImage:]:SVScrollView.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "image.size.width">
+            </PersistentString>
+            <PersistentString
+               value = "self.imageView.frame.size.width">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

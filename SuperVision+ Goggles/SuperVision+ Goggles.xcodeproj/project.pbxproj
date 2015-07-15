@@ -31,7 +31,6 @@
 		A05C110C1B4F0BFD00B409B6 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A05C110B1B4F0BFD00B409B6 /* ImageIO.framework */; };
 		A05C110E1B504C5400B409B6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A05C110D1B504C5400B409B6 /* CoreGraphics.framework */; };
 		A05C11101B504C9600B409B6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A05C110F1B504C9600B409B6 /* UIKit.framework */; };
-		A05C11121B504D5C00B409B6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A05C11111B504D5C00B409B6 /* QuartzCore.framework */; };
 		A05C11161B50557F00B409B6 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A05C11151B50557F00B409B6 /* GLKit.framework */; };
 		A0F6CBD41B432C7C00460AF3 /* empty.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CBC71B432C7C00460AF3 /* empty.png */; };
 		A0F6CBD51B432C7C00460AF3 /* exit.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CBC81B432C7C00460AF3 /* exit.png */; };
@@ -98,7 +97,6 @@
 		A05C110B1B4F0BFD00B409B6 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		A05C110D1B504C5400B409B6 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		A05C110F1B504C9600B409B6 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		A05C11111B504D5C00B409B6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A05C11151B50557F00B409B6 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		A0F6CBC71B432C7C00460AF3 /* empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = empty.png; path = Resources/Images/Buttons/empty.png; sourceTree = "<group>"; };
 		A0F6CBC81B432C7C00460AF3 /* exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = exit.png; path = Resources/Images/Buttons/exit.png; sourceTree = "<group>"; };
@@ -126,7 +124,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A05C11161B50557F00B409B6 /* GLKit.framework in Frameworks */,
-				A05C11121B504D5C00B409B6 /* QuartzCore.framework in Frameworks */,
 				A05C11101B504C9600B409B6 /* UIKit.framework in Frameworks */,
 				A05C110E1B504C5400B409B6 /* CoreGraphics.framework in Frameworks */,
 				A05C110C1B4F0BFD00B409B6 /* ImageIO.framework in Frameworks */,
@@ -317,7 +314,6 @@
 			isa = PBXGroup;
 			children = (
 				A05C11151B50557F00B409B6 /* GLKit.framework */,
-				A05C11111B504D5C00B409B6 /* QuartzCore.framework */,
 				A05C110F1B504C9600B409B6 /* UIKit.framework */,
 				A05C110D1B504C5400B409B6 /* CoreGraphics.framework */,
 				A05C110B1B4F0BFD00B409B6 /* ImageIO.framework */,

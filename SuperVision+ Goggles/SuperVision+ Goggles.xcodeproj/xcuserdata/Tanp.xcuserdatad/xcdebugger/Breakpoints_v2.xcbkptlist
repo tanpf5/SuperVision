@@ -26,27 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SuperVision+ Goggles/ViewController.mm"
-            timestampString = "458600746.512205"
+            timestampString = "458687100.809168"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "891"
-            endingLineNumber = "891"
-            landmarkName = "-targetCursorChanged:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SuperVision+ Goggles/ViewController.mm"
-            timestampString = "458600746.512205"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "885"
-            endingLineNumber = "885"
+            startingLineNumber = "954"
+            endingLineNumber = "954"
             landmarkName = "-zoomSliderChanged:"
             landmarkType = "5">
          </BreakpointContent>
@@ -58,12 +42,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SuperVision+ Goggles/ViewController.mm"
-            timestampString = "458600746.512205"
+            timestampString = "458687100.809168"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "903"
-            endingLineNumber = "903"
-            landmarkName = "-targetCursorChanged:"
+            startingLineNumber = "948"
+            endingLineNumber = "948"
+            landmarkName = "-zoomSliderChanged:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -74,12 +58,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SuperVision+ Goggles/ViewController.mm"
-            timestampString = "458578301.310109"
+            timestampString = "458687100.809168"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
-            landmarkName = "-viewDidLoad"
+            startingLineNumber = "966"
+            endingLineNumber = "966"
+            landmarkName = "-targetCursorChanged:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -106,60 +90,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SuperVision+ Goggles/ViewController.mm"
-            timestampString = "458600746.512205"
+            timestampString = "458687100.809168"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "429"
-            endingLineNumber = "429"
+            startingLineNumber = "492"
+            endingLineNumber = "492"
+            landmarkName = "-ZoomScaleChanged:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SuperVision+ Goggles/ViewController.mm"
+            timestampString = "458687100.809168"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "500"
+            endingLineNumber = "500"
             landmarkName = "-flashTapped"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SuperVision+ Goggles/ViewController.mm"
-            timestampString = "458600746.512205"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "437"
-            endingLineNumber = "437"
-            landmarkName = "-flashTapped"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SuperVision+ Goggles/ViewController.mm"
-            timestampString = "458578301.310109"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "58"
-            endingLineNumber = "58"
-            landmarkName = "-viewDidLoad"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SuperVision+ Goggles/ViewController.mm"
-            timestampString = "458578301.310109"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
-            landmarkName = "-initialSettings"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

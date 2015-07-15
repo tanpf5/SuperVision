@@ -21,35 +21,9 @@
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y3e-X7-7nn" customClass="SVScrollView">
                                 <rect key="frame" x="0.0" y="0.0" width="300" height="600"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eIe-g1-12a">
-                                        <rect key="frame" x="0.0" y="0.0" width="300" height="600"/>
-                                    </imageView>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="eIe-g1-12a" firstAttribute="top" secondItem="Y3e-X7-7nn" secondAttribute="top" id="CKG-Ue-2z1"/>
-                                    <constraint firstAttribute="centerX" secondItem="eIe-g1-12a" secondAttribute="centerX" id="Ey5-I8-o7R"/>
-                                    <constraint firstAttribute="centerY" secondItem="eIe-g1-12a" secondAttribute="centerY" id="G3F-qf-KlL"/>
-                                    <constraint firstItem="eIe-g1-12a" firstAttribute="leading" secondItem="Y3e-X7-7nn" secondAttribute="leading" id="nuV-Kn-VUF"/>
-                                    <constraint firstAttribute="bottom" secondItem="eIe-g1-12a" secondAttribute="bottom" id="vMO-VG-cTn"/>
-                                    <constraint firstAttribute="trailing" secondItem="eIe-g1-12a" secondAttribute="trailing" id="yF3-LB-NlL"/>
-                                </constraints>
                             </scrollView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0gI-NS-mT8" customClass="SVScrollView">
                                 <rect key="frame" x="300" y="0.0" width="300" height="600"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1dx-fV-AHL">
-                                        <rect key="frame" x="0.0" y="0.0" width="300" height="600"/>
-                                    </imageView>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="1dx-fV-AHL" secondAttribute="bottom" id="3l8-gW-3sE"/>
-                                    <constraint firstItem="1dx-fV-AHL" firstAttribute="top" secondItem="0gI-NS-mT8" secondAttribute="top" id="Czi-rf-HOE"/>
-                                    <constraint firstAttribute="centerX" secondItem="1dx-fV-AHL" secondAttribute="centerX" id="hPg-9S-Jnm"/>
-                                    <constraint firstAttribute="centerY" secondItem="1dx-fV-AHL" secondAttribute="centerY" id="mjP-cI-qk8"/>
-                                    <constraint firstItem="1dx-fV-AHL" firstAttribute="leading" secondItem="0gI-NS-mT8" secondAttribute="leading" id="pjR-SP-4lh"/>
-                                    <constraint firstAttribute="trailing" secondItem="1dx-fV-AHL" secondAttribute="trailing" id="zBA-aQ-47g"/>
-                                </constraints>
                             </scrollView>
                             <imageView userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="scaleToFill" image="slider.png" translatesAutoresizingMaskIntoConstraints="NO" id="Qvy-6r-Ks9">
                                 <rect key="frame" x="510" y="125" width="80" height="350"/>

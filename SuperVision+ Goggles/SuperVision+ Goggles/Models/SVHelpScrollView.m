@@ -52,7 +52,6 @@
     UIImage *image = [UIImage imageNamed:@"help.png"];
     [self setContentSize:CGRectMake(0, 0, self.width, self.height).size];
     [self.imageView setFrame:CGRectMake(0, 0, self.width, image.size.height * self.width / image.size.width)];
-    //NSLog(@"width = %f, height = %f", self.imageView.bounds.size.width, self.imageView.bounds.size.height);
     [self.imageView setContentMode:UIViewContentModeScaleAspectFit];
     self.imageView.image = image;
     [self addSubview:imageView];
