@@ -117,9 +117,24 @@
 }
 
 - (void) initialCapture {
+    /*And we create a capture session*/
+    self.captureSession = [[AVCaptureSession alloc] init];
+    
     /*We setup the input*/
-    AVCaptureDeviceInput *captureInput = [AVCaptureDeviceInput deviceInputWithDevice:[AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo]
-                                                                               error:nil];
+    AVCaptureDevice *captureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    NSError *error;
+    AVCaptureDeviceInput *captureInput = [AVCaptureDeviceInput deviceInputWithDevice:captureDevice
+                                                                               error:&error];
+    if (!error) {
+        if ([self.captureSession canAddInput:captureInput]) {
+            [self.captureSession addInput:captureInput];
+        } else {
+            NSLog(@"Video input add-to-session failed");
+        }
+    } else {
+        NSLog(@"Video input creation failed");
+    }
+    
     /*We setup the output*/
     AVCaptureVideoDataOutput *captureOutput = [[AVCaptureVideoDataOutput alloc] init];
     /*While a frame is processes in -captureOutput:didOutputSampleBuffer:fromConnection: delegate methods no other frames are added in the queue.
@@ -139,14 +154,23 @@
     NSNumber* value = [NSNumber numberWithUnsignedInt:kCVPixelFormatType_32BGRA];
     NSDictionary* videoSettings = [NSDictionary dictionaryWithObject:value forKey:key];
     [captureOutput setVideoSettings:videoSettings];
-    /*And we create a capture session*/
-    self.captureSession = [[AVCaptureSession alloc] init];
     
-    /*We add input and output*/
-    [self.captureSession addInput:captureInput];
     [self.captureSession addOutput:captureOutput];
-    /*We use medium quality, ont the iPhone 4 this demo would be laging too much, the conversion in UIImage and CGImage demands too much ressources for a 720p resolution.*/
+    
+    /*We use medium quality, on the iPhone 4 this demo would be laging too much, the conversion in UIImage and CGImage demands too much ressources for a 720p resolution.*/
     [self.captureSession setSessionPreset:self.currentResolution];
+    
+    if ([captureDevice lockForConfiguration:nil]) {
+        
+        //int selectedAVCaptureDeviceFormatIdx = 15;
+        //AVCaptureDeviceFormat* currdf = [captureDevice.formats objectAtIndex:selectedAVCaptureDeviceFormatIdx];
+        //captureDevice.activeFormat = currdf;
+        
+        captureDevice.videoZoomFactor = captureDevice.activeFormat.videoZoomFactorUpscaleThreshold;
+        NSLog(@"videoZoomFactor = %f", captureDevice.videoZoomFactor);
+        [captureDevice unlockForConfiguration];
+    }
+    
     /*We start the capture*/
     [self.captureSession startRunning];
 }
@@ -637,30 +661,8 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 #pragma mark UI Display Controls
 
 - (void)hideMenuAndControl {
-    //  Menu
-    [self.zoomItemLeft setHidden:YES];
-    [self.zoomItemRight setHidden:YES];
-    [self.flashItemLeft setHidden:YES];
-    [self.flashItemRight setHidden:YES];
-    [self.imageItemLeft setHidden:YES];
-    [self.imageItemRight setHidden:YES];
-    [self.exitItemLeft setHidden:YES];
-    [self.exitItemRight setHidden:YES];
-    //  Control
-    [self.flashButtonLeft setHidden:YES];
-    [self.flashButtonRight setHidden:YES];
-    [self.imageButtonLeft setHidden:YES];
-    [self.imageButtonRight setHidden:YES];
-    [self.infoButtonLeft setHidden:YES];
-    [self.infoButtonRight setHidden:YES];
-    //  Zoom sliders
-    [self.sliderBackgroundLeft setHidden:YES];
-    [self.sliderBackgroundRight setHidden:YES];
-    [self.zoomSliderLeft setHidden:YES];
-    [self.zoomSliderRight setHidden:YES];
-    //  Messages
-    [self.messageLeft setHidden:YES];
-    [self.messageRight setHidden:YES];
+    [self hideMenu];
+    [self hideControl];
 }
 
 - (void)hideControl {
