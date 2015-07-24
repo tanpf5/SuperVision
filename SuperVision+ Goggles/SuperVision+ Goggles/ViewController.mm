@@ -21,7 +21,7 @@
 #define IP4RESOLUTION RESOLUTION3
 #define FREQUENCY 50
 //  menu target
-#define TARGET_INTERVAL 4
+#define TARGET_INTERVAL 3
 #define TARGETRATIO 3
 #define ZOOMRATIO 4
 
@@ -102,8 +102,8 @@
         self.lockDelay = 8;
     } else {
         self.currentResolution = OTHERRESOLUTION;
-        self.featureWindowWidth = 284;
-        self.featureWindowHeight = 320;
+        self.featureWindowWidth = 200;
+        self.featureWindowHeight = 250;
         [self.imageProcess setMaxFeatureNumber:20];
         if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
             self.resolutionWidth = 1080;
@@ -162,12 +162,7 @@
     
     if ([captureDevice lockForConfiguration:nil]) {
         
-        //int selectedAVCaptureDeviceFormatIdx = 15;
-        //AVCaptureDeviceFormat* currdf = [captureDevice.formats objectAtIndex:selectedAVCaptureDeviceFormatIdx];
-        //captureDevice.activeFormat = currdf;
-        
         captureDevice.videoZoomFactor = captureDevice.activeFormat.videoZoomFactorUpscaleThreshold;
-        NSLog(@"videoZoomFactor = %f", captureDevice.videoZoomFactor);
         [captureDevice unlockForConfiguration];
     }
     
@@ -538,8 +533,9 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     if ([device hasTorch]) {
         [device lockForConfiguration:nil];
+        //  turn on
         [device setTorchMode:AVCaptureTorchModeOn];
-        //  use AVCaptureTorchModeOff to turn off
+        [MobClick beginEvent:@"FlashlightOn"];
         [device unlockForConfiguration];
     }
 }
@@ -548,8 +544,9 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     if ([device hasTorch]) {
         [device lockForConfiguration:nil];
+        //  turn off
+        [MobClick endEvent:@"FlashlightOn"];
         [device setTorchMode:AVCaptureTorchModeOff];
-        //  use AVCaptureTorchModeOff to turn off
         [device unlockForConfiguration];
     }
 }
@@ -562,7 +559,9 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         [self.imageButtonRight setSelected:NO];
         [self displayMessage:@"Color"];
         [self messageChangeColor:[UIColor blackColor]];
+        [MobClick endEvent:@"ImageModeOn"];
     } else {
+        [MobClick beginEvent:@"ImageModeOn"];
         [self.imageItemLeft setSelected:YES];
         [self.imageItemRight setSelected:YES];
         [self.imageButtonLeft setSelected:YES];
@@ -1116,10 +1115,19 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     if (!self.isControlHidden) {
         self.controlHidden = true;
     }
+    if (self.flashOn) {
+        [self flashTapped];
+    }
+    if (self.imageModeOn) {
+        [MobClick endEvent:@"ImageModeOn"];
+    }
 }
 
 - (void)applicationDidBecomeActive {
-    [self recoverFlash];
+    if (self.imageModeOn) {
+        [MobClick beginEvent:@"ImageModeOn"];
+    }
+    //[self recoverFlash];
 }
 
 - (void)applicationDidEnterBackground {

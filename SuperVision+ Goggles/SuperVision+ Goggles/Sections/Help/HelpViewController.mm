@@ -14,6 +14,15 @@
 
 @implementation HelpViewController
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"HelperPage"];
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"HelperPage"];
+}
+
 - (IBAction)backButtonTapped {
     [self willMoveToParentViewController:nil];
     [self.view removeFromSuperview];

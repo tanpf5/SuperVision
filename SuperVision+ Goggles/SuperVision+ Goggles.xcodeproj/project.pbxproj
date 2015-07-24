@@ -32,6 +32,8 @@
 		A05C110E1B504C5400B409B6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A05C110D1B504C5400B409B6 /* CoreGraphics.framework */; };
 		A05C11101B504C9600B409B6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A05C110F1B504C9600B409B6 /* UIKit.framework */; };
 		A05C11161B50557F00B409B6 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A05C11151B50557F00B409B6 /* GLKit.framework */; };
+		A0F638E51B62881100964FF8 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0F638E31B62881100964FF8 /* libMobClickLibrary.a */; };
+		A0F638E71B62888400964FF8 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A0F638E61B62888400964FF8 /* libz.dylib */; };
 		A0F6CBD41B432C7C00460AF3 /* empty.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CBC71B432C7C00460AF3 /* empty.png */; };
 		A0F6CBD51B432C7C00460AF3 /* exit.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CBC81B432C7C00460AF3 /* exit.png */; };
 		A0F6CBD61B432C7C00460AF3 /* flashlight_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CBC91B432C7C00460AF3 /* flashlight_selected.png */; };
@@ -98,6 +100,9 @@
 		A05C110D1B504C5400B409B6 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		A05C110F1B504C9600B409B6 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A05C11151B50557F00B409B6 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		A0F638E31B62881100964FF8 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
+		A0F638E41B62881100964FF8 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
+		A0F638E61B62888400964FF8 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		A0F6CBC71B432C7C00460AF3 /* empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = empty.png; path = Resources/Images/Buttons/empty.png; sourceTree = "<group>"; };
 		A0F6CBC81B432C7C00460AF3 /* exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = exit.png; path = Resources/Images/Buttons/exit.png; sourceTree = "<group>"; };
 		A0F6CBC91B432C7C00460AF3 /* flashlight_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = flashlight_selected.png; path = Resources/Images/Buttons/flashlight_selected.png; sourceTree = "<group>"; };
@@ -123,6 +128,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0F638E71B62888400964FF8 /* libz.dylib in Frameworks */,
 				A05C11161B50557F00B409B6 /* GLKit.framework in Frameworks */,
 				A05C11101B504C9600B409B6 /* UIKit.framework in Frameworks */,
 				A05C110E1B504C5400B409B6 /* CoreGraphics.framework in Frameworks */,
@@ -132,6 +138,7 @@
 				A05C11061B4EF84400B409B6 /* Foundation.framework in Frameworks */,
 				A05C11041B4EF6E400B409B6 /* opencv2.framework in Frameworks */,
 				A037E9091B45DBDC00DA7961 /* CoreMotion.framework in Frameworks */,
+				A0F638E51B62881100964FF8 /* libMobClickLibrary.a in Frameworks */,
 				A0F6CC111B446FAC00460AF3 /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -232,6 +239,7 @@
 				A0F0FAA11B3DA1EC000FC3E9 /* Motion */,
 				A0F0FAA21B3DA1F8000FC3E9 /* Help */,
 				A05C10FF1B4EF64400B409B6 /* Image Process */,
+				A0F638E21B62878E00964FF8 /* Umeng */,
 			);
 			name = Sections;
 			sourceTree = "<group>";
@@ -270,6 +278,15 @@
 				A00D07241B4DB18C00ED27FD /* HelpViewController.xib */,
 			);
 			name = Help;
+			sourceTree = "<group>";
+		};
+		A0F638E21B62878E00964FF8 /* Umeng */ = {
+			isa = PBXGroup;
+			children = (
+				A0F638E31B62881100964FF8 /* libMobClickLibrary.a */,
+				A0F638E41B62881100964FF8 /* MobClick.h */,
+			);
+			name = Umeng;
 			sourceTree = "<group>";
 		};
 		A0F6CBA91B41E49300460AF3 /* Resources */ = {
@@ -313,6 +330,7 @@
 		A0F6CC0F1B446F9100460AF3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A0F638E61B62888400964FF8 /* libz.dylib */,
 				A05C11151B50557F00B409B6 /* GLKit.framework */,
 				A05C110F1B504C9600B409B6 /* UIKit.framework */,
 				A05C110D1B504C5400B409B6 /* CoreGraphics.framework */,
@@ -588,6 +606,11 @@
 				INFOPLIST_FILE = "SuperVision+ Goggles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/SuperVision+",
+					Goggles,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -605,6 +628,11 @@
 				INFOPLIST_FILE = "SuperVision+ Goggles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/SuperVision+",
+					Goggles,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};

@@ -112,7 +112,7 @@ namespace SuperVision
         
         int n = checkTap();
         
-        if (n >= 2)
+        if (n >= 2 && n <= 3)
         {
             NSLog(@"n = %d", n);
             _sampleIndex = 0;

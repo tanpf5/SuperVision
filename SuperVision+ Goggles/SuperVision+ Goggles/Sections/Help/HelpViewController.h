@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SVHelpScrollView.h"
+#import "MobClick.h"
 
 @interface HelpViewController : UIViewController
 
