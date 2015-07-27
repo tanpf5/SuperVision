@@ -67,6 +67,8 @@
 @property (strong, nonatomic) AVCaptureSession *captureSession;
 // CGImageRef
 @property (nonatomic) CGImageRef cgImageRef;
+// CIContext is used to get new CGImageRef
+@property (nonatomic) CIContext *ciContext;
 //  image process logic class
 @property (strong, nonatomic) ImageProcess *imageProcess;
 //  a state to indicate whether to hide all controls;

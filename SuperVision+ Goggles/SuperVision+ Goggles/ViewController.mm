@@ -102,8 +102,8 @@
         self.lockDelay = 8;
     } else {
         self.currentResolution = OTHERRESOLUTION;
-        self.featureWindowWidth = 200;
-        self.featureWindowHeight = 250;
+        self.featureWindowWidth = 284;
+        self.featureWindowHeight = 320;
         [self.imageProcess setMaxFeatureNumber:20];
         if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
             self.resolutionWidth = 1080;
@@ -168,6 +168,11 @@
     
     /*We start the capture*/
     [self.captureSession startRunning];
+    
+    // create the CIContext instance, note that this must be done after _videoPreviewView is properly set up
+    EAGLContext *_eaglContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+    self.ciContext = [CIContext contextWithEAGLContext:_eaglContext options:@{kCIContextWorkingColorSpace : [NSNull null]} ];
+    //self.ciContext = [CIContext contextWithOptions:nil];
 }
 
 - (void)initialMotion {
@@ -264,6 +269,12 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     CGContextRef context = CGBitmapContextCreate(baseAddress, width, height, 8, bytesPerRow, colorSpace, kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
     // create a cgimgRef from original source.
     self.cgImageRef = CGBitmapContextCreateImage(context);
+    // cut a particle of a cgimage to process fast feature detect
+    CGImageRef processCGImageRef = CGImageCreateWithImageInRect(self.cgImageRef, CGRectMake(width/2 - self.featureWindowWidth/2, height/2 - self.featureWindowHeight/2, self.featureWindowWidth, self.featureWindowHeight));
+    // we crop a part of cgimage to uiimage to do feature detect and track.
+    UIImage *processUIImage = [UIImage imageWithCGImage:processCGImageRef];
+    /* release original cgimage */
+    CGImageRelease(processCGImageRef);
     if (self.isImageModeOn) {
         [self addFilter:self.cgImageRef];
     }
@@ -273,14 +284,6 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     CGColorSpaceRelease(colorSpace);
     
     UIImage *originalUIImage = [UIImage imageWithCGImage:self.cgImageRef];
-    
-    
-    // cut a particle of a cgimage to process fast feature detect
-    CGImageRef processCGImageRef = CGImageCreateWithImageInRect(self.cgImageRef, CGRectMake(width/2 - self.featureWindowWidth/2, height/2 - self.featureWindowHeight/2, self.featureWindowWidth, self.featureWindowHeight));
-    // we crop a part of cgimage to uiimage to do feature detect and track.
-    UIImage *processUIImage = [UIImage imageWithCGImage:processCGImageRef];
-    /* release original cgimage */
-    CGImageRelease(processCGImageRef);
     UIImage *finalUIImage = originalUIImage;
     
     if (self.isBeforeLocked) {
@@ -400,7 +403,33 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     // add filter
     CIImage *image = [CIImage imageWithCGImage:cgImageRef];
     CGImageRelease(cgImageRef);
-    CIContext *cicontext = [CIContext contextWithOptions:nil];
+    
+    // exposure help make picture clear when high contrast
+    //image = [CIFilter filterWithName:@"CIExposureAdjust" keysAndValues:kCIInputImageKey, image, @"inputEV", [NSNumber numberWithFloat:1], nil].outputImage;
+    // coler black and white
+    CIFilter* photoEffectMono = [CIFilter filterWithName:@"CIPhotoEffectMono"];
+    [photoEffectMono setDefaults];
+    [photoEffectMono setValue:image forKey:@"inputImage"];
+    image = [photoEffectMono valueForKey:@"outputImage"];
+    
+    // coler invert filter
+    CIFilter* colorInvertFilter = [CIFilter filterWithName:@"CIColorInvert"];
+    [colorInvertFilter setDefaults];
+    [colorInvertFilter setValue:image forKey:@"inputImage"];
+    image = [colorInvertFilter valueForKey:@"outputImage"];
+    
+    // color control filter
+    CIFilter* colorControlsFilter = [CIFilter filterWithName:@"CIColorControls"];
+    [colorControlsFilter setDefaults];
+    [colorControlsFilter setValue:@5 forKey:@"inputContrast"];
+    [colorControlsFilter setValue:image forKey:@"inputImage"];
+    image = [colorControlsFilter valueForKey:@"outputImage"];
+    self.cgImageRef = [self.ciContext createCGImage:image fromRect:[image extent]];
+}
+/*- (void)addFilter:(CGImageRef) cgImageRef {
+    // add filter
+    CIImage *image = [CIImage imageWithCGImage:cgImageRef];
+    CGImageRelease(cgImageRef);
     
     // exposure help make picture clear when high contrast
     image = [CIFilter filterWithName:@"CIExposureAdjust" keysAndValues:kCIInputImageKey, image, @"inputEV", [NSNumber numberWithFloat:1], nil].outputImage;
@@ -418,9 +447,10 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     [colorControlsFilter setValue:@0 forKey:@"inputSaturation"];
     [colorControlsFilter setValue:image forKey:@"inputImage"];
     image = [colorControlsFilter valueForKey:@"outputImage"];
-    
-    self.cgImageRef = [cicontext createCGImage:image fromRect:[image extent]];
-}
+    //NSBitmapImageRep* rep = [[NSBitmapImageRep alloc] initWithCIImage:ciImage];
+    //self.cgImageRef = rep.CGImage;
+    [self.ciContext drawImage:image inRect:self.scrollViewLeft.frame fromRect:[image extent]];
+}*/
 
 - (void)startReleaseStabilization {
     self.beingReleased = true;
@@ -559,9 +589,9 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         [self.imageButtonRight setSelected:NO];
         [self displayMessage:@"Color"];
         [self messageChangeColor:[UIColor blackColor]];
-        [MobClick endEvent:@"ImageModeOn"];
+        [MobClick endEvent:@"ImageModeOn" label:@"Enh-Inv"];
     } else {
-        [MobClick beginEvent:@"ImageModeOn"];
+        [MobClick beginEvent:@"ImageModeOn" label:@"Enh-Inv"];
         [self.imageItemLeft setSelected:YES];
         [self.imageItemRight setSelected:YES];
         [self.imageButtonLeft setSelected:YES];

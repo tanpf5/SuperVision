@@ -36,27 +36,33 @@
     [MobClick getConfigParams];
     //[MobClick setLogEnabled:YES];  // 打开友盟sdk调试，注意Release发布时需要注释掉此行,减少io消耗
     
+    NSLog(@"%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);*/
+    [MobClick startWithAppkey:UMENG_APPKEY reportPolicy:BATCH channelId:nil];
+    //[MobClick setLogEnabled:YES];  // 打开友盟sdk调试，注意Release发布时需要注释掉此行,减少io消耗
+    [MobClick updateOnlineConfig];  //在线参数配置
+    [MobClick getConfigParams];
+    [MobClick event:@"Launched"];
+    //[self getDeviceInfo];
+    
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onlineConfigCallBack:) name:UMOnlineConfigDidFinishedNotification object:nil];
+    
+}
+
+- (void)getDeviceInfo {
     Class cls = NSClassFromString(@"UMANUtil");
     SEL deviceIDSelector = @selector(openUDIDString);
     NSString *deviceID = nil;
-    if(cls && [cls respondsToSelector:deviceIDSelector]){
+    if (cls && [cls respondsToSelector:deviceIDSelector]) {
         deviceID = [cls performSelector:deviceIDSelector];
     }
     NSData* jsonData = [NSJSONSerialization dataWithJSONObject:@{@"oid" : deviceID}
                                                        options:NSJSONWritingPrettyPrinted
                                                          error:nil];
     
-    NSLog(@"%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);*/
-    [MobClick startWithAppkey:UMENG_APPKEY reportPolicy:BATCH channelId:nil];
-    [MobClick setCrashReportEnabled:YES]; // 如果不需要捕捉异常，注释掉此行
-    [MobClick setLogEnabled:YES];  // 打开友盟sdk调试，注意Release发布时需要注释掉此行,减少io消耗
-    [MobClick updateOnlineConfig];  //在线参数配置
-    [MobClick getConfigParams];
-    [MobClick event:@"Launched"];
-    
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onlineConfigCallBack:) name:UMOnlineConfigDidFinishedNotification object:nil];
+    NSLog(@"%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
     
 }
+
 
 /*- (void)onlineConfigCallBack:(NSNotification *)note {
     
