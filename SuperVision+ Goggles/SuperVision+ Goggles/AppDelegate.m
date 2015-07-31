@@ -27,22 +27,15 @@
 }
 
 - (void)umengTrack {
-    /*//  umeng
-    [MobClick startWithAppkey:@"55b24ecbe0f55ab20d001c72" reportPolicy:BATCH channelId:nil];
+    [MobClick startWithAppkey:UMENG_APPKEY reportPolicy:BATCH channelId:nil];
     // version
     NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     [MobClick setAppVersion:version];
     [MobClick updateOnlineConfig];
     [MobClick getConfigParams];
-    //[MobClick setLogEnabled:YES];  // 打开友盟sdk调试，注意Release发布时需要注释掉此行,减少io消耗
-    
-    NSLog(@"%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);*/
-    [MobClick startWithAppkey:UMENG_APPKEY reportPolicy:BATCH channelId:nil];
-    //[MobClick setLogEnabled:YES];  // 打开友盟sdk调试，注意Release发布时需要注释掉此行,减少io消耗
-    [MobClick updateOnlineConfig];  //在线参数配置
-    [MobClick getConfigParams];
     [MobClick event:@"Launched"];
     //[self getDeviceInfo];
+    //[MobClick setLogEnabled:YES]; // test
     
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onlineConfigCallBack:) name:UMOnlineConfigDidFinishedNotification object:nil];
     
@@ -63,11 +56,6 @@
     
 }
 
-
-/*- (void)onlineConfigCallBack:(NSNotification *)note {
-    
-    NSLog(@"online config has fininshed and note = %@", note.userInfo);
-}*/
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

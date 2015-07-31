@@ -10,9 +10,6 @@
 
 #define SYSTEM_VERSION_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
 
-#define ScreenWidth      ceil(CGRectGetWidth([[UIScreen mainScreen] bounds])/2)
-#define ScreenHeight     CGRectGetHeight([[UIScreen mainScreen] bounds])
-
 #define RESOLUTION1 AVCaptureSessionPreset1920x1080
 #define RESOLUTION2 AVCaptureSessionPreset1280x720
 #define RESOLUTION3 AVCaptureSessionPresetiFrame960x540
@@ -75,14 +72,6 @@
     self.imageModeOn = false; // image mode off
     self.zoomSelected = false; // zoom item don't select
     self.zoomOutModeOn = false; // not in zoom out mode
-    // set min zoom scale
-    /*[self.scrollViewLeft changeImageViewFrame:CGRectMake(0, 0, 1920, 1080)];
-    [self.scrollViewRight changeImageViewFrame:CGRectMake(0, 0, 1920, 1080)];
-    float viewScale = fmax(ScreenWidth / self.scrollViewLeft.imageView.frame.size.width,
-                           ScreenHeight / self.scrollViewLeft.imageView.frame.size.height);
-    
-    [self setMinimalZoomScale:viewScale];*/
-    [self setMinimalZoomScale:0.4]; // this zoom scale keeps iPhone 6 no white edge when stabilization
     // init instance
     self.imageProcess = [[ImageProcess alloc] init];
     self.offsetArray = [[NSMutableArray alloc] init];
@@ -100,6 +89,7 @@
             self.resolutionHeight = 540;
         }
         self.lockDelay = 8;
+        [self setMinimalZoomScale:0.6];
     } else {
         self.currentResolution = OTHERRESOLUTION;
         self.featureWindowWidth = 284;
@@ -113,6 +103,7 @@
             self.resolutionHeight = 1080;
         }
         self.lockDelay = 10;
+        [self setMinimalZoomScale:0.4];
     }
 }
 
@@ -160,8 +151,7 @@
     /*We use medium quality, on the iPhone 4 this demo would be laging too much, the conversion in UIImage and CGImage demands too much ressources for a 720p resolution.*/
     [self.captureSession setSessionPreset:self.currentResolution];
     
-    if ([captureDevice lockForConfiguration:nil]) {
-        
+    if ([captureDevice lockForConfiguration:nil] && ![self isIphone4]) {
         captureDevice.videoZoomFactor = captureDevice.activeFormat.videoZoomFactorUpscaleThreshold;
         [captureDevice unlockForConfiguration];
     }
@@ -172,7 +162,6 @@
     // create the CIContext instance, note that this must be done after _videoPreviewView is properly set up
     EAGLContext *_eaglContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
     self.ciContext = [CIContext contextWithEAGLContext:_eaglContext options:@{kCIContextWorkingColorSpace : [NSNull null]} ];
-    //self.ciContext = [CIContext contextWithOptions:nil];
 }
 
 - (void)initialMotion {
@@ -242,6 +231,13 @@
 - (void)viewDidAppear:(BOOL)animated {
     [self.scrollViewLeft changeImageViewFrame:CGRectMake(0, 0, self.resolutionWidth, self.resolutionHeight)];
     [self.scrollViewRight changeImageViewFrame:CGRectMake(0, 0, self.resolutionWidth, self.resolutionHeight)];
+    
+    /*float viewScale = fmax([ViewController screenWidth] / self.scrollViewLeft.imageView.frame.size.width,
+                           [ViewController screenHeight] / self.scrollViewLeft.imageView.frame.size.height);
+    
+    NSLog(@"screenwidth = %d, width = %f, screenheight = %d, height = %f", [ViewController screenWidth], self.scrollViewLeft.imageView.frame.size.width, [ViewController screenHeight], self.scrollViewLeft.imageView.frame.size.height);
+    [self setMinimalZoomScale:viewScale];
+    NSLog(@"viewScale = %f", viewScale);*/
 }
 
 #pragma mark -
@@ -251,9 +247,11 @@
 didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
        fromConnection:(AVCaptureConnection *)connection {
     if (self.isLocked) {
-        return;
+        return; 
     }
-    
+    /*We create an autorelease pool because as we are not in the main_queue our code is
+     not executed in the main thread. So we have to create an autorelease pool for the thread we are in*/
+    @autoreleasepool {
     CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
     /*Lock the image buffer*/
     CVPixelBufferLockBaseAddress(imageBuffer,0);
@@ -275,17 +273,17 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     UIImage *processUIImage = [UIImage imageWithCGImage:processCGImageRef];
     /* release original cgimage */
     CGImageRelease(processCGImageRef);
-    if (self.isImageModeOn) {
-        [self addFilter:self.cgImageRef];
-    }
-    
     /*We release some components*/
     CGContextRelease(context);
     CGColorSpaceRelease(colorSpace);
     
+    // add filter
+    if (self.isImageModeOn) {
+        [self addFilter:self.cgImageRef];
+    }
+    
     UIImage *originalUIImage = [UIImage imageWithCGImage:self.cgImageRef];
     UIImage *finalUIImage = originalUIImage;
-    
     if (self.isBeforeLocked) {
         [self.imageProcess setCurrentImageMat:processUIImage];
         double var = [self.imageProcess calVariance];
@@ -324,9 +322,9 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
             if ([self.offsetArray count] == POINT_WND) {
                 [self.offsetArray removeObjectAtIndex:0];
             }
-            /* set up images */
+            // set up images
             [self.imageProcess setCurrentImageMat:processUIImage];
-            /* calculate motion vector */
+            // calculate motion vector 
             CGPoint motionVector = [self.imageProcess motionEstimation];
             [self.offsetArray addObject:[NSValue valueWithCGPoint:motionVector]];
             
@@ -391,11 +389,12 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     // set image
     [self.scrollViewLeft setImage:finalUIImage];
     [self.scrollViewRight setImage:finalUIImage];
-    /*We relase the CGImageRef*/
+    // We relase the CGImageRef
     CGImageRelease(self.cgImageRef);
-    /*We unlock the  image buffer*/
+    // We unlock the  image buffer
     CVPixelBufferUnlockBaseAddress(imageBuffer,0);
     self.imageNo++;
+    } // autorelease finished
     return;
 }
 
@@ -426,31 +425,6 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     image = [colorControlsFilter valueForKey:@"outputImage"];
     self.cgImageRef = [self.ciContext createCGImage:image fromRect:[image extent]];
 }
-/*- (void)addFilter:(CGImageRef) cgImageRef {
-    // add filter
-    CIImage *image = [CIImage imageWithCGImage:cgImageRef];
-    CGImageRelease(cgImageRef);
-    
-    // exposure help make picture clear when high contrast
-    image = [CIFilter filterWithName:@"CIExposureAdjust" keysAndValues:kCIInputImageKey, image, @"inputEV", [NSNumber numberWithFloat:1], nil].outputImage;
-    
-    // coler invert filter
-    CIFilter* colorInvertFilter = [CIFilter filterWithName:@"CIColorInvert"];
-    [colorInvertFilter setDefaults];
-    [colorInvertFilter setValue:image forKey:@"inputImage"];
-    image = [colorInvertFilter valueForKey:@"outputImage"];
-    
-    // color control filter
-    CIFilter* colorControlsFilter = [CIFilter filterWithName:@"CIColorControls"];
-    [colorControlsFilter setDefaults];
-    [colorControlsFilter setValue:@5 forKey:@"inputContrast"];
-    [colorControlsFilter setValue:@0 forKey:@"inputSaturation"];
-    [colorControlsFilter setValue:image forKey:@"inputImage"];
-    image = [colorControlsFilter valueForKey:@"outputImage"];
-    //NSBitmapImageRep* rep = [[NSBitmapImageRep alloc] initWithCIImage:ciImage];
-    //self.cgImageRef = rep.CGImage;
-    [self.ciContext drawImage:image inRect:self.scrollViewLeft.frame fromRect:[image extent]];
-}*/
 
 - (void)startReleaseStabilization {
     self.beingReleased = true;
@@ -1035,6 +1009,28 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 
 - (BOOL)isIpad {
     return [AppDelegate isIpad];
+}
+
+// hide status bar
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
+}
+
++ (NSInteger)screenWidth {
+    if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
+        return ceil(CGRectGetHeight([[UIScreen mainScreen] bounds]) / 2);
+    } else {
+        return ceil(CGRectGetWidth([[UIScreen mainScreen] bounds]) / 2);
+    }
+}
+
++ (NSInteger)screenHeight {
+    if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
+        return CGRectGetWidth([[UIScreen mainScreen] bounds]);
+    } else {
+        return CGRectGetHeight([[UIScreen mainScreen] bounds]);
+    }
 }
 
 #pragma mark -

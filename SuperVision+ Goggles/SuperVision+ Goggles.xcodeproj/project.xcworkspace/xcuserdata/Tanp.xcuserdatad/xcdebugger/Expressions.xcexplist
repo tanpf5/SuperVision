@@ -36,15 +36,15 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "-[SVScrollView initialSettings]:SVScrollView.m">
+      </ContextState>
+      <ContextState
          contextName = "-[HelpViewController initialView]:HelpViewController.mm">
          <PersistentStrings>
             <PersistentString
                value = "self.scrollView.minimumZoomScale">
             </PersistentString>
          </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "-[SVScrollView initialSettings]:SVScrollView.m">
       </ContextState>
       <ContextState
          contextName = "-[ViewController viewDidLoad]:ViewController.mm">
@@ -98,10 +98,24 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "-[ViewController viewDidAppear:]:ViewController.mm">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.resolutionWidth">
+            </PersistentString>
+            <PersistentString
+               value = "ScreenWidth">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[ViewController captureOutput:didOutputSampleBuffer:fromConnection:]:ViewController.mm">
          <PersistentStrings>
             <PersistentString
                value = "finalUIImage.size.width">
+            </PersistentString>
+            <PersistentString
+               value = "self.imageNo">
             </PersistentString>
             <PersistentString
                value = "finalUIImage.size.height">
