@@ -19,8 +19,8 @@
 #define FREQUENCY 50
 //  menu target
 #define TARGET_INTERVAL 3
-#define TARGETRATIO 3
-#define ZOOMRATIO 4
+#define TARGETRATIO 2.5
+#define ZOOMRATIO 3.5
 
 //  release stablization
 #define RELEASE_TIME 30 //frame
@@ -54,6 +54,7 @@
     [self initialCapture];
     [self initialMotion];
     [self initialNotification];
+    [self adjustGyroDraft];
 }
 
 - (void)initialView {
@@ -178,10 +179,10 @@
 }
 
 - (void)initialNotification {
-    [[NSNotificationCenter defaultCenter] addObserver:self
+    /*[[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(applicationWillResignActive)
                                                  name:UIApplicationWillResignActiveNotification
-                                               object:nil];
+                                               object:nil];*/
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(applicationDidBecomeActive)
                                                  name:UIApplicationDidBecomeActiveNotification
@@ -225,6 +226,21 @@
         // On subsequent launches, this block will execute
         NSLog(@"notfirstlaunch");
     }
+}
+
+- (void)adjustGyroDraft {
+    _gyro->start();
+    NSLog(@"start adjust");
+    double delayInSeconds = 60.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        // if the menu is shown, don't stop gyro
+        if (self.isMenuHidden) {
+             _gyro->stop();
+        }
+        NSLog(@"finish adjust");
+        NSLog(@"x offset = %f, y offset = %f", _gyro->xOffset(), _gyro->yOffset());
+    });
 }
 
 // the frame of ui change to the true value when view did appear
@@ -1145,14 +1161,15 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         [self flashTapped];
     }
     if (self.imageModeOn) {
-        [MobClick endEvent:@"ImageModeOn"];
+        [MobClick endEvent:@"ImageModeOn" label:@"Enh-Inv"];
     }
 }
 
 - (void)applicationDidBecomeActive {
     if (self.imageModeOn) {
-        [MobClick beginEvent:@"ImageModeOn"];
+        [MobClick beginEvent:@"ImageModeOn" label:@"Enh-Inv"];
     }
+    [self retriveData];
     //[self recoverFlash];
 }
 
@@ -1160,6 +1177,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     [self stopPlaying];
     [self stopAccelerometer];
     [self stopMagnetSensor];
+    [self storeData];
 }
 
 - (void)applicationWillEnterForeground {
@@ -1176,6 +1194,36 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 - (void) resumePlaying {
     [self.captureSession startRunning];
     [[AVAudioSession sharedInstance] setActive:YES error:nil];
+}
+
+#pragma mark -
+#pragma mark System Data Storage
+
+- (void)storeData {
+    NSMutableDictionary *svGoggles = [[NSMutableDictionary alloc] init];
+    [svGoggles setObject:[NSString stringWithFormat:@"%f", self.currentZoomScale] forKey:@"Zoom Scale"];
+    [svGoggles setObject:[NSString stringWithFormat:@"%f", _gyro->xOffset()] forKey:@"X Offset"];
+    [svGoggles setObject:[NSString stringWithFormat:@"%f", _gyro->yOffset()] forKey:@"Y Offset"];
+    [svGoggles setObject:[NSString stringWithFormat:@"%d", _gyro->xNumber()] forKey:@"X Number"];
+    [svGoggles setObject:[NSString stringWithFormat:@"%d", _gyro->yNumber()] forKey:@"Y Number"];
+    [[NSUserDefaults standardUserDefaults] setObject:svGoggles forKey:@"SVGoggles"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)retriveData {
+    NSDictionary *svGoggles = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"SVGoggles"];
+    if (svGoggles) {
+        [self setZoomScale:[[svGoggles objectForKey:@"Zoom Scale"] floatValue]];
+        _gyro->setXOffset([[svGoggles objectForKey:@"X Offset"] floatValue]);
+        _gyro->setYOffset([[svGoggles objectForKey:@"Y Offset"] floatValue]);
+        _gyro->setXNumber([[svGoggles objectForKey:@"X Number"] intValue]);
+        _gyro->setYNumber([[svGoggles objectForKey:@"Y Number"] intValue]);
+        /*NSLog(@"X offset = %f, Y offset = %f, X Number = %d, Y Number = %d",
+              [[svGoggles objectForKey:@"X Offset"] floatValue],
+              [[svGoggles objectForKey:@"Y Offset"] floatValue],
+              [[svGoggles objectForKey:@"X Number"] intValue],
+              [[svGoggles objectForKey:@"Y Number"] intValue]);*/
+    }
 }
 
 @end

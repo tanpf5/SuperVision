@@ -129,5 +129,10 @@
 // Gyro
 @property (nonatomic) SuperVision::Gyro * gyro;
 
+- (void)applicationWillResignActive;
+- (void)applicationDidBecomeActive;
+- (void)applicationDidEnterBackground;
+- (void)applicationWillEnterForeground;
+
 @end
 

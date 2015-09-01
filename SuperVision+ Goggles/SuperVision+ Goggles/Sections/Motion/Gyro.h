@@ -30,6 +30,14 @@ namespace SuperVision
         void stopUpAndDown();
         void startLeftAndRight();
         void stopLeftAndRight();
+        double xOffset();
+        double yOffset();
+        int xNumber();
+        int yNumber();
+        void setXOffset(double xOffset);
+        void setYOffset(double yOffset);
+        void setXNumber(int xNumber);
+        void setYNumber(int yNumber);
         
     private:
         CMMotionManager *_manager;

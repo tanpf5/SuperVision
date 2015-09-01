@@ -74,6 +74,46 @@ namespace SuperVision
         isLeftAndRight = false;
     }
     
+    double Gyro::xOffset()
+    {
+        return _x_offset;
+    }
+    
+    double Gyro::yOffset()
+    {
+        return _y_offset;
+    }
+    
+    int Gyro::xNumber()
+    {
+        return _x_number;
+    }
+    
+    int Gyro::yNumber()
+    {
+        return _y_number;
+    }
+    
+    void Gyro::setXOffset(double xOffset)
+    {
+        _x_offset = xOffset;
+    }
+    
+    void Gyro::setYOffset(double yOffset)
+    {
+        _y_offset = yOffset;
+    }
+    
+    void Gyro::setXNumber(int xNumber)
+    {
+        _x_number = xNumber;
+    }
+    
+    void Gyro::setYNumber(int yNumber)
+    {
+        _y_number = yNumber;
+    }
+    
     void Gyro::addData(GLKVector3 value)
     {
         _sensorData[_sampleIndex % numberOfSamples] = value;

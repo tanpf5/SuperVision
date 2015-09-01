@@ -71,6 +71,22 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "-[ViewController showHelpViewController]:ViewController.mm">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.helpViewController.view">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ViewController retriveData]:ViewController.mm">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.currentZoomScale">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[ViewController zoomSliderChanged:]:ViewController.mm">
       </ContextState>
       <ContextState
@@ -94,6 +110,17 @@
          <PersistentStrings>
             <PersistentString
                value = "self.gestureRecognizer">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "SuperVision::Gyro::addData(_GLKVector3):Gyro.mm">
+         <PersistentStrings>
+            <PersistentString
+               value = "_x_offset">
+            </PersistentString>
+            <PersistentString
+               value = "_y_offset">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -166,6 +193,9 @@
       <ContextState
          contextName = "-[ViewController initialSettings]:ViewController.mm">
          <PersistentStrings>
+            <PersistentString
+               value = "self.currentZoomScale">
+            </PersistentString>
             <PersistentString
                value = "self.scrollViewLeft.imageView.frame.size.width">
             </PersistentString>
