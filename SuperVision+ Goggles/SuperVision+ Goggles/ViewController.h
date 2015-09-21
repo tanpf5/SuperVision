@@ -54,15 +54,22 @@
 @property (strong, nonatomic) IBOutlet SVSlider *zoomSliderRight;
 //  current ZoomScale
 @property (nonatomic) float currentZoomScale;
+//  min ZoomScale
+@property (nonatomic) float minZoomScale;
 
 // messages
 @property (strong, nonatomic) IBOutlet UILabel *messageLeft;
 @property (strong, nonatomic) IBOutlet UILabel *messageRight;
 
+// timer
+@property (strong, nonatomic) NSTimer *repeatTimer;
+
 //  HelperView
 @property (strong, nonatomic) HelpViewController *helpViewController;
 
 //  Capture
+// capture device is used to set some property of device
+@property (strong, nonatomic) AVCaptureDevice *captureDevice;
 // capture session is used to control frame flow from camerra
 @property (strong, nonatomic) AVCaptureSession *captureSession;
 // CGImageRef
@@ -104,6 +111,9 @@
 @property (nonatomic) NSInteger increasing;
 @property (nonatomic) float move_x;
 @property (nonatomic) float move_y;
+// focus level
+@property (nonatomic) NSUInteger focusLevel;
+@property (nonatomic) NSDate *focusLevelTimer;
 
 //  User Interface Control
 @property (nonatomic, getter=isMenuHidden) BOOL menuHidden;

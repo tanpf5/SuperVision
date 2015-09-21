@@ -24,7 +24,7 @@
 
 - (void)initialSettings {
     self.delegate = self; // events will trigger the overload functions
-    [self setScrollEnabled:NO]; // disable scroll
+    [self setScrollEnabled:YES]; // disable scroll
     self.maximumZoomScale = 8;
     // add double tap gesture
     UITapGestureRecognizer *doubleTapGesture = [[UITapGestureRecognizer alloc]

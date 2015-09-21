@@ -55,6 +55,7 @@
     [self initialMotion];
     [self initialNotification];
     [self adjustGyroDraft];
+    [self retrieveData];
 }
 
 - (void)initialView {
@@ -66,8 +67,6 @@
 - (void)initialSettings {
     self.scrollViewLeft.touchDelegate = self;
     self.scrollViewRight.touchDelegate = self;
-    // set initial zoom level
-    [self setZoomScale:1];
     // set initial controls
     self.flashOn = false; // flashlight off
     self.imageModeOn = false; // image mode off
@@ -91,6 +90,7 @@
         }
         self.lockDelay = 8;
         [self setMinimalZoomScale:0.6];
+        [self setZoomScale:1];
     } else {
         self.currentResolution = OTHERRESOLUTION;
         self.featureWindowWidth = 284;
@@ -104,7 +104,8 @@
             self.resolutionHeight = 1080;
         }
         self.lockDelay = 10;
-        [self setMinimalZoomScale:0.4];
+        [self setMinimalZoomScale:0.5];
+        [self setZoomScale:1];
     }
 }
 
@@ -112,10 +113,12 @@
     /*And we create a capture session*/
     self.captureSession = [[AVCaptureSession alloc] init];
     
+    // setup capture device
+    self.captureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    
     /*We setup the input*/
-    AVCaptureDevice *captureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     NSError *error;
-    AVCaptureDeviceInput *captureInput = [AVCaptureDeviceInput deviceInputWithDevice:captureDevice
+    AVCaptureDeviceInput *captureInput = [AVCaptureDeviceInput deviceInputWithDevice:self.captureDevice
                                                                                error:&error];
     if (!error) {
         if ([self.captureSession canAddInput:captureInput]) {
@@ -152,9 +155,9 @@
     /*We use medium quality, on the iPhone 4 this demo would be laging too much, the conversion in UIImage and CGImage demands too much ressources for a 720p resolution.*/
     [self.captureSession setSessionPreset:self.currentResolution];
     
-    if ([captureDevice lockForConfiguration:nil] && ![self isIphone4]) {
-        captureDevice.videoZoomFactor = captureDevice.activeFormat.videoZoomFactorUpscaleThreshold;
-        [captureDevice unlockForConfiguration];
+    if ([self.captureDevice lockForConfiguration:nil] && ![self isIphone4]) {
+        self.captureDevice.videoZoomFactor = self.captureDevice.activeFormat.videoZoomFactorUpscaleThreshold;
+        [self.captureDevice unlockForConfiguration];
     }
     
     /*We start the capture*/
@@ -509,9 +512,38 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     [self.scrollViewRight changeImageViewFrame:CGRectMake(0, 0, 960 * self.currentZoomScale, 540 * self.currentZoomScale)];
 }
 
+- (void)checkFocusChange {
+    NSUInteger level = [self getLevel];
+    //[self displayMessage:[NSString stringWithFormat:@"dis = %lu, lens = %.03f", (unsigned long)level, self.captureDevice.lensPosition]];
+    if (level != self.focusLevel) {
+        [self endFocusLevelEvent];
+        [self beginFocusLevelEvent];
+    }
+}
+
+- (float)getOffset {
+    // can extend to all kinds of devices
+    /*if ([self isIphone5]) {
+        return 0.14;
+    }*/
+    return 0.16;
+}
+
+- (NSUInteger)getLevel {
+    float offset = [self getOffset];
+    float g = _accelerometer->getCurrent();
+    float lens = self.captureDevice.lensPosition - offset * g;
+    float distance = 1 / (-0.3929 * lens + 0.2986);
+    if (distance < 0 || distance > 360) {
+        distance = 360;
+    }
+    return distance / 1;
+}
+
 #pragma mark -
 #pragma mark Basic Controls
 - (void) setMinimalZoomScale: (float)minScale {
+    self.minZoomScale = minScale;
     self.scrollViewLeft.minimumZoomScale = minScale;
     self.scrollViewRight.minimumZoomScale = minScale;
     [self.zoomSliderLeft setMinimumValue:minScale];
@@ -550,24 +582,22 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 }
 
 - (void)turnFlashOn {
-    AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-    if ([device hasTorch]) {
-        [device lockForConfiguration:nil];
+    if ([self.captureDevice hasTorch]) {
+        [self.captureDevice lockForConfiguration:nil];
         //  turn on
-        [device setTorchMode:AVCaptureTorchModeOn];
+        [self.captureDevice setTorchMode:AVCaptureTorchModeOn];
         [MobClick beginEvent:@"FlashlightOn"];
-        [device unlockForConfiguration];
+        [self.captureDevice unlockForConfiguration];
     }
 }
 
 - (void)turnFlashOff {
-    AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-    if ([device hasTorch]) {
-        [device lockForConfiguration:nil];
+    if ([self.captureDevice hasTorch]) {
+        [self.captureDevice lockForConfiguration:nil];
         //  turn off
         [MobClick endEvent:@"FlashlightOn"];
-        [device setTorchMode:AVCaptureTorchModeOff];
-        [device unlockForConfiguration];
+        [self.captureDevice setTorchMode:AVCaptureTorchModeOff];
+        [self.captureDevice unlockForConfiguration];
     }
 }
 
@@ -848,10 +878,12 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     } else {
         [self displayMessage:@"Zoom Mode"];
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self.zoomSliderLeft setValue:0.5 animated:YES];
-            [self.zoomSliderRight setValue:0.5 animated:YES];
-            [self.scrollViewLeft setZoomScale:0.5 animated:YES];
-            [self.scrollViewRight setZoomScale:0.5 animated:YES];
+            [self.zoomSliderLeft setValue:self.minZoomScale animated:YES];
+            [self.zoomSliderRight setValue:self.minZoomScale animated:YES];
+            [self.scrollViewLeft setZoomScale:self.minZoomScale animated:YES];
+            [self.scrollViewRight setZoomScale:self.minZoomScale animated:YES];
+            // tap zoom out umeng event
+            [MobClick event:@"TapZoomOut"];
         });
     }
     self.zoomOutModeOn = !_zoomOutModeOn;
@@ -1163,13 +1195,25 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     if (self.imageModeOn) {
         [MobClick endEvent:@"ImageModeOn" label:@"Enh-Inv"];
     }
+    // zoom exit umeng event
+    NSString *value = [NSString stringWithFormat:@"%ld", (long)ceil(self.currentZoomScale)];
+    [MobClick event:@"ZoomAtExit" label:value];
+    // stop the timer for focus level
+    if ([self hasLensPosition]) {
+        [self stopTimer];
+        [self endFocusLevelEvent];
+    }
 }
 
 - (void)applicationDidBecomeActive {
     if (self.imageModeOn) {
         [MobClick beginEvent:@"ImageModeOn" label:@"Enh-Inv"];
     }
-    [self retriveData];
+    // set up a timer for focus level
+    if ([self hasLensPosition]) {
+        [self startTimer];
+        [self beginFocusLevelEvent];
+    }
     //[self recoverFlash];
 }
 
@@ -1196,6 +1240,39 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     [[AVAudioSession sharedInstance] setActive:YES error:nil];
 }
 
+- (void)startTimer {
+    self.repeatTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(checkFocusChange) userInfo:nil repeats:YES];
+}
+
+- (void)beginFocusLevelEvent {
+    self.focusLevelTimer = [NSDate date];
+    self.focusLevel = [self getLevel];
+    NSString *label = [NSString stringWithFormat:@"%ld", (long)self.focusLevel];
+    [MobClick beginEvent:@"FocusLevel" label:label];
+}
+
+- (void)stopTimer {
+    if (self.repeatTimer) {
+        [self.repeatTimer invalidate];
+        self.repeatTimer = nil;
+    }
+}
+
+- (void)endFocusLevelEvent {
+    float seconds = [[NSDate date] timeIntervalSinceDate:self.focusLevelTimer];
+    if (seconds >= 3) {
+        NSString *label = [NSString stringWithFormat:@"%ld", (long)self.focusLevel];
+        [MobClick endEvent:@"FocusLevel" label:label];
+    }
+}
+
+- (BOOL)hasLensPosition {
+    if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
+        return false;
+    }
+    return true;
+}
+
 #pragma mark -
 #pragma mark System Data Storage
 
@@ -1210,7 +1287,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-- (void)retriveData {
+- (void)retrieveData {
     NSDictionary *svGoggles = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"SVGoggles"];
     if (svGoggles) {
         [self setZoomScale:[[svGoggles objectForKey:@"Zoom Scale"] floatValue]];
@@ -1218,11 +1295,6 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         _gyro->setYOffset([[svGoggles objectForKey:@"Y Offset"] floatValue]);
         _gyro->setXNumber([[svGoggles objectForKey:@"X Number"] intValue]);
         _gyro->setYNumber([[svGoggles objectForKey:@"Y Number"] intValue]);
-        /*NSLog(@"X offset = %f, Y offset = %f, X Number = %d, Y Number = %d",
-              [[svGoggles objectForKey:@"X Offset"] floatValue],
-              [[svGoggles objectForKey:@"Y Offset"] floatValue],
-              [[svGoggles objectForKey:@"X Number"] intValue],
-              [[svGoggles objectForKey:@"Y Number"] intValue]);*/
     }
 }
 

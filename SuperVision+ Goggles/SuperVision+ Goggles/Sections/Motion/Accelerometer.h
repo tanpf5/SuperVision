@@ -26,16 +26,19 @@ namespace SuperVision
         virtual ~Accelerometer() {}
         void start();
         void stop();
+        float getCurrent();
         
     private:
         CMMotionManager *_manager;
         size_t _sampleIndex;
         float _baseline;
+        float _current_z;
         std::vector<float> _sensorData;
         std::vector<float> _offsets;
         
         
         void addData(float value);
+        void updateCurrent(float value);
         void evaluateModel();
         int checkTap();
         float meanOf(size_t start, int n);

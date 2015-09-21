@@ -44,6 +44,7 @@ namespace SuperVision
                                            withHandler:^(CMAccelerometerData* accelerometerData, NSError *error)
              {
                  addData((float) -accelerometerData.acceleration.y);
+                 updateCurrent((float) -accelerometerData.acceleration.z);
              }];
         }
     }
@@ -53,12 +54,22 @@ namespace SuperVision
         [_manager stopAccelerometerUpdates];
     }
     
+    float Accelerometer::getCurrent()
+    {
+        return _current_z;
+    }
+    
     void Accelerometer::addData(float value)
     {
         _sensorData[_sampleIndex % TOTAL_WND] = value;
         _baseline = value;
         ++_sampleIndex;
         evaluateModel();
+    }
+    
+    void Accelerometer::updateCurrent(float value)
+    {
+        _current_z = value;
     }
     
     int Accelerometer::checkTap()

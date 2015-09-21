@@ -18,7 +18,6 @@
 		A00D07261B4DB18C00ED27FD /* HelpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A00D07241B4DB18C00ED27FD /* HelpViewController.xib */; };
 		A00D072D1B4DB47300ED27FD /* undo.png in Resources */ = {isa = PBXBuildFile; fileRef = A00D072C1B4DB47300ED27FD /* undo.png */; };
 		A00D07301B4EB9A600ED27FD /* SVHelpScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = A00D072F1B4EB9A600ED27FD /* SVHelpScrollView.m */; };
-		A01B2F281B8BA57B00A4C68F /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A01B2F261B8BA57B00A4C68F /* libMobClickLibrary.a */; };
 		A037E9041B45D9E300DA7961 /* MagnetSensor.mm in Sources */ = {isa = PBXBuildFile; fileRef = A037E9031B45D9E300DA7961 /* MagnetSensor.mm */; };
 		A037E9071B45DB7100DA7961 /* Accelerometer.mm in Sources */ = {isa = PBXBuildFile; fileRef = A037E9051B45DB7100DA7961 /* Accelerometer.mm */; };
 		A037E9091B45DBDC00DA7961 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A037E9081B45DBDC00DA7961 /* CoreMotion.framework */; };
@@ -31,6 +30,7 @@
 		A05C110E1B504C5400B409B6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A05C110D1B504C5400B409B6 /* CoreGraphics.framework */; };
 		A05C11101B504C9600B409B6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A05C110F1B504C9600B409B6 /* UIKit.framework */; };
 		A05C11161B50557F00B409B6 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A05C11151B50557F00B409B6 /* GLKit.framework */; };
+		A06DDAE81BB0468400328553 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A06DDAE61BB0468400328553 /* libMobClickLibrary.a */; };
 		A0D9CEA01B69750100E3D01F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0D9CE9F1B69750100E3D01F /* Images.xcassets */; };
 		A0F638E71B62888400964FF8 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A0F638E61B62888400964FF8 /* libz.dylib */; };
 		A0F6CBD41B432C7C00460AF3 /* empty.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CBC71B432C7C00460AF3 /* empty.png */; };
@@ -82,8 +82,6 @@
 		A00D072C1B4DB47300ED27FD /* undo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = undo.png; path = Resources/Images/Buttons/undo.png; sourceTree = "<group>"; };
 		A00D072E1B4EB9A600ED27FD /* SVHelpScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SVHelpScrollView.h; path = Models/SVHelpScrollView.h; sourceTree = "<group>"; };
 		A00D072F1B4EB9A600ED27FD /* SVHelpScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SVHelpScrollView.m; path = Models/SVHelpScrollView.m; sourceTree = "<group>"; };
-		A01B2F261B8BA57B00A4C68F /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
-		A01B2F271B8BA57B00A4C68F /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
 		A037E8FE1B45D91300DA7961 /* MagnetSensor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MagnetSensor.h; path = Sections/Motion/MagnetSensor.h; sourceTree = "<group>"; };
 		A037E9031B45D9E300DA7961 /* MagnetSensor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MagnetSensor.mm; path = Sections/Motion/MagnetSensor.mm; sourceTree = "<group>"; };
 		A037E9051B45DB7100DA7961 /* Accelerometer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Accelerometer.mm; path = Sections/Motion/Accelerometer.mm; sourceTree = "<group>"; };
@@ -99,6 +97,8 @@
 		A05C110D1B504C5400B409B6 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		A05C110F1B504C9600B409B6 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A05C11151B50557F00B409B6 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		A06DDAE61BB0468400328553 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
+		A06DDAE71BB0468400328553 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
 		A0D9CE9F1B69750100E3D01F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		A0F638E61B62888400964FF8 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		A0F6CBC71B432C7C00460AF3 /* empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = empty.png; path = Resources/Images/Buttons/empty.png; sourceTree = "<group>"; };
@@ -129,7 +129,7 @@
 				A0F638E71B62888400964FF8 /* libz.dylib in Frameworks */,
 				A05C11161B50557F00B409B6 /* GLKit.framework in Frameworks */,
 				A05C11101B504C9600B409B6 /* UIKit.framework in Frameworks */,
-				A01B2F281B8BA57B00A4C68F /* libMobClickLibrary.a in Frameworks */,
+				A06DDAE81BB0468400328553 /* libMobClickLibrary.a in Frameworks */,
 				A05C110E1B504C5400B409B6 /* CoreGraphics.framework in Frameworks */,
 				A05C110C1B4F0BFD00B409B6 /* ImageIO.framework in Frameworks */,
 				A05C110A1B4F0BF600B409B6 /* CoreVideo.framework in Frameworks */,
@@ -281,8 +281,8 @@
 		A0F638E21B62878E00964FF8 /* Umeng */ = {
 			isa = PBXGroup;
 			children = (
-				A01B2F261B8BA57B00A4C68F /* libMobClickLibrary.a */,
-				A01B2F271B8BA57B00A4C68F /* MobClick.h */,
+				A06DDAE61BB0468400328553 /* libMobClickLibrary.a */,
+				A06DDAE71BB0468400328553 /* MobClick.h */,
 			);
 			name = Umeng;
 			sourceTree = "<group>";
@@ -615,6 +615,10 @@
 					Goggles,
 					"$(PROJECT_DIR)/SuperVision+",
 					Goggles,
+					"$(PROJECT_DIR)/SuperVision+",
+					Goggles,
+					"$(PROJECT_DIR)/SuperVision+",
+					Goggles,
 				);
 				PRODUCT_NAME = "SuperVision Goggles";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -636,6 +640,10 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/SuperVision+",
+					Goggles,
+					"$(PROJECT_DIR)/SuperVision+",
+					Goggles,
 					"$(PROJECT_DIR)/SuperVision+",
 					Goggles,
 					"$(PROJECT_DIR)/SuperVision+",
