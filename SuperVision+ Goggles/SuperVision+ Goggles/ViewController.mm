@@ -162,6 +162,10 @@
     
     /*We start the capture*/
     [self.captureSession startRunning];
+    
+    // create the CIContext instance, note that this must be done after _videoPreviewView is properly set up
+    EAGLContext *_eaglContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+    self.ciContext = [CIContext contextWithEAGLContext:_eaglContext options:@{kCIContextWorkingColorSpace : [NSNull null]} ];
 }
 
 - (void)initialMotion {
@@ -267,160 +271,159 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     /*We create an autorelease pool because as we are not in the main_queue our code is
      not executed in the main thread. So we have to create an autorelease pool for the thread we are in*/
     @autoreleasepool {
-        CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
-        /*Lock the image buffer*/
-        CVPixelBufferLockBaseAddress(imageBuffer,0);
-        /*Get information about the image*/
-        uint8_t *baseAddress = (uint8_t *)CVPixelBufferGetBaseAddress(imageBuffer);
-        size_t bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer);
-        // screen width is 320, image width is 640 / 1920 / 1280
-        size_t width = CVPixelBufferGetWidth(imageBuffer);
-        // screen height is 480, image height is 480 / 1080 / 720
-        size_t height = CVPixelBufferGetHeight(imageBuffer);
-        /*Create a CGImageRef from the CVImageBufferRef*/
-        CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-        CGContextRef context = CGBitmapContextCreate(baseAddress, width, height, 8, bytesPerRow, colorSpace, kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
-        // create a cgimgRef from original source.
-        self.cgImageRef = CGBitmapContextCreateImage(context);
-        // cut a particle of a cgimage to process fast feature detect
-        CGImageRef processCGImageRef = CGImageCreateWithImageInRect(self.cgImageRef, CGRectMake(width/2 - self.featureWindowWidth/2, height/2 - self.featureWindowHeight/2, self.featureWindowWidth, self.featureWindowHeight));
-        // we crop a part of cgimage to uiimage to do feature detect and track.
-        UIImage *processUIImage = [UIImage imageWithCGImage:processCGImageRef];
-        /* release original cgimage */
-        CGImageRelease(processCGImageRef);
-        /*We release some components*/
-        CGContextRelease(context);
-        CGColorSpaceRelease(colorSpace);
-        
-        //UIImage *originalUIImage;
-        UIImage *originalUIImage = [UIImage imageWithCGImage:self.cgImageRef];
-        // add filter
-        if (self.isImageModeOn) {
-            originalUIImage = [self addFilter:self.cgImageRef];
-        }
-        
-        //UIImage *originalUIImage = [UIImage imageWithCGImage:self.cgImageRef];
-        UIImage *finalUIImage = originalUIImage;
-        if (self.isBeforeLocked) {
-            [self.imageProcess setCurrentImageMat:processUIImage];
-            double var = [self.imageProcess calVariance];
-            if (self.imageNo >= self.lockDelay) {
-                if ((width != 960) && ([self isIphone4])) {
-                    // show to screen.
-                    [self adjustForHighResolution];
-                    finalUIImage = self.highVarImg;
-                    self.locked = true;
-                    //[self.scrollViewLeft setContentOffset:self.correctContentOffset animated:NO];
-                    //[self.scrollViewRight setContentOffset:self.correctContentOffset animated:NO];
-                    self.maxVariance = 0;
-                } else {
-                    self.locked = true;
-                    finalUIImage = self.highVarImg;
-                    self.maxVariance = 0;
-                }
-            }
-            // if not reaching lock delay.
-            else {
-                if ((self.maxVariance < var) || (self.maxVariance == 0)) {
-                    self.highVarImg = originalUIImage;
-                    self.maxVariance = var;
-                }
-            }
-        }
-        // normal state that not locked.
-        else {
-            float mean_x = 0;
-            float mean_y = 0;
-            if (self.imageNo == 0) {
-                [self.imageProcess setLastImageMat:processUIImage];
-            }
-            else {
-                //  add offset into offset array
-                if ([self.offsetArray count] == POINT_WND) {
-                    [self.offsetArray removeObjectAtIndex:0];
-                }
-                // set up images
-                [self.imageProcess setCurrentImageMat:processUIImage];
-                // calculate motion vector 
-                CGPoint motionVector = [self.imageProcess motionEstimation];
-                [self.offsetArray addObject:[NSValue valueWithCGPoint:motionVector]];
-                
-                //  calculate total of offsets
-                for (int i = 0; i < [self.offsetArray count]; i++) {
-                    NSValue *val = [self.offsetArray objectAtIndex:i];
-                    CGPoint p = [val CGPointValue];
-                    mean_x += p.x;
-                    mean_y += p.y;
-                }
-                mean_x /= [self.offsetArray count];
-                mean_y /= [self.offsetArray count];
-                if (fabs(mean_x) < MEAN_STABLE_THRESHOLD_LEFT_RIGHT && fabs(mean_y) < MEAN_STABLE_THRESHOLD_UP_DOWN && !self.isBeingReleased) {
-                    if (!self.isStabilizationEnabled) {
-                        self.stabilizationEnabled = true;
-                        //[self displayMessage:@"start stable"];
-                        [self reSet];
-                    }
-                }
-                if (fabs(mean_x) > MEAN_NOT_STABLE_THRESHOLD_LEFT_RIGHT || fabs(mean_y) > MEAN_NOT_STABLE_THRESHOLD_UP_DOWN || fabs(motionVector.x) > MOVEMENT_LEFT_RIGHT / sqrt(self.currentZoomScale) || fabs(motionVector.y) > MOVEMENT_UP_DOWN / sqrt(self.currentZoomScale) || fabs(self.motionX) > MOVEMENT_THRESHOLD_LEFT_RIGHT || fabs(self.motionY) > MOVEMENT_THRESHOLD_UP_DOWN) {
-                    if (self.isStabilizationEnabled) {
-                        self.stabilizationEnabled = false;
-                        //[self displayMessage:@"end stable"];
-                        [self startReleaseStabilization];
-                    }
-                }
-            }
-            //  if stabilization function is disabled
-            if (self.isBeingReleased) {
-                CGRect windowBounds = [[UIScreen mainScreen] bounds];
-                ++self.increasing;
-                float x = self.move_x * (RELEASE_TIME - self.increasing);
-                float y = self.move_y * (RELEASE_TIME - self.increasing);
-                CGRect resultRect = [self.imageProcess calculateMyCroppedImage:x ypos:y width:width height:height scale:self.currentZoomScale bounds:CGRectMake(0, 0, windowBounds.size.width / 2, windowBounds.size.height)];
-                //  cut from original to move the image
-                //CGImageRef finalProcessImage = CGImageCreateWithImageInRect(self.cgImageRef, resultRect);
-                CGImageRef finalProcessImage = CGImageCreateWithImageInRect([originalUIImage CGImage], resultRect);
-                finalUIImage = [UIImage imageWithCGImage:finalProcessImage];
-                CGImageRelease(finalProcessImage);
-                if (self.increasing == RELEASE_TIME) {
-                    [self endReleaseStabilization];
-                }
+    CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+    /*Lock the image buffer*/
+    CVPixelBufferLockBaseAddress(imageBuffer,0);
+    /*Get information about the image*/
+    uint8_t *baseAddress = (uint8_t *)CVPixelBufferGetBaseAddress(imageBuffer);
+    size_t bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer);
+    // screen width is 320, image width is 640 / 1920 / 1280
+    size_t width = CVPixelBufferGetWidth(imageBuffer);
+    // screen height is 480, image height is 480 / 1080 / 720
+    size_t height = CVPixelBufferGetHeight(imageBuffer);
+    /*Create a CGImageRef from the CVImageBufferRef*/
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGContextRef context = CGBitmapContextCreate(baseAddress, width, height, 8, bytesPerRow, colorSpace, kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
+    // create a cgimgRef from original source.
+    self.cgImageRef = CGBitmapContextCreateImage(context);
+    // cut a particle of a cgimage to process fast feature detect
+    CGImageRef processCGImageRef = CGImageCreateWithImageInRect(self.cgImageRef, CGRectMake(width/2 - self.featureWindowWidth/2, height/2 - self.featureWindowHeight/2, self.featureWindowWidth, self.featureWindowHeight));
+    // we crop a part of cgimage to uiimage to do feature detect and track.
+    UIImage *processUIImage = [UIImage imageWithCGImage:processCGImageRef];
+    /* release original cgimage */
+    CGImageRelease(processCGImageRef);
+    /*We release some components*/
+    CGContextRelease(context);
+    CGColorSpaceRelease(colorSpace);
+    
+    // add filter
+    if (self.isImageModeOn) {
+        [self addFilter:self.cgImageRef];
+    }
+    
+    UIImage *originalUIImage = [UIImage imageWithCGImage:self.cgImageRef];
+    UIImage *finalUIImage = originalUIImage;
+    if (self.isBeforeLocked) {
+        [self.imageProcess setCurrentImageMat:processUIImage];
+        double var = [self.imageProcess calVariance];
+        if (self.imageNo >= self.lockDelay) {
+            if ((width != 960) && ([self isIphone4])) {
+                // show to screen.
+                [self adjustForHighResolution];
+                finalUIImage = self.highVarImg;
+                self.locked = true;
+                //[self.scrollViewLeft setContentOffset:self.correctContentOffset animated:NO];
+                //[self.scrollViewRight setContentOffset:self.correctContentOffset animated:NO];
+                self.maxVariance = 0;
             } else {
-                // if statbilization disabled, just use original image
+                self.locked = true;
+                finalUIImage = self.highVarImg;
+                self.maxVariance = 0;
+            }
+        }
+        // if not reaching lock delay.
+        else {
+            if ((self.maxVariance < var) || (self.maxVariance == 0)) {
+                self.highVarImg = originalUIImage;
+                self.maxVariance = var;
+            }
+        }
+    }
+    // normal state that not locked.
+    else {
+        float mean_x = 0;
+        float mean_y = 0;
+        if (self.imageNo == 0) {
+            [self.imageProcess setLastImageMat:processUIImage];
+        }
+        else {
+            //  add offset into offset array
+            if ([self.offsetArray count] == POINT_WND) {
+                [self.offsetArray removeObjectAtIndex:0];
+            }
+            // set up images
+            [self.imageProcess setCurrentImageMat:processUIImage];
+            // calculate motion vector 
+            CGPoint motionVector = [self.imageProcess motionEstimation];
+            [self.offsetArray addObject:[NSValue valueWithCGPoint:motionVector]];
+            
+            //  calculate total of offsets
+            for (int i = 0; i < [self.offsetArray count]; i++) {
+                NSValue *val = [self.offsetArray objectAtIndex:i];
+                CGPoint p = [val CGPointValue];
+                mean_x += p.x;
+                mean_y += p.y;
+            }
+            mean_x /= [self.offsetArray count];
+            mean_y /= [self.offsetArray count];
+            if (fabs(mean_x) < MEAN_STABLE_THRESHOLD_LEFT_RIGHT && fabs(mean_y) < MEAN_STABLE_THRESHOLD_UP_DOWN && !self.isBeingReleased) {
+                if (!self.isStabilizationEnabled) {
+                    self.stabilizationEnabled = true;
+                    //[self displayMessage:@"start stable"];
+                    [self reSet];
+                }
+            }
+            if (fabs(mean_x) > MEAN_NOT_STABLE_THRESHOLD_LEFT_RIGHT || fabs(mean_y) > MEAN_NOT_STABLE_THRESHOLD_UP_DOWN || fabs(motionVector.x) > MOVEMENT_LEFT_RIGHT / sqrt(self.currentZoomScale) || fabs(motionVector.y) > MOVEMENT_UP_DOWN / sqrt(self.currentZoomScale) || fabs(self.motionX) > MOVEMENT_THRESHOLD_LEFT_RIGHT || fabs(self.motionY) > MOVEMENT_THRESHOLD_UP_DOWN) {
                 if (self.isStabilizationEnabled) {
-                    if (self.imageNo != 0) {
-                        NSValue *val = [self.offsetArray objectAtIndex:[self.offsetArray count] - 1];
-                        CGPoint p = [val CGPointValue];
-                        self.motionX += p.x;
-                        self.motionY += p.y;
-                        
-                        CGRect windowBounds = [[UIScreen mainScreen] bounds];
-                        CGRect resultRect = [self.imageProcess calculateMyCroppedImage:self.motionX ypos:self.motionY width:width height:height scale:self.currentZoomScale bounds:CGRectMake(0, 0, windowBounds.size.width / 2, windowBounds.size.height)];
-                        
-                        //  cut from original to move the image
-                        //CGImageRef finalProcessImage = CGImageCreateWithImageInRect(self.cgImageRef, resultRect);
-                        CGImageRef finalProcessImage = CGImageCreateWithImageInRect([originalUIImage CGImage], resultRect);
-                        finalUIImage = [UIImage imageWithCGImage:finalProcessImage];
-                        CGImageRelease(finalProcessImage);
-                    }
+                    self.stabilizationEnabled = false;
+                    //[self displayMessage:@"end stable"];
+                    [self startReleaseStabilization];
                 }
             }
         }
-        // set image
-        [self.scrollViewLeft setImage:finalUIImage];
-        [self.scrollViewRight setImage:finalUIImage];
-        // We relase the CGImageRef
-        CGImageRelease(self.cgImageRef);
-        // We unlock the  image buffer
-        CVPixelBufferUnlockBaseAddress(imageBuffer,0);
-        self.imageNo++;
+        //  if stabilization function is disabled
+        if (self.isBeingReleased) {
+            CGRect windowBounds = [[UIScreen mainScreen] bounds];
+            ++self.increasing;
+            float x = self.move_x * (RELEASE_TIME - self.increasing);
+            float y = self.move_y * (RELEASE_TIME - self.increasing);
+            CGRect resultRect = [self.imageProcess calculateMyCroppedImage:x ypos:y width:width height:height scale:self.currentZoomScale bounds:CGRectMake(0, 0, windowBounds.size.width / 2, windowBounds.size.height)];
+            //  cut from original to move the image
+            CGImageRef finalProcessImage = CGImageCreateWithImageInRect(self.cgImageRef, resultRect);
+            finalUIImage = [UIImage imageWithCGImage:finalProcessImage];
+            CGImageRelease(finalProcessImage);
+            if (self.increasing == RELEASE_TIME) {
+                [self endReleaseStabilization];
+            }
+        } else {
+            // if statbilization disabled, just use original image
+            if (self.isStabilizationEnabled) {
+                if (self.imageNo != 0) {
+                    NSValue *val = [self.offsetArray objectAtIndex:[self.offsetArray count] - 1];
+                    CGPoint p = [val CGPointValue];
+                    self.motionX += p.x;
+                    self.motionY += p.y;
+                    
+                    CGRect windowBounds = [[UIScreen mainScreen] bounds];
+                    CGRect resultRect = [self.imageProcess calculateMyCroppedImage:self.motionX ypos:self.motionY width:width height:height scale:self.currentZoomScale bounds:CGRectMake(0, 0, windowBounds.size.width / 2, windowBounds.size.height)];
+                    
+                    //  cut from original to move the image
+                    CGImageRef finalProcessImage = CGImageCreateWithImageInRect(self.cgImageRef, resultRect);
+                    finalUIImage = [UIImage imageWithCGImage:finalProcessImage];
+                    CGImageRelease(finalProcessImage);
+                }
+            }
+        }
+    }
+    // set image
+    [self.scrollViewLeft setImage:finalUIImage];
+    [self.scrollViewRight setImage:finalUIImage];
+    // We relase the CGImageRef
+    CGImageRelease(self.cgImageRef);
+    // We unlock the  image buffer
+    CVPixelBufferUnlockBaseAddress(imageBuffer,0);
+    self.imageNo++;
     } // autorelease finished
     return;
 }
 
-- (UIImage *)addFilter:(CGImageRef) cgImageRef {
+- (void)addFilter:(CGImageRef) cgImageRef {
     // add filter
-    CIImage *image = [CIImage imageWithCGImage:self.cgImageRef];
+    CIImage *image = [CIImage imageWithCGImage:cgImageRef];
+    CGImageRelease(cgImageRef);
     
+    // exposure help make picture clear when high contrast
+    //image = [CIFilter filterWithName:@"CIExposureAdjust" keysAndValues:kCIInputImageKey, image, @"inputEV", [NSNumber numberWithFloat:1], nil].outputImage;
     // coler black and white
     CIFilter* photoEffectMono = [CIFilter filterWithName:@"CIPhotoEffectMono"];
     [photoEffectMono setDefaults];
@@ -439,21 +442,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     [colorControlsFilter setValue:@5 forKey:@"inputContrast"];
     [colorControlsFilter setValue:image forKey:@"inputImage"];
     image = [colorControlsFilter valueForKey:@"outputImage"];
-    return [self makeUIImageFromCIImage:image];
-}
-
--(UIImage*)makeUIImageFromCIImage:(CIImage*)ciImage
-{
-    // create the CIContext instance, note that this must be done after _videoPreviewView is properly set up
-    EAGLContext *_eaglContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
-    CIContext *cicontext = [CIContext contextWithEAGLContext:_eaglContext options:@{kCIContextWorkingColorSpace : [NSNull null]}];
-    //CIContext *cicontext = [CIContext contextWithOptions:nil];
-    // finally!
-    UIImage * returnImage;
-    CGImageRef processedCGImage = [cicontext createCGImage:ciImage fromRect:[ciImage extent]];
-    returnImage = [UIImage imageWithCGImage:processedCGImage];
-    CGImageRelease(processedCGImage);
-    return returnImage;
+    self.cgImageRef = [self.ciContext createCGImage:image fromRect:[image extent]];
 }
 
 - (void)startReleaseStabilization {

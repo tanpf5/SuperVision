@@ -139,16 +139,13 @@
          contextName = "-[ViewController captureOutput:didOutputSampleBuffer:fromConnection:]:ViewController.mm">
          <PersistentStrings>
             <PersistentString
-               value = "self.cgImageRef">
-            </PersistentString>
-            <PersistentString
                value = "finalUIImage.size.width">
             </PersistentString>
             <PersistentString
-               value = "finalUIImage.size.height">
+               value = "self.imageNo">
             </PersistentString>
             <PersistentString
-               value = "self.imageNo">
+               value = "finalUIImage.size.height">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -197,10 +194,10 @@
          contextName = "-[ViewController initialSettings]:ViewController.mm">
          <PersistentStrings>
             <PersistentString
-               value = "self.scrollViewLeft.imageView.frame.size.width">
+               value = "self.currentZoomScale">
             </PersistentString>
             <PersistentString
-               value = "self.currentZoomScale">
+               value = "self.scrollViewLeft.imageView.frame.size.width">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
