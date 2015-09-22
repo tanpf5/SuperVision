@@ -30,9 +30,7 @@
 		A05C110E1B504C5400B409B6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A05C110D1B504C5400B409B6 /* CoreGraphics.framework */; };
 		A05C11101B504C9600B409B6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A05C110F1B504C9600B409B6 /* UIKit.framework */; };
 		A05C11161B50557F00B409B6 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A05C11151B50557F00B409B6 /* GLKit.framework */; };
-		A06DDAE81BB0468400328553 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A06DDAE61BB0468400328553 /* libMobClickLibrary.a */; };
 		A0D9CEA01B69750100E3D01F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0D9CE9F1B69750100E3D01F /* Images.xcassets */; };
-		A0F638E71B62888400964FF8 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A0F638E61B62888400964FF8 /* libz.dylib */; };
 		A0F6CBD41B432C7C00460AF3 /* empty.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CBC71B432C7C00460AF3 /* empty.png */; };
 		A0F6CBD51B432C7C00460AF3 /* exit.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CBC81B432C7C00460AF3 /* exit.png */; };
 		A0F6CBD61B432C7C00460AF3 /* flashlight_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F6CBC91B432C7C00460AF3 /* flashlight_selected.png */; };
@@ -49,6 +47,7 @@
 		A0F6CBE61B4337D900460AF3 /* SVSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = A0F6CBE51B4337D900460AF3 /* SVSlider.m */; };
 		A0F6CC111B446FAC00460AF3 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0F6CC101B446FAC00460AF3 /* AVFoundation.framework */; };
 		A0F6CC1B1B44863800460AF3 /* SVScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0F6CC1A1B44863800460AF3 /* SVScrollView.m */; };
+		A0FF5A111BB1D11100E0827A /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0FF5A0F1BB1D11100E0827A /* libMobClickLibrary.a */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,10 +96,7 @@
 		A05C110D1B504C5400B409B6 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		A05C110F1B504C9600B409B6 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A05C11151B50557F00B409B6 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
-		A06DDAE61BB0468400328553 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
-		A06DDAE71BB0468400328553 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
 		A0D9CE9F1B69750100E3D01F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		A0F638E61B62888400964FF8 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		A0F6CBC71B432C7C00460AF3 /* empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = empty.png; path = Resources/Images/Buttons/empty.png; sourceTree = "<group>"; };
 		A0F6CBC81B432C7C00460AF3 /* exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = exit.png; path = Resources/Images/Buttons/exit.png; sourceTree = "<group>"; };
 		A0F6CBC91B432C7C00460AF3 /* flashlight_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = flashlight_selected.png; path = Resources/Images/Buttons/flashlight_selected.png; sourceTree = "<group>"; };
@@ -119,6 +115,8 @@
 		A0F6CC101B446FAC00460AF3 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		A0F6CC191B44863800460AF3 /* SVScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SVScrollView.h; path = Models/SVScrollView.h; sourceTree = "<group>"; };
 		A0F6CC1A1B44863800460AF3 /* SVScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SVScrollView.m; path = Models/SVScrollView.m; sourceTree = "<group>"; };
+		A0FF5A0F1BB1D11100E0827A /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
+		A0FF5A101BB1D11100E0827A /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,10 +124,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0F638E71B62888400964FF8 /* libz.dylib in Frameworks */,
 				A05C11161B50557F00B409B6 /* GLKit.framework in Frameworks */,
 				A05C11101B504C9600B409B6 /* UIKit.framework in Frameworks */,
-				A06DDAE81BB0468400328553 /* libMobClickLibrary.a in Frameworks */,
+				A0FF5A111BB1D11100E0827A /* libMobClickLibrary.a in Frameworks */,
 				A05C110E1B504C5400B409B6 /* CoreGraphics.framework in Frameworks */,
 				A05C110C1B4F0BFD00B409B6 /* ImageIO.framework in Frameworks */,
 				A05C110A1B4F0BF600B409B6 /* CoreVideo.framework in Frameworks */,
@@ -281,8 +278,8 @@
 		A0F638E21B62878E00964FF8 /* Umeng */ = {
 			isa = PBXGroup;
 			children = (
-				A06DDAE61BB0468400328553 /* libMobClickLibrary.a */,
-				A06DDAE71BB0468400328553 /* MobClick.h */,
+				A0FF5A0F1BB1D11100E0827A /* libMobClickLibrary.a */,
+				A0FF5A101BB1D11100E0827A /* MobClick.h */,
 			);
 			name = Umeng;
 			sourceTree = "<group>";
@@ -327,7 +324,6 @@
 		A0F6CC0F1B446F9100460AF3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A0F638E61B62888400964FF8 /* libz.dylib */,
 				A05C11151B50557F00B409B6 /* GLKit.framework */,
 				A05C110F1B504C9600B409B6 /* UIKit.framework */,
 				A05C110D1B504C5400B409B6 /* CoreGraphics.framework */,
@@ -596,6 +592,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Framework",
@@ -605,6 +602,14 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/SuperVision+",
+					Goggles,
+					"$(PROJECT_DIR)/SuperVision+",
+					Goggles,
+					"$(PROJECT_DIR)/SuperVision+",
+					Goggles,
+					"$(PROJECT_DIR)/SuperVision+",
+					Goggles,
 					"$(PROJECT_DIR)/SuperVision+",
 					Goggles,
 					"$(PROJECT_DIR)/SuperVision+",
@@ -631,6 +636,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Framework",
@@ -640,6 +646,14 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/SuperVision+",
+					Goggles,
+					"$(PROJECT_DIR)/SuperVision+",
+					Goggles,
+					"$(PROJECT_DIR)/SuperVision+",
+					Goggles,
+					"$(PROJECT_DIR)/SuperVision+",
+					Goggles,
 					"$(PROJECT_DIR)/SuperVision+",
 					Goggles,
 					"$(PROJECT_DIR)/SuperVision+",
