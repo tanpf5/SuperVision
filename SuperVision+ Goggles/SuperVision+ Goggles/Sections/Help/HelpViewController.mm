@@ -24,8 +24,18 @@
 }
 
 - (IBAction)backButtonTapped {
+    CGRect screenBounds = self.view.bounds;
+    CGRect toFrame = CGRectMake(0.0f, screenBounds.size.height, screenBounds.size.width, screenBounds.size.height);
     [self willMoveToParentViewController:nil];
-    [self.view removeFromSuperview];
+    [UIView animateWithDuration:0.3f
+                          delay:0.0f
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         self.view.frame = toFrame;
+                     }
+                     completion:^(BOOL finished) {
+                         [self.view removeFromSuperview];
+                     }];
     [self removeFromParentViewController];
 }
 @end

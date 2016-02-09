@@ -419,7 +419,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 
 - (UIImage *)addFilter:(CGImageRef) cgImageRef {
     // add filter
-    CIImage *image = [CIImage imageWithCGImage:self.cgImageRef];
+    CIImage *image = [CIImage imageWithCGImage:cgImageRef];
     
     // coler black and white
     CIFilter* photoEffectMono = [CIFilter filterWithName:@"CIPhotoEffectMono"];
@@ -445,8 +445,9 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 -(UIImage*)makeUIImageFromCIImage:(CIImage*)ciImage
 {
     // create the CIContext instance, note that this must be done after _videoPreviewView is properly set up
-    EAGLContext *_eaglContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
-    CIContext *cicontext = [CIContext contextWithEAGLContext:_eaglContext options:@{kCIContextWorkingColorSpace : [NSNull null]}];
+    //EAGLContext *_eaglContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+    //CIContext *cicontext = [CIContext contextWithEAGLContext:_eaglContext options:@{kCIContextWorkingColorSpace : [NSNull null]}];
+    CIContext *cicontext = [CIContext contextWithOptions:@{kCIContextWorkingColorSpace : [NSNull null]}];
     //CIContext *cicontext = [CIContext contextWithOptions:nil];
     // finally!
     UIImage * returnImage;
@@ -717,8 +718,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 }
 
 
-#pragma mark - 
-#pragma mark UI Display Controls
+#pragma mark - UI Display Controls
 
 - (void)hideMenuAndControl {
     [self hideMenu];
@@ -831,8 +831,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     });
 }
 
-#pragma mark - 
-#pragma mark Menu Control
+#pragma mark - Menu Control
 
 - (void) menuControl {
     if (self.isMenuHidden) {
@@ -1284,8 +1283,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     return true;
 }
 
-#pragma mark -
-#pragma mark System Data Storage
+#pragma mark - System Data Storage
 
 - (void)storeData {
     NSMutableDictionary *svGoggles = [[NSMutableDictionary alloc] init];
